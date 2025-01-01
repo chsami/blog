@@ -14,33 +14,33 @@ This plugin bridges EF Core and Azure SQL Database's native vector support, enab
 - Perform **vector similarity searches** using LINQ.
 -  **insert and retrieve vector data** in Azure SQL.
 
-````c#
+```c#
 builder.Services.AddDbContext<ProductContext>(options =>
   options.UseSqlServer("<connection string>", o => o.UseVectorSearch()));
-````
+```
 
-````c#
+```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Product>().Property(p => p.Embedding).HasColumnType("vector(3)");
 }
-````
+```
 
-````c#
+```c#
 public class Product
 {
     public int Id { get; set; }
     public float[] Embedding { get; set; }
 }
-````
+```
 
-````c#
+```c#
 var someVector = new[] { 1f, 2f, 3f };
 var products = await context.Products
     .OrderBy(p => EF.Functions.VectorDistance("cosine", p.Embedding, vector))
     .Take(5)
     .ToArrayAsync();
-````
+```
 
 With this, working with embeddings and vectorized data becomes possible, directly within your EF Core projects.
 
@@ -58,3 +58,7 @@ Learn more about the vector features in Azure SQL in this guide: [Azure SQL Vect
 
 
 For more details, visit the GitHub repository: [EFCore.SqlServer.VectorSearch](https://github.com/efcore/EFCore.SqlServer.VectorSearch).
+
+More of this on: https://chsami.com
+
+Happy coding!
