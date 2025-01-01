@@ -86,7 +86,9 @@ public class ExceptionMiddleware
 }
 ```
 
+https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-9.0
+
 
 
 Enjoy!
