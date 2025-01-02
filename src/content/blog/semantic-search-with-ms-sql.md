@@ -59,6 +59,4 @@ Learn more about the vector features in Azure SQL in this guide: [Azure SQL Vect
 
 For more details, visit the GitHub repository: [EFCore.SqlServer.VectorSearch](https://github.com/efcore/EFCore.SqlServer.VectorSearch).
 
-More of this on: https://chsami.com
-
 Happy coding!
