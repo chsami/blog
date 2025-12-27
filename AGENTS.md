@@ -276,21 +276,6 @@ pre, code {
 
 ---
 
-## Creating New Posts
-
-When creating a new blog post in the `posts/` directory:
-
-1. **Always copy the color variables** from `index.html` (lines 22-31) into the new post's `:root` selector
-2. **Use the same font imports** as the main page:
-   ```html
-   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-   ```
-3. **Reference existing posts** in `posts/` as templates for consistent styling
-4. **Never introduce new colors** — stick to the monochromatic palette defined in index.html
-
----
-
 ## Quick Reference
 
 ```
