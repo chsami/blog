@@ -200,6 +200,37 @@
             opacity: 0;
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .header {
@@ -214,6 +245,7 @@
                 width: 100%;
                 justify-content: center;
                 order: 3;
+                gap: 32px;
             }
 
             .main-content {
@@ -227,6 +259,91 @@
             .about-content {
                 font-size: 16px;
             }
+
+            .footer {
+                padding: 32px 24px;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 32px;
+                width: 100%;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+                z-index: 99;
+            }
+
+            .nav.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .nav-item {
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .main-content {
+                padding: 40px 20px;
+            }
+
+            .about-header {
+                margin-bottom: 24px;
+            }
+
+            .about-title {
+                font-size: 28px;
+                margin-bottom: 32px;
+            }
+
+            .about-content {
+                font-size: 15px;
+                line-height: 1.75;
+            }
+
+            .about-content p {
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-subtitle {
+                font-size: 10px;
+            }
+
+            .about-title {
+                font-size: 24px;
+            }
+
+            .about-content {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -238,7 +355,12 @@
             <a href="index.html" class="logo">CH<span>SAMI</span></a>
             <div class="logo-subtitle">&lt;/developer&gt;</div>
         </div>
-        <nav class="nav">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav" id="mainNav">
             <a href="index.html" class="nav-item">Home</a>
             <a href="about.html" class="nav-item active">About</a>
         </nav>
@@ -273,6 +395,27 @@
         <span class="footer-text">© 2025 CHSAMI</span>
         <span class="footer-text">Software Development Blog</span>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close menu when clicking a link
+        mainNav.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
 </body>
 
 </html>

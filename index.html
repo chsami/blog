@@ -486,6 +486,37 @@
       display: none !important;
     }
 
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 100;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
     /* Responsive */
     @media (max-width: 1100px) {
       .featured-grid {
@@ -505,19 +536,21 @@
         border-right: none;
         border-top: 1px solid var(--border-color);
         position: static;
+        padding: 32px 20px;
       }
 
       .header {
-        padding: 24px;
+        padding: 20px;
       }
 
       .nav {
         position: static;
         transform: none;
+        gap: 32px;
       }
 
       .main-content {
-        padding: 32px 24px;
+        padding: 32px 20px;
       }
 
       .hero-title {
@@ -525,7 +558,14 @@
       }
 
       .hero-img {
-        height: 300px;
+        height: 280px;
+      }
+
+      .hero-section::after {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 11px;
       }
 
       .search-input {
@@ -534,6 +574,155 @@
 
       .search-input:focus {
         width: 180px;
+      }
+
+      .footer {
+        padding: 32px 20px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .header {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg-primary);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 99;
+      }
+
+      .nav.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-item {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .search-container {
+        width: 100%;
+        order: 3;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+
+      .search-input:focus {
+        width: 100%;
+      }
+
+      .categories {
+        margin-bottom: 32px;
+      }
+
+      .category-pill {
+        padding: 8px 16px;
+        font-size: 11px;
+      }
+
+      .hero-content {
+        padding: 28px 0;
+      }
+
+      .hero-meta {
+        font-size: 9px;
+      }
+
+      .hero-title {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      .hero-excerpt {
+        font-size: 15px;
+      }
+
+      .hero-img {
+        height: 220px;
+      }
+
+      .hero-section {
+        margin-bottom: 48px;
+      }
+
+      .featured-header {
+        margin-bottom: 24px;
+      }
+
+      .card-content {
+        padding: 24px;
+      }
+
+      .card-img {
+        height: 200px;
+      }
+
+      .card-number {
+        font-size: 56px;
+        top: -36px;
+        right: 16px;
+      }
+
+      .card-title {
+        font-size: 18px;
+      }
+
+      .card-excerpt {
+        font-size: 13px;
+      }
+
+      .sidebar-post {
+        padding: 16px 0;
+      }
+
+      .sidebar-title {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo-subtitle {
+        font-size: 10px;
+      }
+
+      .hero-title {
+        font-size: 22px;
+      }
+
+      .hero-excerpt {
+        font-size: 14px;
+      }
+
+      .category-pill {
+        padding: 6px 12px;
+        font-size: 10px;
       }
     }
   </style>
@@ -546,7 +735,12 @@
       <a href="#" class="logo">CH<span>SAMI</span></a>
       <div class="logo-subtitle">&lt;/developer&gt;</div>
     </div>
-    <nav class="nav">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav" id="mainNav">
       <a href="index.html" class="nav-item">Home</a>
       <a href="about.html" class="nav-item">About</a>
     </nav>
@@ -723,6 +917,25 @@
         } else {
           card.classList.add('hidden');
         }
+      });
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+      document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close menu when clicking a link
+    mainNav.querySelectorAll('.nav-item').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+        document.body.style.overflow = '';
       });
     });
   </script>

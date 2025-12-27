@@ -549,8 +549,22 @@
         font-size: 42px;
       }
 
+      .hero-title span {
+        font-size: 20px;
+      }
+
+      .hero-desc {
+        font-size: 17px;
+      }
+
       .content {
         padding: 0 24px 48px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
       }
 
       .section-number {
@@ -565,20 +579,136 @@
         grid-template-columns: 1fr;
       }
 
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .conventions-table {
+        min-width: 600px;
+      }
+
       .conventions-table th,
       .conventions-table td {
         padding: 16px;
         font-size: 13px;
       }
 
+      .reason-card {
+        padding: 28px;
+      }
+
+      .use-card {
+        padding: 24px;
+      }
+
+      .model-card {
+        padding: 32px 24px;
+      }
+
+      .hierarchy-container {
+        padding: 32px 20px;
+        overflow-x: auto;
+      }
+
+      .hierarchy-tree {
+        font-size: 12px;
+        min-width: 400px;
+      }
+
+      .code-block {
+        padding: 24px;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        font-size: 12px;
+      }
+
       .cta-section {
         padding: 40px 24px;
       }
 
+      .cta-title {
+        font-size: 24px;
+      }
+
+      .cta-desc {
+        font-size: 14px;
+      }
+
       .header,
       .footer {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .footer > div {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-title span {
+        font-size: 16px;
+        margin-top: 8px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+        margin-top: 24px;
+      }
+
+      .content {
+        padding: 0 20px 40px;
+      }
+
+      .section-number {
+        font-size: 36px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .reason-title {
+        font-size: 18px;
+      }
+
+      .reason-desc {
+        font-size: 14px;
+      }
+
+      .use-number {
+        font-size: 36px;
+      }
+
+      .use-title {
+        font-size: 16px;
+      }
+
+      .model-logo {
+        width: 56px;
+        height: 56px;
+      }
+
+      .model-name {
+        font-size: 18px;
       }
     }
   </style>
