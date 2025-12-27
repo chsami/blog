@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — CHSAMI</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 60px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            font-weight: 400;
+        }
+
+        .logo-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 48px;
+        }
+
+        .nav-item {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--text-primary);
+            transform: scaleX(0);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            transform: scaleX(1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+        }
+
+        .about-container {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        .about-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .about-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 48px;
+        }
+
+        .about-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .about-content p {
+            margin-bottom: 28px;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .header {
+                padding: 24px;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .nav {
+                position: static;
+                transform: none;
+                width: 100%;
+                justify-content: center;
+                order: 3;
+            }
+
+            .main-content {
+                padding: 48px 24px;
+            }
+
+            .about-title {
+                font-size: 32px;
+            }
+
+            .about-content {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html" class="logo">CH<span>SAMI</span></a>
+            <div class="logo-subtitle">&lt;/developer&gt;</div>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="about.html" class="nav-item active">About</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="about-container">
+            <div class="about-header fade-in-up">About Me</div>
+            <h1 class="about-title fade-in-up delay-100">Value First</h1>
+            <div class="about-content fade-in-up delay-200">
+                <p>I'm a software developer who thrives in the details. My world revolves around .NET, Java, databases,
+                    and increasingly AI, though I'm just as likely to be found reverse-engineering something to
+                    understand how it really works under the hood.</p>
+
+                <p>I believe good software comes from asking the right questions: How does this actually work? What
+                    happens at the edges? Will this scale? I'm drawn to clean architecture, well-considered patterns,
+                    and pragmatic solutions over clever ones.</p>
+
+                <p>When I'm not building, I'm contributing to open-source projects and thinking about how to make
+                    tooling and workflows better for everyone. There's something satisfying about solving a problem once
+                    in a way that helps many.</p>
+
+                <p>If you're looking for someone who prefers direct answers, structured thinking, and getting things
+                    right, let's connect.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span class="footer-text">© 2025 CHSAMI</span>
+        <span class="footer-text">Software Development Blog</span>
+    </footer>
+</body>
+
+</html>
