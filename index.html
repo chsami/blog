@@ -90,68 +90,44 @@
       transform: scaleX(1);
     }
 
-    .search-btn {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
+    /* Inline Search */
+    .search-container {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
+      position: relative;
     }
 
-    /* Search Overlay */
-    .search-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(248, 246, 241, 0.98);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .search-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .search-overlay input {
+    .search-input {
       font-family: 'Satoshi', sans-serif;
-      font-size: 48px;
+      font-size: 14px;
       font-weight: 500;
       background: transparent;
-      border: none;
-      border-bottom: 3px solid var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       outline: none;
-      width: 60%;
-      padding: 20px 0;
-      text-align: center;
+      padding: 8px 12px 8px 36px;
+      width: 200px;
+      transition: all 0.2s ease;
+      color: var(--text-primary);
     }
 
-    .search-overlay input::placeholder {
-      color: #C4C0B8;
+    .search-input:focus {
+      border-color: var(--text-primary);
+      width: 250px;
     }
 
-    .close-btn {
-      position: fixed;
-      top: 40px;
-      right: 40px;
-      width: 48px;
-      height: 48px;
-      background: var(--text-primary);
-      border: none;
-      cursor: pointer;
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      pointer-events: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 101;
     }
 
     /* Layout */
@@ -516,24 +492,17 @@
         height: 300px;
       }
 
-      .search-overlay input {
-        font-size: 24px;
-        width: 80%;
+      .search-input {
+        width: 150px;
+      }
+
+      .search-input:focus {
+        width: 180px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Search Overlay -->
-  <div class="search-overlay" id="searchOverlay">
-    <input type="text" placeholder="Search..." id="searchInput" autofocus>
-    <button class="close-btn" id="closeSearch">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-  </div>
-
   <!-- Header -->
   <header class="header">
     <a href="#" class="logo">CH<span>SAMI</span></a>
@@ -541,12 +510,15 @@
       <a href="#" class="nav-item">Home</a>
       <a href="#" class="nav-item">About</a>
     </nav>
-    <button class="search-btn" id="openSearch">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="M21 21l-4.35-4.35"/>
-      </svg>
-    </button>
+    <div class="search-container">
+      <div class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+      </div>
+      <input type="text" placeholder="Search..." id="searchInput" class="search-input">
+    </div>
   </header>
 
   <div class="layout">
@@ -672,27 +644,8 @@
   </footer>
 
   <script>
-    // Search overlay
-    const searchOverlay = document.getElementById('searchOverlay');
-    const openSearchBtn = document.getElementById('openSearch');
-    const closeSearchBtn = document.getElementById('closeSearch');
+    // Inline search
     const searchInput = document.getElementById('searchInput');
-
-    openSearchBtn.addEventListener('click', () => {
-      searchOverlay.classList.add('open');
-      searchInput.focus();
-    });
-
-    closeSearchBtn.addEventListener('click', () => {
-      searchOverlay.classList.remove('open');
-    });
-
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        searchOverlay.classList.remove('open');
-      }
-    });
 
     // Category filtering
     const categoryBtns = document.querySelectorAll('.category-pill');
