@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CHSAMI — Developer Blog</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
@@ -47,6 +48,12 @@
       position: relative;
     }
 
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
     .logo {
       font-size: 24px;
       font-weight: 900;
@@ -57,6 +64,14 @@
 
     .logo span {
       font-weight: 400;
+    }
+
+    .logo-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
     .nav {
@@ -527,7 +542,10 @@
 <body>
   <!-- Header -->
   <header class="header">
-    <a href="#" class="logo">CH<span>SAMI</span></a>
+    <div class="logo-container">
+      <a href="#" class="logo">CH<span>SAMI</span></a>
+      <div class="logo-subtitle">&lt;/developer&gt;</div>
+    </div>
     <nav class="nav">
       <a href="#" class="nav-item">Home</a>
       <a href="#" class="nav-item">About</a>
