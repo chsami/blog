@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -284,7 +287,7 @@
 
     .hero-img {
       width: 100%;
-      height: 520px;
+      height: 380px;
       object-fit: cover;
       display: block;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -433,17 +436,35 @@
 
     /* Animations */
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .slide-up {
       animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
-    .delay-100 { animation-delay: 0.1s; opacity: 0; }
-    .delay-200 { animation-delay: 0.2s; opacity: 0; }
-    .delay-300 { animation-delay: 0.3s; opacity: 0; }
+    .delay-100 {
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
 
     /* Utility */
     .hidden {
@@ -502,6 +523,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Header -->
   <header class="header">
@@ -513,8 +535,8 @@
     <div class="search-container">
       <div class="search-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="M21 21l-4.35-4.35"/>
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
         </svg>
       </div>
       <input type="text" placeholder="Search..." id="searchInput" class="search-input">
@@ -524,59 +546,25 @@
   <div class="layout">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-header">Archive — <span id="postCount">6</span> Posts</div>
-      
-      <div class="sidebar-post" data-category="Backend" data-title="Building Resilient Microservices with Event Sourcing">
+      <div class="sidebar-header">Archive — <span id="postCount">2</span> Posts</div>
+
+      <div class="sidebar-post" data-category="Development" data-title="How AI Agents Use Markdown Files"
+        onclick="window.location.href='posts/ai-agents-markdown.html'">
         <span class="post-index">01</span>
         <div class="post-info">
-          <div class="post-meta">Backend · 12 min</div>
-          <h4 class="sidebar-title">Building Resilient Microservices with Event Sourcing</h4>
-          <span class="sidebar-date">24.12.2024</span>
+          <div class="post-meta">Development · 8 min</div>
+          <h4 class="sidebar-title">How AI Agents Use Markdown Files</h4>
+          <span class="sidebar-date">27.12.2025</span>
         </div>
       </div>
 
-      <div class="sidebar-post" data-category="Frontend" data-title="The Art of TypeScript Generics">
+      <div class="sidebar-post" data-category="Architecture" data-title="BMAD Method — AI Development Framework"
+        onclick="window.location.href='posts/bmad-infographic.html'">
         <span class="post-index">02</span>
         <div class="post-info">
-          <div class="post-meta">Frontend · 8 min</div>
-          <h4 class="sidebar-title">The Art of TypeScript Generics</h4>
-          <span class="sidebar-date">20.12.2024</span>
-        </div>
-      </div>
-
-      <div class="sidebar-post" data-category="Backend" data-title="Designing APIs That Developers Love">
-        <span class="post-index">03</span>
-        <div class="post-info">
-          <div class="post-meta">Backend · 10 min</div>
-          <h4 class="sidebar-title">Designing APIs That Developers Love</h4>
-          <span class="sidebar-date">15.12.2024</span>
-        </div>
-      </div>
-
-      <div class="sidebar-post" data-category="Frontend" data-title="Understanding React Server Components">
-        <span class="post-index">04</span>
-        <div class="post-info">
-          <div class="post-meta">Frontend · 15 min</div>
-          <h4 class="sidebar-title">Understanding React Server Components</h4>
-          <span class="sidebar-date">10.12.2024</span>
-        </div>
-      </div>
-
-      <div class="sidebar-post" data-category="Backend" data-title="Database Indexing Strategies">
-        <span class="post-index">05</span>
-        <div class="post-info">
-          <div class="post-meta">Backend · 9 min</div>
-          <h4 class="sidebar-title">Database Indexing Strategies</h4>
-          <span class="sidebar-date">05.12.2024</span>
-        </div>
-      </div>
-
-      <div class="sidebar-post" data-category="DevOps" data-title="CI/CD Pipeline Best Practices">
-        <span class="post-index">06</span>
-        <div class="post-info">
-          <div class="post-meta">DevOps · 11 min</div>
-          <h4 class="sidebar-title">CI/CD Pipeline Best Practices</h4>
-          <span class="sidebar-date">28.11.2024</span>
+          <div class="post-meta">Architecture · 10 min</div>
+          <h4 class="sidebar-title">BMAD Method — AI Development Framework</h4>
+          <span class="sidebar-date">27.12.2024</span>
         </div>
       </div>
     </aside>
@@ -586,54 +574,43 @@
       <!-- Categories -->
       <div class="categories slide-up">
         <button class="category-pill active" data-category="All">All</button>
-        <button class="category-pill" data-category="Frontend">Frontend</button>
-        <button class="category-pill" data-category="Backend">Backend</button>
-        <button class="category-pill" data-category="DevOps">DevOps</button>
+        <button class="category-pill" data-category="Development">Development</button>
         <button class="category-pill" data-category="Architecture">Architecture</button>
       </div>
 
       <!-- Hero -->
-      <section class="hero-section slide-up delay-100" data-category="Backend">
-        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=600&fit=crop" alt="Microservices" class="hero-img">
+      <section class="hero-section slide-up delay-100" data-category="Development"
+        onclick="window.location.href='posts/ai-agents-markdown.html'">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop"
+          alt="AI Agents and Markdown" class="hero-img">
         <div class="hero-content">
-          <div class="hero-meta">Architecture / Microservices — 12 min read</div>
-          <h2 class="hero-title">Building Resilient Microservices with Event Sourcing</h2>
-          <p class="hero-excerpt">A deep dive into event-driven architecture patterns that help create truly scalable and maintainable distributed systems.</p>
-          <div class="hero-author">By Sami · 24.12.2024</div>
+          <div class="hero-meta">Development / AI Tools — 8 min read</div>
+          <h2 class="hero-title">How AI Agents Use Markdown Files</h2>
+          <p class="hero-excerpt">A comprehensive guide to understanding why modern AI coding assistants rely on
+            markdown files for project-specific instructions, covering Claude, OpenAI, Gemini, and Grok.</p>
+          <div class="hero-author">By Sami · 27.12.2025</div>
         </div>
       </section>
 
-      <!-- Featured Grid -->
-      <section>
-        <div class="featured-header">Featured</div>
-        <div class="featured-grid">
-          <article class="featured-card slide-up delay-200" data-category="Frontend">
-            <div class="card-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop" alt="TypeScript" class="card-img">
-            </div>
-            <div class="card-content">
-              <span class="card-number">02</span>
-              <div class="card-category">Frontend</div>
-              <h3 class="card-title">The Art of TypeScript Generics</h3>
-              <p class="card-excerpt">Master advanced TypeScript patterns to write more expressive and type-safe code that scales with your application.</p>
-              <div class="card-meta">20.12.2024 · 8 min</div>
-            </div>
-          </article>
-
-          <article class="featured-card slide-up delay-300" data-category="Backend">
-            <div class="card-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=500&fit=crop" alt="API Design" class="card-img">
-            </div>
-            <div class="card-content">
-              <span class="card-number">03</span>
-              <div class="card-category">Backend</div>
-              <h3 class="card-title">Designing APIs That Developers Love</h3>
-              <p class="card-excerpt">Principles and practices for creating intuitive, well-documented APIs that provide excellent developer experience.</p>
-              <div class="card-meta">15.12.2024 · 10 min</div>
-            </div>
-          </article>
+      <!-- Featured -->
+      <div class="featured-header slide-up delay-200">Featured Articles</div>
+      <div class="featured-grid slide-up delay-300">
+        <div class="featured-card" data-category="Architecture"
+          onclick="window.location.href='posts/bmad-infographic.html'">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=400&fit=crop"
+              alt="BMAD Method" class="card-img">
+          </div>
+          <div class="card-content">
+            <span class="card-number">01</span>
+            <div class="card-category">Architecture</div>
+            <h3 class="card-title">BMAD Method — AI Development Framework</h3>
+            <p class="card-excerpt">A comprehensive framework that integrates agile methodologies with AI agents to
+              streamline software development.</p>
+            <div class="card-meta">10 min read · 27.12.2024</div>
+          </div>
         </div>
-      </section>
+      </div>
     </main>
   </div>
 
@@ -689,7 +666,7 @@
           }
         });
 
-        postCountEl.textContent = visibleCount;
+        postCountEl.textContent = visibleCount + (visibleCount === 1 ? ' Post' : ' Posts');
       });
     });
 
@@ -710,9 +687,9 @@
         }
       });
 
-      postCountEl.textContent = visibleCount;
+      postCountEl.textContent = visibleCount + (visibleCount === 1 ? ' Post' : ' Posts');
 
-      // Also filter hero and cards
+      // Also filter hero
       const heroTitle = heroSection.querySelector('.hero-title').textContent.toLowerCase();
       if (heroTitle.includes(query)) {
         heroSection.classList.remove('hidden');
@@ -720,6 +697,7 @@
         heroSection.classList.add('hidden');
       }
 
+      // Also filter featured cards
       featuredCards.forEach(card => {
         const cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
         if (cardTitle.includes(query)) {
@@ -731,4 +709,5 @@
     });
   </script>
 </body>
+
 </html>

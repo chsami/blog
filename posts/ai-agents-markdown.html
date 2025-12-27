@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How AI Agents Use Markdown Files — CHSAMI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-top: 32px;
+    }
+
+    /* Main Content */
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Reason Cards */
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .reason-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+    }
+
+    .reason-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .reason-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .reason-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .reason-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .reason-stat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .reason-stat strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* Use Cases Grid */
+    .uses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .use-card {
+      background: var(--bg-card);
+      padding: 32px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .use-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .use-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 48px;
+      font-weight: 500;
+      color: var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .use-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .use-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* Table Section */
+    .table-container {
+      background: var(--bg-card);
+      overflow: hidden;
+    }
+
+    .conventions-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .conventions-table th,
+    .conventions-table td {
+      padding: 24px 32px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .conventions-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+      font-weight: 500;
+    }
+
+    .conventions-table td {
+      font-size: 15px;
+    }
+
+    .conventions-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .conventions-table tr:hover td {
+      background: rgba(26, 26, 26, 0.02);
+    }
+
+    .tool-name {
+      font-weight: 600;
+    }
+
+    .file-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--bg-primary);
+      padding: 4px 10px;
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+    }
+
+    .location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Models Grid */
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .model-card {
+      background: var(--bg-card);
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .model-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--text-primary);
+    }
+
+    .model-logo {
+      width: 72px;
+      height: 72px;
+      background: var(--bg-primary);
+      border: 2px solid var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .model-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .model-company {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .model-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .model-file {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 8px 16px;
+      display: inline-block;
+    }
+
+    /* Code Example */
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .code-block .comment {
+      color: #6B7280;
+    }
+
+    .code-block .heading {
+      color: #F59E0B;
+    }
+
+    .code-block .list-item {
+      color: #10B981;
+    }
+
+    /* Hierarchy Diagram */
+    .hierarchy-container {
+      background: var(--bg-card);
+      padding: 48px;
+      margin-top: 48px;
+    }
+
+    .hierarchy-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .hierarchy-tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .hierarchy-tree .folder {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .hierarchy-tree .file {
+      color: var(--text-secondary);
+    }
+
+    .hierarchy-tree .highlight {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 2px 8px;
+      margin-left: 8px;
+    }
+
+    .hierarchy-tree .note {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-text {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+    .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .reasons-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .models-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .uses-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 48px 24px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .content {
+        padding: 0 24px 48px;
+      }
+
+      .section-number {
+        font-size: 48px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .models-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .conventions-table th,
+      .conventions-table td {
+        padding: 16px;
+        font-size: 13px;
+      }
+
+      .cta-section {
+        padding: 40px 24px;
+      }
+
+      .header,
+      .footer {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="../index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Blog
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label animate">Guide — AI Development</div>
+    <h1 class="hero-title animate delay-1">
+      .MD
+      <span>How AI Agents Use Markdown Files</span>
+    </h1>
+    <p class="hero-desc animate delay-2">
+      A comprehensive guide to understanding why modern AI coding assistants rely on markdown files for project-specific instructions, and how to leverage them across Claude, OpenAI, Gemini, and Grok.
+    </p>
+  </section>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Section 1: Why -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">Why AI Agents Use Markdown</h2>
+          <p class="section-subtitle">The Technical Advantages</p>
+        </div>
+      </div>
+
+      <div class="reasons-grid">
+        <div class="reason-card animate delay-3">
+          <div class="reason-icon">//</div>
+          <h3 class="reason-title">Token Efficiency</h3>
+          <p class="reason-desc">
+            Markdown significantly reduces token consumption compared to HTML or other rich formats. When AI agents process documentation, markdown's clean syntax means more content fits within context windows.
+          </p>
+          <div class="reason-stat">
+            Token reduction: <strong>~10x smaller</strong> than equivalent HTML
+          </div>
+        </div>
+
+        <div class="reason-card animate delay-4">
+          <div class="reason-icon">{}</div>
+          <h3 class="reason-title">Human & Machine Readable</h3>
+          <p class="reason-desc">
+            The same file that developers read and edit is directly parseable by AI models. No translation layer, no format conversion—just plain text with semantic structure.
+          </p>
+          <div class="reason-stat">
+            Dual purpose: <strong>Documentation + Instructions</strong>
+          </div>
+        </div>
+
+        <div class="reason-card animate delay-5">
+          <div class="reason-icon">±</div>
+          <h3 class="reason-title">Version Control Native</h3>
+          <p class="reason-desc">
+            As plain text files, markdown integrates seamlessly with Git. Track changes, review diffs, and collaborate on AI instructions just like you would with code.
+          </p>
+          <div class="reason-stat">
+            Integration: <strong>Full Git compatibility</strong>
+          </div>
+        </div>
+
+        <div class="reason-card animate delay-6">
+          <div class="reason-icon">▣</div>
+          <h3 class="reason-title">Standardization</h3>
+          <p class="reason-desc">
+            A consistent format across projects enables predictable AI behavior. Teams can share instruction templates, and AI agents know exactly what to expect.
+          </p>
+          <div class="reason-stat">
+            Cross-platform: <strong>Universal syntax</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: How -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">How AI Agents Use Markdown</h2>
+          <p class="section-subtitle">Practical Applications</p>
+        </div>
+      </div>
+
+      <div class="uses-grid">
+        <div class="use-card animate delay-1">
+          <div class="use-number">01</div>
+          <h4 class="use-title">Project Context</h4>
+          <p class="use-desc">Development environment setup, build commands, dependency management, and runtime configurations that ground the AI in your specific project.</p>
+        </div>
+
+        <div class="use-card animate delay-2">
+          <div class="use-number">02</div>
+          <h4 class="use-title">Code Style Guidelines</h4>
+          <p class="use-desc">Formatting rules, naming conventions, architectural patterns, and preferred libraries that ensure generated code matches your standards.</p>
+        </div>
+
+        <div class="use-card animate delay-3">
+          <div class="use-number">03</div>
+          <h4 class="use-title">Behavioral Instructions</h4>
+          <p class="use-desc">How the AI should respond, what approaches to avoid, communication tone, and decision-making preferences for complex scenarios.</p>
+        </div>
+
+        <div class="use-card animate delay-4">
+          <div class="use-number">04</div>
+          <h4 class="use-title">File & Directory Context</h4>
+          <p class="use-desc">Which files to focus on, directories to ignore, important architectural boundaries, and file organization conventions.</p>
+        </div>
+
+        <div class="use-card animate delay-5">
+          <div class="use-number">05</div>
+          <h4 class="use-title">Hierarchical Inheritance</h4>
+          <p class="use-desc">Files in subdirectories can override root-level instructions, enabling monorepo support and context-specific rules for different packages.</p>
+        </div>
+
+        <div class="use-card animate delay-6">
+          <div class="use-number">06</div>
+          <h4 class="use-title">Documentation Serving</h4>
+          <p class="use-desc">APIs and documentation sites can serve markdown to AI agents via Accept headers, providing richer context with fewer tokens.</p>
+        </div>
+      </div>
+
+      <!-- Code Example -->
+      <div class="code-section">
+        <div class="code-header">Example: AGENTS.md Structure</div>
+        <div class="code-block">
+<pre><span class="heading"># Project Instructions</span>
+
+<span class="heading">## Development Environment</span>
+<span class="list-item">- Node.js 20+ required</span>
+<span class="list-item">- Use pnpm for package management</span>
+<span class="list-item">- Run `pnpm dev` for local development</span>
+
+<span class="heading">## Code Style</span>
+<span class="list-item">- TypeScript strict mode enabled</span>
+<span class="list-item">- Prefer functional components in React</span>
+<span class="list-item">- Use named exports, avoid default exports</span>
+
+<span class="heading">## Architecture</span>
+<span class="list-item">- Follow feature-based folder structure</span>
+<span class="list-item">- Keep components under 200 lines</span>
+<span class="list-item">- Colocate tests with source files</span>
+
+<span class="comment">&lt;!-- AI agents parse this to understand your project --&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- Hierarchy Diagram -->
+      <div class="hierarchy-container">
+        <div class="hierarchy-title">File Hierarchy & Inheritance</div>
+        <div class="hierarchy-tree">
+          <div><span class="folder">my-project/</span></div>
+          <div>├── <span class="file">AGENTS.md</span> <span class="highlight">Root instructions</span></div>
+          <div>├── <span class="folder">packages/</span></div>
+          <div>│   ├── <span class="folder">frontend/</span></div>
+          <div>│   │   └── <span class="file">AGENTS.md</span> <span class="note">← Overrides root for React-specific rules</span></div>
+          <div>│   └── <span class="folder">backend/</span></div>
+          <div>│       └── <span class="file">AGENTS.md</span> <span class="note">← Overrides root for API-specific rules</span></div>
+          <div>└── <span class="folder">.cursor/</span></div>
+          <div>    └── <span class="folder">rules/</span></div>
+          <div>        └── <span class="file">typescript.mdc</span> <span class="note">← Cursor-specific rule files</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Naming Conventions -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">Naming Conventions by Tool</h2>
+          <p class="section-subtitle">Quick Reference</p>
+        </div>
+      </div>
+
+      <div class="table-container animate delay-3">
+        <table class="conventions-table">
+          <thead>
+            <tr>
+              <th>Tool / Platform</th>
+              <th>File Name(s)</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tool-name">Cursor IDE</span></td>
+              <td>
+                <span class="file-name">.cursorrules</span>
+                <span class="file-name">.cursor/rules/*.mdc</span>
+              </td>
+              <td><span class="location">Project root / .cursor/ folder</span></td>
+            </tr>
+            <tr>
+              <td><span class="tool-name">Claude (Anthropic)</span></td>
+              <td>
+                <span class="file-name">CLAUDE.md</span>
+                <span class="file-name">claude.md</span>
+              </td>
+              <td><span class="location">Project root</span></td>
+            </tr>
+            <tr>
+              <td><span class="tool-name">OpenAI Codex</span></td>
+              <td>
+                <span class="file-name">AGENTS.md</span>
+              </td>
+              <td><span class="location">Project root</span></td>
+            </tr>
+            <tr>
+              <td><span class="tool-name">GitHub Copilot</span></td>
+              <td>
+                <span class="file-name">AGENTS.md</span>
+                <span class="file-name">.github/copilot-instructions.md</span>
+              </td>
+              <td><span class="location">Project root / .github/</span></td>
+            </tr>
+            <tr>
+              <td><span class="tool-name">Windsurf (Codeium)</span></td>
+              <td>
+                <span class="file-name">.windsurfrules</span>
+              </td>
+              <td><span class="location">Project root</span></td>
+            </tr>
+            <tr>
+              <td><span class="tool-name">Universal Standard</span></td>
+              <td>
+                <span class="file-name">AGENTS.md</span>
+              </td>
+              <td><span class="location">Project root (cross-platform)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Major Models -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">Major AI Models</h2>
+          <p class="section-subtitle">Platform-Specific Details</p>
+        </div>
+      </div>
+
+      <div class="models-grid">
+        <div class="model-card animate delay-1">
+          <div class="model-logo">CL</div>
+          <h3 class="model-name">Claude</h3>
+          <div class="model-company">Anthropic</div>
+          <p class="model-desc">Pioneered markdown-based instructions for AI coding. Uses dedicated project files and excels at following structured guidelines.</p>
+          <span class="model-file">CLAUDE.md</span>
+        </div>
+
+        <div class="model-card animate delay-2">
+          <div class="model-logo">GPT</div>
+          <h3 class="model-name">GPT / Codex</h3>
+          <div class="model-company">OpenAI</div>
+          <p class="model-desc">Supports the AGENTS.md standard. Powers GitHub Copilot with additional support for repository-level instructions.</p>
+          <span class="model-file">AGENTS.md</span>
+        </div>
+
+        <div class="model-card animate delay-3">
+          <div class="model-logo">GM</div>
+          <h3 class="model-name">Gemini</h3>
+          <div class="model-company">Google</div>
+          <p class="model-desc">Follows emerging community standards for markdown configs. Benefits from structured JSON Schema outputs for multi-agent workflows.</p>
+          <span class="model-file">AGENTS.md</span>
+        </div>
+
+        <div class="model-card animate delay-4">
+          <div class="model-logo">GK</div>
+          <h3 class="model-name">Grok</h3>
+          <div class="model-company">xAI</div>
+          <p class="model-desc">Emerging support for markdown instruction files. Aligns with community standards while building unique real-time capabilities.</p>
+          <span class="model-file">AGENTS.md</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-text">
+        <div class="cta-label">Get Started</div>
+        <div class="cta-title">Add AI Instructions to Your Project</div>
+        <p class="cta-desc">
+          Create an AGENTS.md file in your project root to provide context, conventions, and guidelines that any AI coding assistant can understand.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="footer-text">© 2025 CHSAMI — AI Agents & Markdown</span>
+    <a href="https://agents.md" target="_blank" class="footer-link">
+      Learn more at agents.md →
+    </a>
+  </footer>
+</body>
+</html>
+
