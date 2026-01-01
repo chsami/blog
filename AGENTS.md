@@ -1,5 +1,7 @@
 # ChSami Blog Style Guide
 
+**Date:** 2026-01-01
+
 > **Design System: Swiss Minimalist**
 > Follow these guidelines for all blog-related design work to maintain visual consistency.
 
