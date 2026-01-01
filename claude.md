@@ -9,11 +9,11 @@
 
 The ChSami blog follows a **Swiss Minimalist** aesthetic inspired by the International Typographic Style. Core principles:
 
-- **Precision over decoration** — Every element serves a purpose
-- **Grid-based layouts** — Clean alignment and mathematical spacing
-- **Strong typography hierarchy** — Type does the heavy lifting
-- **Generous whitespace** — Let content breathe
-- **Monochromatic with purpose** — Black, cream, and subtle grays
+- **Precision over decoration**: Every element serves a purpose
+- **Grid-based layouts**: Clean alignment and mathematical spacing
+- **Strong typography hierarchy**: Type does the heavy lifting
+- **Generous whitespace**: Let content breathe
+- **Monochromatic with purpose**: Black, cream, and subtle grays
 
 ---
 
@@ -93,12 +93,12 @@ The ChSami blog follows a **Swiss Minimalist** aesthetic inspired by the Interna
 
 ### Spacing System
 Use multiples of 8px:
-- `8px` — tight spacing (between related items)
-- `16px` — standard gap
-- `24px` — section padding
-- `32px` — component separation
-- `48px` — major section breaks
-- `64px` — hero/section margins
+- `8px`: tight spacing (between related items)
+- `16px`: standard gap
+- `24px`: section padding
+- `32px`: component separation
+- `48px`: major section breaks
+- `64px`: hero/section margins
 
 ### Grid
 - Featured cards: `grid-template-columns: repeat(2, 1fr); gap: 32px`
@@ -287,7 +287,7 @@ When creating a new blog post in the `posts/` directory:
    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
    ```
 3. **Reference existing posts** in `posts/` as templates for consistent styling
-4. **Never introduce new colors** — stick to the monochromatic palette defined in index.html
+4. **Never introduce new colors**: stick to the monochromatic palette defined in index.html
 
 ---
 

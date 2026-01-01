@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ralph - Autonomous AI Development Loop for Claude Code - CHSAMI</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-top: 32px;
+    }
+
+    /* Main Content */
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Feature Cards */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* Workflow Section */
+    .workflow-container {
+      background: var(--bg-card);
+      padding: 48px;
+      margin-top: 48px;
+    }
+
+    .workflow-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+
+    .workflow-steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--border-color);
+    }
+
+    .workflow-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-card);
+      border: 3px solid var(--text-primary);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step-command {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 6px 12px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Code Example */
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .code-block .comment {
+      color: #6B7280;
+    }
+
+    .code-block .command {
+      color: #F59E0B;
+    }
+
+    .code-block .string {
+      color: #10B981;
+    }
+
+    .code-block .flag {
+      color: #60A5FA;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-content {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .cta-command {
+      display: inline-block;
+      background: rgba(248, 246, 241, 0.1);
+      border: 1px solid rgba(248, 246, 241, 0.2);
+      padding: 16px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--bg-primary);
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    .delay-6 {
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .workflow-steps::before {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 48px 24px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .hero-title span {
+        font-size: 18px;
+      }
+
+      .hero-desc {
+        font-size: 17px;
+      }
+
+      .hero-image {
+        height: 300px;
+      }
+
+      .content {
+        padding: 0 24px 48px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
+      }
+
+      .section-number {
+        font-size: 48px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .workflow-steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .feature-card {
+        padding: 28px;
+      }
+
+      .workflow-container {
+        padding: 32px 24px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        padding: 40px 24px;
+      }
+
+      .cta-title {
+        font-size: 24px;
+      }
+
+      .cta-command {
+        font-size: 12px;
+        padding: 12px 20px;
+        word-break: break-all;
+      }
+
+      .header,
+      .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-title span {
+        font-size: 14px;
+        margin-top: 8px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+        margin-top: 24px;
+      }
+
+      .hero-image {
+        height: 220px;
+      }
+
+      .content {
+        padding: 0 20px 40px;
+      }
+
+      .section-number {
+        font-size: 36px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .feature-title {
+        font-size: 18px;
+      }
+
+      .step-number {
+        width: 48px;
+        height: 48px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="../index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label animate">Tool - Claude Code CLI</div>
+    <h1 class="hero-title animate delay-1">
+      Ralph
+      <span>Autonomous AI Development Loop for Claude Code</span>
+    </h1>
+    <p class="hero-desc animate delay-2">
+      Ralph is a bash-based automation wrapper <em>exclusively</em> for <strong>Claude Code</strong>, Anthropic's
+      official CLI tool. It creates a continuous development loop where Claude Code iteratively builds your project from
+      a prompt file, analyzing each response to determine when work is complete. Not for Cursor, Copilot, or other AI
+      tools. This is pure Claude Code automation.
+    </p>
+  </section>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Section 1: What is Ralph -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">What is Ralph?</h2>
+          <p class="section-subtitle">Claude Code Automation</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">⚠️</div>
+          <h3 class="feature-title">Claude Code Only</h3>
+          <p class="feature-desc">
+            Ralph is built <em>exclusively</em> for <strong>Claude Code</strong>, Anthropic's official command-line
+            interface. You must have the <code>claude</code> CLI installed and authenticated before using Ralph. This is
+            not a generic AI wrapper. It's purpose-built for Claude Code's specific behavior and API patterns.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">∞</div>
+          <h3 class="feature-title">The Loop Concept</h3>
+          <p class="feature-desc">
+            Ralph wraps Claude Code in a <code>while</code> loop, repeatedly invoking it with your
+            <code>PROMPT.md</code> file. After each execution, Ralph analyzes Claude's response to determine if the task
+            is complete or if another iteration is needed. This continues until project objectives are met.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">🔧</div>
+          <h3 class="feature-title">Prerequisites</h3>
+          <p class="feature-desc">
+            Requires: Claude Code CLI (<code>claude</code> command), tmux for session management, and bash. Ralph
+            orchestrates these tools together. It doesn't replace Claude Code, it automates the repeated invocation
+            pattern that complex projects require.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: How It Works -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">How the Loop Works</h2>
+          <p class="section-subtitle">Under the Hood</p>
+        </div>
+      </div>
+
+      <div class="workflow-container">
+        <div class="workflow-title">The Ralph Loop Cycle</div>
+        <div class="workflow-steps">
+          <div class="workflow-step animate delay-1">
+            <div class="step-number">01</div>
+            <div class="step-title">Read Prompt</div>
+            <code class="step-command">PROMPT.md</code>
+            <p class="step-desc">Ralph reads your project requirements from PROMPT.md file</p>
+          </div>
+
+          <div class="workflow-step animate delay-2">
+            <div class="step-number">02</div>
+            <div class="step-title">Invoke Claude</div>
+            <code class="step-command">claude --print</code>
+            <p class="step-desc">Executes Claude Code CLI with your prompt, capturing the response</p>
+          </div>
+
+          <div class="workflow-step animate delay-3">
+            <div class="step-number">03</div>
+            <div class="step-title">Analyze Response</div>
+            <code class="step-command">response_analyzer</code>
+            <p class="step-desc">Semantic analysis determines if task is complete or needs iteration</p>
+          </div>
+
+          <div class="workflow-step animate delay-4">
+            <div class="step-number">04</div>
+            <div class="step-title">Loop or Exit</div>
+            <code class="step-command">while [ ! complete ]</code>
+            <p class="step-desc">Continues looping until exit conditions are met</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Example -->
+      <div class="code-section">
+        <div class="code-header">The Core Loop (Simplified)</div>
+        <div class="code-block">
+          <pre><span class="comment"># Ralph's core loop (simplified pseudocode)</span>
+<span class="command">while</span> [ <span class="flag">$loop_count</span> -lt <span class="flag">$max_calls</span> ]; <span class="command">do</span>
+    
+    <span class="comment"># Invoke Claude Code CLI with your prompt</span>
+    <span class="string">response</span>=$(<span class="command">claude</span> <span class="flag">--print</span> <span class="flag">-p</span> <span class="string">"$(cat PROMPT.md)"</span>)
+    
+    <span class="comment"># Log the response</span>
+    <span class="command">echo</span> <span class="string">"$response"</span> >> <span class="string">logs/ralph.log</span>
+    
+    <span class="comment"># Analyze if task is complete</span>
+    <span class="command">if</span> analyze_response <span class="string">"$response"</span>; <span class="command">then</span>
+        <span class="command">echo</span> <span class="string">"✓ Project complete!"</span>
+        <span class="command">exit</span> <span class="flag">0</span>
+    <span class="command">fi</span>
+    
+    <span class="comment"># Rate limiting check</span>
+    check_rate_limit
+    
+    <span class="command">((loop_count++))</span>
+<span class="command">done</span></pre>
+        </div>
+      </div>
+
+      <!-- File Structure -->
+      <div class="code-section">
+        <div class="code-header">Project File Structure</div>
+        <div class="code-block">
+          <pre><span class="string">my-project/</span>
+├── <span class="command">PROMPT.md</span>          <span class="comment"># Your project requirements (Ralph reads this)</span>
+├── <span class="command">@fix_plan.md</span>       <span class="comment"># Current task list for Claude to work on</span>
+├── <span class="string">logs/</span>
+│   └── <span class="command">ralph.log</span>      <span class="comment"># Execution logs with timestamps</span>
+├── <span class="string">.claude/</span>            <span class="comment"># Claude Code settings (created by claude init)</span>
+└── <span class="string">src/</span>                <span class="comment"># Your source code (Claude modifies this)</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Exit Detection -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">Intelligent Exit Detection</h2>
+          <p class="section-subtitle">How Ralph Knows When to Stop</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">Response Analyzer</h3>
+          <p class="feature-desc">
+            After each Claude Code execution, Ralph's response analyzer parses the output using semantic pattern
+            matching. It looks for completion signals like "all tasks complete", "no remaining work", or explicit done
+            markers in Claude's response.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">📋</div>
+          <h3 class="feature-title">Task File Monitoring</h3>
+          <p class="feature-desc">
+            Ralph monitors <code>@fix_plan.md</code> for remaining tasks. When Claude marks all items complete or the
+            file indicates no pending work, Ralph triggers exit. This file acts as the shared state between Ralph and
+            Claude Code.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🛑</div>
+          <h3 class="feature-title">Exit Thresholds</h3>
+          <p class="feature-desc">
+            Configurable thresholds prevent premature or delayed exits. Ralph tracks consecutive "complete" signals,
+            requiring multiple confirmations before stopping to avoid false positives from ambiguous responses.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">⏱</div>
+          <h3 class="feature-title">Rate Limit Detection</h3>
+          <p class="feature-desc">
+            Ralph detects Claude's API rate limits and 5-hour usage cap. When hit, it displays a countdown timer and
+            offers options: wait for the limit to reset or gracefully exit the loop.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Circuit Breaker</h3>
+          <p class="feature-desc">
+            After repeated failures or stuck states, the circuit breaker trips. This prevents infinite loops when Claude
+            Code encounters errors, unresolvable conflicts, or repeatedly produces the same output.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-6">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Max Iterations</h3>
+          <p class="feature-desc">
+            Hard limit on loop iterations (default: 100 calls/hour). Even if exit detection fails, Ralph will stop at
+            the configured maximum to prevent runaway API usage and costs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: tmux Integration -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">tmux Integration</h2>
+          <p class="section-subtitle">Background Execution & Monitoring</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🖥️</div>
+          <h3 class="feature-title">Detachable Sessions</h3>
+          <p class="feature-desc">
+            Ralph runs inside a tmux session, allowing you to detach (<code>Ctrl+B D</code>) and close your terminal
+            while the loop continues. Reattach anytime with <code>tmux attach</code> to check progress.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">📺</div>
+          <h3 class="feature-title">Split Pane Dashboard</h3>
+          <p class="feature-desc">
+            The <code>--monitor</code> flag creates a split-pane view: one pane shows the live Ralph loop, another tails
+            the log file. Navigate between panes with <code>Ctrl+B ←/→</code>.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">📝</div>
+          <h3 class="feature-title">Live Log Streaming</h3>
+          <p class="feature-desc">
+            All Claude Code interactions are logged to <code>logs/ralph.log</code> with timestamps. The monitor pane
+            runs <code>tail -f</code> on this file, giving you real-time visibility into what Claude is doing.
+          </p>
+        </div>
+      </div>
+
+      <!-- tmux commands -->
+      <div class="code-section">
+        <div class="code-header">tmux Session Commands</div>
+        <div class="code-block">
+          <pre><span class="comment"># Start Ralph with integrated monitoring dashboard</span>
+<span class="command">ralph</span> <span class="flag">--monitor</span>
+
+<span class="comment"># Detach from session (Ralph keeps running)</span>
+<span class="string">Ctrl+B</span> then <span class="string">D</span>
+
+<span class="comment"># List running Ralph sessions</span>
+<span class="command">tmux</span> <span class="string">list-sessions</span>
+
+<span class="comment"># Reattach to a running session</span>
+<span class="command">tmux</span> <span class="string">attach</span> <span class="flag">-t</span> <span class="string">ralph-session</span>
+
+<span class="comment"># Switch between panes in split view</span>
+<span class="string">Ctrl+B</span> then <span class="string">←</span> or <span class="string">→</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Getting Started -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <h2 class="section-title">Getting Started</h2>
+          <p class="section-subtitle">Installation & First Run</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">1</div>
+          <h3 class="feature-title">Install Claude Code</h3>
+          <p class="feature-desc">
+            First, install Anthropic's Claude Code CLI. Visit <code>claude.ai</code> and follow the installation guide.
+            Authenticate with <code>claude login</code>. Ralph cannot work without Claude Code installed.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">2</div>
+          <h3 class="feature-title">Install Ralph</h3>
+          <p class="feature-desc">
+            Clone the repository and run the installer. Ralph installs globally, adding <code>ralph</code>,
+            <code>ralph-setup</code>, and <code>ralph-import</code> commands to your PATH.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">3</div>
+          <h3 class="feature-title">Create PROMPT.md</h3>
+          <p class="feature-desc">
+            Write your project requirements in <code>PROMPT.md</code>. This is what Claude Code will work from. Be
+            specific about features, tech stack, and completion criteria.
+          </p>
+        </div>
+      </div>
+
+      <!-- Installation commands -->
+      <div class="code-section">
+        <div class="code-header">Full Installation Steps</div>
+        <div class="code-block">
+          <pre><span class="comment"># 1. Prerequisites: Install Claude Code CLI (required!)</span>
+<span class="comment"># Follow instructions at: https://claude.ai/code</span>
+<span class="command">claude</span> <span class="string">--version</span>        <span class="comment"># Verify it's installed</span>
+<span class="command">claude</span> <span class="string">login</span>           <span class="comment"># Authenticate with Anthropic</span>
+
+<span class="comment"># 2. Install Ralph</span>
+<span class="command">git clone</span> <span class="string">https://github.com/frankbria/ralph-claude-code.git</span>
+<span class="command">cd</span> <span class="string">ralph-claude-code</span>
+<span class="command">./install.sh</span>
+
+<span class="comment"># 3. Create a new project</span>
+<span class="command">ralph-setup</span> <span class="string">my-project</span>
+<span class="command">cd</span> <span class="string">my-project</span>
+
+<span class="comment"># 4. Edit PROMPT.md with your requirements</span>
+<span class="command">vim</span> <span class="string">PROMPT.md</span>
+
+<span class="comment"># 5. Start the autonomous loop</span>
+<span class="command">ralph</span> <span class="flag">--monitor</span> <span class="flag">--verbose</span></pre>
+        </div>
+      </div>
+
+
+      <!-- Section 6: CLI Reference -->
+      <section>
+        <div class="section-header">
+          <span class="section-number">06</span>
+          <div>
+            <h2 class="section-title">CLI Reference</h2>
+            <p class="section-subtitle">Command Line Options</p>
+          </div>
+        </div>
+
+        <!-- CLI options -->
+        <div class="code-section">
+          <div class="code-header">Ralph Command Options</div>
+          <div class="code-block">
+            <pre><span class="command">ralph</span> <span class="string">[OPTIONS]</span>
+
+  <span class="flag">-h, --help</span>          <span class="comment">Show help message</span>
+  <span class="flag">-c, --calls NUM</span>     <span class="comment">Set max calls per hour (default: 100)</span>
+  <span class="flag">-p, --prompt FILE</span>   <span class="comment">Set prompt file (default: PROMPT.md)</span>
+  <span class="flag">-s, --status</span>        <span class="comment">Show current status and exit</span>
+  <span class="flag">-m, --monitor</span>       <span class="comment">Start with tmux session and live monitor</span>
+  <span class="flag">-v, --verbose</span>       <span class="comment">Show detailed progress updates</span>
+  <span class="flag">-t, --timeout MIN</span>   <span class="comment">Set Claude Code timeout (1-120 minutes)</span>
+
+<span class="comment"># Project setup commands</span>
+<span class="command">ralph-setup</span> <span class="string">project-name</span>     <span class="comment"># Create new Ralph project</span>
+<span class="command">ralph-import</span> <span class="string">prd.md project</span>  <span class="comment"># Convert PRD to Ralph project</span>
+<span class="command">ralph-monitor</span>              <span class="comment"># Manual monitoring dashboard</span></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <div class="cta-content">
+          <div class="cta-label">Claude Code Required</div>
+          <div class="cta-title">Automate Your Claude Code Workflow</div>
+          <p class="cta-desc">
+            Ralph is purpose-built for Claude Code, Anthropic's CLI. Define your project in PROMPT.md, start the loop,
+            and
+            let Claude Code iteratively build until completion. No other AI tools supported.
+          </p>
+          <code class="cta-command">git clone https://github.com/frankbria/ralph-claude-code.git && ./install.sh</code>
+        </div>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a href="../index.html" class="footer-link">
+      ← Back to Blog
+    </a>
+    <div style="display: flex; gap: 32px; align-items: center;">
+      <span class="footer-text">© 2025 CHSAMI - Ralph for Claude Code</span>
+      <a href="https://github.com/frankbria/ralph-claude-code" target="_blank" class="footer-link">
+        View on GitHub →
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>
