@@ -120,42 +120,21 @@
             padding: 80px 60px;
         }
 
-        .about-container {
-            max-width: 680px;
-            width: 100%;
+        .about-statement {
+            font-size: 42px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
         }
 
-        .about-header {
+        .shrug {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            display: block;
+            margin-top: 16px;
+            font-size: 32px;
             color: var(--text-muted);
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .about-title {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 48px;
-        }
-
-        .about-content {
-            font-size: 18px;
-            line-height: 1.8;
-            color: var(--text-secondary);
-        }
-
-        .about-content p {
-            margin-bottom: 28px;
-        }
-
-        .about-content p:last-child {
-            margin-bottom: 0;
         }
 
         /* Footer */
@@ -174,30 +153,16 @@
         }
 
         /* Animations */
-        @keyframes fadeInUp {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
 
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .delay-100 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-
-        .delay-200 {
-            animation-delay: 0.2s;
-            opacity: 0;
         }
 
         /* Mobile Menu Toggle */
@@ -252,12 +217,12 @@
                 padding: 48px 24px;
             }
 
-            .about-title {
+            .about-statement {
                 font-size: 32px;
             }
 
-            .about-content {
-                font-size: 16px;
+            .shrug {
+                font-size: 24px;
             }
 
             .footer {
@@ -309,22 +274,12 @@
                 padding: 40px 20px;
             }
 
-            .about-header {
-                margin-bottom: 24px;
+            .about-statement {
+                font-size: 26px;
             }
 
-            .about-title {
-                font-size: 28px;
-                margin-bottom: 32px;
-            }
-
-            .about-content {
-                font-size: 15px;
-                line-height: 1.75;
-            }
-
-            .about-content p {
-                margin-bottom: 24px;
+            .shrug {
+                font-size: 20px;
             }
         }
 
@@ -337,12 +292,12 @@
                 font-size: 10px;
             }
 
-            .about-title {
-                font-size: 24px;
+            .about-statement {
+                font-size: 22px;
             }
 
-            .about-content {
-                font-size: 14px;
+            .shrug {
+                font-size: 18px;
             }
         }
     </style>
@@ -368,26 +323,10 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="about-container">
-            <div class="about-header fade-in-up">About Me</div>
-            <h1 class="about-title fade-in-up delay-100">Value First</h1>
-            <div class="about-content fade-in-up delay-200">
-                <p>I'm a software developer who thrives in the details. My world revolves around .NET, Java, databases,
-                    and increasingly AI, though I'm just as likely to be found reverse-engineering something to
-                    understand how it really works under the hood.</p>
-
-                <p>I believe good software comes from asking the right questions: How does this actually work? What
-                    happens at the edges? Will this scale? I'm drawn to clean architecture, well-considered patterns,
-                    and pragmatic solutions over clever ones.</p>
-
-                <p>When I'm not building, I'm contributing to open-source projects and thinking about how to make
-                    tooling and workflows better for everyone. There's something satisfying about solving a problem once
-                    in a way that helps many.</p>
-
-                <p>If you're looking for someone who prefers direct answers, structured thinking, and getting things
-                    do, let's connect.</p>
-            </div>
-        </div>
+        <h1 class="about-statement">
+            Simply a Developer
+            <span class="shrug">¯\_(ツ)_/¯</span>
+        </h1>
     </main>
 
     <!-- Footer -->
