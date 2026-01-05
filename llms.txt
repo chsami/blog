@@ -1,0 +1,56 @@
+# CHSAMI Developer Blog
+
+> A software development blog focused on AI agents, development tools, and modern coding practices.
+
+## Author
+Sami - Software Developer
+
+## Topics Covered
+- AI agent development (Claude, GPT, Gemini, Grok)
+- Autonomous development loops and automation
+- Specification-driven development
+- Markdown-based AI instructions (AGENTS.md, CLAUDE.md, CURSOR.md)
+- Development frameworks and methodologies
+- Claude Code CLI tools and workflows
+
+## Content
+
+### Homepage
+- URL: /index.html
+- Description: Blog homepage featuring latest articles on AI development tools and practices
+
+### About
+- URL: /about.html  
+- Description: About the author
+
+### Blog Posts
+
+#### Ralph - Autonomous Loop for Claude Code
+- URL: /posts/ralph-claude-code.html
+- Published: 2026-01-01
+- Description: Ralph is a bash wrapper exclusively for Claude Code that creates a continuous development loop. Define your project in PROMPT.md, let Claude iteratively build until completion. Covers loop concepts, exit detection, tmux integration, and CLI usage.
+
+#### SpecKit - Specification-Driven Development
+- URL: /posts/speckit-specification-driven-development.html
+- Published: 2025-12-27
+- Description: An open-source toolkit that transforms development by making specifications executable. Covers the SpecKit workflow (init, specify, plan, implement), use cases for greenfield projects and rapid prototyping, and comparison with BMAD Method.
+
+#### How AI Agents Use Markdown Files
+- URL: /posts/ai-agents-markdown.html
+- Published: 2025-12-27
+- Description: Comprehensive guide on why AI coding assistants rely on markdown files for project-specific instructions. Covers token efficiency, naming conventions by tool (Cursor, Claude, OpenAI Codex, GitHub Copilot, Windsurf), and file hierarchy inheritance.
+
+#### BMAD Method - AI Development Framework
+- URL: /posts/bmad-infographic.html
+- Published: 2025-12-27
+- Description: BMAD (Breakthrough Method for Agile AI-Driven Development) framework infographic. Covers two core phases (Agentic Planning and Context-Engineered Development), specialized AI agent roles (Analyst, PM, Architect, UX, Scrum Master, Developer, QA, Product Owner), and development workflow.
+
+## Technical Details
+- Static HTML website
+- Swiss Minimalist design aesthetic
+- No JavaScript frameworks
+- Responsive design
+
+## Contact
+Website: https://chsami.com
+

@@ -1,0 +1,12 @@
+# CHSAMI Developer Blog
+# https://chsami.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://chsami.com/sitemap.xml
+
+# LLMs.txt for AI crawlers
+# https://chsami.com/llms.txt
+
