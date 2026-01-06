@@ -25,6 +25,26 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### Claude Reflect - Self-Learning Memory for Claude Code
+- URL: /posts/claude-reflect.html
+- Published: 2026-01-06
+- Description: A self-learning system for Claude Code that captures your corrections, positive feedback, and preferences during coding sessions. Automatically queues learnings and syncs them to CLAUDE.md and AGENTS.md. Features hybrid detection (regex + semantic AI), multi-target sync, historical scan, and semantic deduplication.
+
+#### Porterminal - Web-Based Terminal Access
+- URL: /posts/porterminal.html
+- Published: 2026-01-06
+- Description: A web-based terminal that facilitates secure tunneling between your phone and PC. Just run uvx ptn and you're in — no installation, no configuration required.
+
+#### Claude HUD - Real-Time Session Visibility
+- URL: /posts/claude-hud.html
+- Published: 2026-01-06
+- Description: A Claude Code plugin that shows what's happening — context usage, active tools, running agents, and todo progress. Always visible below your input.
+
+#### Claude Skills - A Complete Guide
+- URL: /posts/claude-skills-guide.html
+- Published: 2026-01-06
+- Description: Learn how to create Claude Skills - modular instruction sets that enhance Claude's capabilities. Discover folder structure, activation logic, and best practices.
+
 #### Ralph - Autonomous Loop for Claude Code
 - URL: /posts/ralph-claude-code.html
 - Published: 2026-01-01

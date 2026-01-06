@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Reflect - Self-Learning Memory for Claude Code - CHSAMI</title>
+    <meta name="description"
+        content="Discover claude-reflect: a self-learning system that captures your corrections and preferences during Claude Code sessions, then syncs them to CLAUDE.md and AGENTS.md.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/claude-reflect.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/claude-reflect.html">
+    <meta property="og:title" content="Claude Reflect - Self-Learning Memory for Claude Code">
+    <meta property="og:description"
+        content="Discover claude-reflect: a self-learning system that captures your corrections and preferences during Claude Code sessions, then syncs them to CLAUDE.md and AGENTS.md.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-06">
+    <meta property="article:author" content="Sami">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Reflect - Self-Learning Memory for Claude Code">
+    <meta name="twitter:description"
+        content="Discover claude-reflect: a self-learning system that captures your corrections and preferences during Claude Code sessions, then syncs them to CLAUDE.md and AGENTS.md.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Reflect - Self-Learning Memory for Claude Code",
+    "description": "Discover claude-reflect: a self-learning system that captures your corrections and preferences during Claude Code sessions, then syncs them to CLAUDE.md and AGENTS.md.",
+    "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-reflect.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        /* Flow Diagram */
+        .flow-container {
+            background: var(--bg-card);
+            padding: 48px;
+            margin-top: 48px;
+        }
+
+        .flow-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            position: relative;
+        }
+
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-color);
+        }
+
+        .flow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-primary);
+            border: 3px solid var(--text-primary);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Code Section */
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .heading {
+            color: #60A5FA;
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--bg-card);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 24px 32px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        .command-cell {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 4px 10px;
+            display: inline-block;
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border-left: 4px solid var(--text-primary);
+        }
+
+        .tip-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tip-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Pro Tip Callout */
+        .pro-tip {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .pro-tip-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .pro-tip-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pro-tip-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .cta-link {
+            display: inline-block;
+            margin-top: 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--bg-primary);
+            text-decoration: none;
+            padding: 16px 32px;
+            border: 2px solid var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+
+        .cta-link:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps::before {
+                display: none;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .flow-container {
+                padding: 32px 20px;
+            }
+
+            .code-block {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            .code-block pre {
+                font-size: 12px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .comparison-table {
+                min-width: 500px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 16px;
+                font-size: 13px;
+            }
+
+            .pro-tip {
+                padding: 32px 24px;
+            }
+
+            .pro-tip-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .step-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-label animate">Plugin - Claude Code</div>
+        <h1 class="hero-title animate delay-1">
+            Reflect
+            <span>Self-Learning Memory for Claude Code</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            Stop repeating yourself. Claude Reflect captures your corrections, preferences, and positive feedback during
+            coding sessions — then syncs them to CLAUDE.md so Claude remembers for next time.
+        </p>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Section 1: The Problem -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">The Problem</h2>
+                    <p class="section-subtitle">Why Manual Memory Management Fails</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">↻</div>
+                    <h3 class="feature-title">Repetitive Corrections</h3>
+                    <p class="feature-desc">
+                        Every session, you tell Claude the same things: "use gpt-5.1 not gpt-5", "we use Poetry here",
+                        "always add type hints". These corrections vanish when the session ends.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Manual CLAUDE.md Updates</h3>
+                    <p class="feature-desc">
+                        You could manually add preferences to CLAUDE.md, but who remembers to do that mid-flow? By the
+                        time you finish coding, you've forgotten half the corrections you made.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">🔀</div>
+                    <h3 class="feature-title">Context Lost Across Projects</h3>
+                    <p class="feature-desc">
+                        Global preferences (like model versions) need to be in your global CLAUDE.md. Project-specific
+                        conventions need to be local. Keeping them organized is tedious.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: How It Works -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="section-subtitle">Two-Stage Learning Pipeline</p>
+                </div>
+            </div>
+
+            <div class="flow-container animate delay-3">
+                <div class="flow-title">The Reflect Pipeline</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-icon">1</div>
+                        <div class="step-title">You Correct Claude</div>
+                        <div class="step-desc">"No, use database for caching"<br>"Actually, we prefer Ruff"</div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-icon">2</div>
+                        <div class="step-title">Hook Captures</div>
+                        <div class="step-desc">Automatic detection queues the learning with confidence score</div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-icon">3</div>
+                        <div class="step-title">/reflect Syncs</div>
+                        <div class="step-desc">Review and approve learnings to CLAUDE.md files</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2" style="margin-top: 48px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Stage 1: Capture (Automatic)</h3>
+                    <p class="feature-desc">
+                        Hooks run on every prompt, detecting correction patterns like "no, use X", "don't use Y",
+                        "actually...", and "that's wrong". Positive feedback like "Perfect!" is captured too. Explicit
+                        <code>remember:</code> markers get highest confidence.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">Stage 2: Process (Manual)</h3>
+                    <p class="feature-desc">
+                        Run <code>/reflect</code> to review queued learnings. An AI-powered semantic filter validates
+                        each one, removing false positives. You choose which to apply — to global CLAUDE.md, project
+                        CLAUDE.md, or AGENTS.md.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Code Example -->
+            <div class="code-section">
+                <div class="code-header">Example Session</div>
+                <div class="code-block">
+                    <pre><span class="comment"># During your coding session...</span>
+
+<span class="value">You:</span> "no, use gpt-5.1 not gpt-5 for reasoning tasks"
+<span class="value">You:</span> "remember: always run tests before committing"
+<span class="value">You:</span> "Perfect! That's exactly how we handle auth here"
+
+<span class="comment"># Later, run /reflect...</span>
+
+<span class="heading">════════════════════════════════════════════════════════════</span>
+<span class="heading">LEARNINGS SUMMARY — 3 items found</span>
+<span class="heading">════════════════════════════════════════════════════════════</span>
+
+<span class="key">┌────┬─────────────────────────────────────────┬──────────┬────────┐</span>
+<span class="key">│</span> #  <span class="key">│</span> Learning                                <span class="key">│</span> Scope    <span class="key">│</span> Status <span class="key">│</span>
+<span class="key">├────┼─────────────────────────────────────────┼──────────┼────────┤</span>
+<span class="key">│</span> 1  <span class="key">│</span> <span class="value">Use gpt-5.1 for reasoning tasks</span>         <span class="key">│</span> global   <span class="key">│</span> ✓ new  <span class="key">│</span>
+<span class="key">│</span> 2  <span class="key">│</span> <span class="value">Always run tests before committing</span>      <span class="key">│</span> project  <span class="key">│</span> ✓ new  <span class="key">│</span>
+<span class="key">│</span> 3  <span class="key">│</span> <span class="value">Auth handling pattern (positive)</span>       <span class="key">│</span> project  <span class="key">│</span> ✓ new  <span class="key">│</span>
+<span class="key">└────┴─────────────────────────────────────────┴──────────┴────────┘</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Detection Methods -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Detection Methods</h2>
+                    <p class="section-subtitle">Hybrid Pattern Recognition</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">/.*/ </div>
+                    <h3 class="feature-title">Regex Patterns (Real-time)</h3>
+                    <p class="feature-desc">
+                        Fast pattern matching during sessions detects corrections ("no, use X", "don't use Y"),
+                        positive feedback ("Perfect!", "Exactly right"), and explicit markers (<code>remember:</code>).
+                        Each pattern has a confidence score from 0.60-0.95.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Semantic AI Validation</h3>
+                    <p class="feature-desc">
+                        When you run <code>/reflect</code>, an AI-powered semantic filter validates each learning.
+                        Multi-language support understands corrections in any language. Extracts concise, actionable
+                        statements from natural language.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pro-tip animate delay-3">
+                <div class="pro-tip-label">Multi-Language Support</div>
+                <div class="pro-tip-title">Corrections in Any Language</div>
+                <p class="pro-tip-desc">
+                    The semantic filter understands corrections beyond English patterns. A Spanish correction like
+                    "no, usa Python" is correctly detected even though it doesn't match English regex patterns.
+                    The final confidence score is the higher of regex and semantic analysis.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 4: Commands Reference -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">Commands Reference</h2>
+                    <p class="section-subtitle">Full Command Suite</p>
+                </div>
+            </div>
+
+            <div class="table-container animate delay-3">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="command-cell">/reflect</span></td>
+                            <td>Process queued learnings with human review</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/reflect --scan-history</span></td>
+                            <td>Scan ALL past sessions for missed learnings</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/reflect --dry-run</span></td>
+                            <td>Preview changes without applying them</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/reflect --targets</span></td>
+                            <td>Show detected config files (CLAUDE.md, AGENTS.md)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/reflect --review</span></td>
+                            <td>Show queue with confidence scores and decay status</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/reflect --dedupe</span></td>
+                            <td>Find and consolidate similar entries in CLAUDE.md</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/skip-reflect</span></td>
+                            <td>Discard all queued learnings</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-cell">/view-queue</span></td>
+                            <td>View pending learnings without processing</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 5: Multi-Target Sync -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Multi-Target Sync</h2>
+                    <p class="section-subtitle">Where Learnings Go</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">~/.claude/CLAUDE.md</h3>
+                    <p class="feature-desc">
+                        Global learnings that apply everywhere. Model preferences, general coding style, universal
+                        conventions. Shared across all your projects automatically.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">📁</div>
+                    <h3 class="feature-title">./CLAUDE.md</h3>
+                    <p class="feature-desc">
+                        Project-specific learnings. Framework conventions, local patterns, team preferences. Lives with
+                        your code and is version-controlled.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">AGENTS.md</h3>
+                    <p class="feature-desc">
+                        Cross-tool compatibility. Works with Codex, Cursor, Aider, Jules, Zed, and Factory. Learnings
+                        follow you across your entire AI-assisted development workflow.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Check Your Targets</div>
+                <div class="code-block">
+                    <pre><span class="comment"># See which files will be updated</span>
+<span class="key">/reflect --targets</span>
+
+<span class="value">Detected configuration files:</span>
+  <span class="heading">Global:</span>  ~/.claude/CLAUDE.md
+  <span class="heading">Project:</span> ./CLAUDE.md
+  <span class="heading">Agents:</span>  ./AGENTS.md ✓</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Smart Features -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <div>
+                    <h2 class="section-title">Smart Features</h2>
+                    <p class="section-subtitle">Beyond Basic Capture</p>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">Feature 01</div>
+                    <h4 class="tip-title">Historical Scan</h4>
+                    <p class="tip-desc">First time using claude-reflect? Run <code>/reflect --scan-history</code> to
+                        scan all past sessions for corrections. Recover learnings from before installation.</p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">Feature 02</div>
+                    <h4 class="tip-title">Smart Filtering</h4>
+                    <p class="tip-desc">Questions, one-time task instructions, and vague feedback are automatically
+                        filtered out. Only reusable, actionable learnings are kept.</p>
+                </div>
+
+                <div class="tip-card animate delay-3">
+                    <div class="tip-number">Feature 03</div>
+                    <h4 class="tip-title">Duplicate Detection</h4>
+                    <p class="tip-desc">Before adding a learning, existing CLAUDE.md content is checked. If similar
+                        content exists, you can merge, replace, or skip.</p>
+                </div>
+
+                <div class="tip-card animate delay-4">
+                    <div class="tip-number">Feature 04</div>
+                    <h4 class="tip-title">Semantic Deduplication</h4>
+                    <p class="tip-desc">Over time, CLAUDE.md accumulates similar entries. Run <code>/reflect
+                            --dedupe</code> to consolidate "Use gpt-5.1 for complex tasks" and "Prefer gpt-5.1 for
+                        reasoning" into one entry.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Installation -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <div>
+                    <h2 class="section-title">Installation</h2>
+                    <p class="section-subtitle">Get Started in Seconds</p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Quick Install</div>
+                <div class="code-block">
+                    <pre><span class="comment"># Add the marketplace</span>
+<span class="key">claude plugin marketplace add</span> <span class="value">bayramannakov/claude-reflect</span>
+
+<span class="comment"># Install the plugin</span>
+<span class="key">claude plugin install</span> <span class="value">claude-reflect@claude-reflect-marketplace</span>
+
+<span class="comment"># IMPORTANT: Restart Claude Code to activate</span>
+<span class="comment"># Then hooks auto-configure and commands are ready</span></pre>
+                </div>
+            </div>
+
+            <div class="features-grid" style="margin-top: 48px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🍎</div>
+                    <h3 class="feature-title">macOS</h3>
+                    <p class="feature-desc">
+                        Fully supported. Works out of the box with Claude Code.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🐧</div>
+                    <h3 class="feature-title">Linux</h3>
+                    <p class="feature-desc">
+                        Fully supported. Requires Python 3.6+ (included on most systems).
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🪟</div>
+                    <h3 class="feature-title">Windows</h3>
+                    <p class="feature-desc">
+                        Fully supported with native Python. No WSL required.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Get Started</div>
+                <div class="cta-title">Make Claude Remember</div>
+                <p class="cta-desc">
+                    Stop repeating yourself. Install claude-reflect and let your corrections compound into a
+                    personalized AI assistant that learns your preferences, your conventions, and your way of working.
+                </p>
+                <a href="https://github.com/BayramAnnakov/claude-reflect" target="_blank" class="cta-link">
+                    View on GitHub →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2026 CHSAMI - Claude Reflect</span>
+            <a href="https://github.com/BayramAnnakov/claude-reflect" target="_blank" class="footer-link">
+                GitHub →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>
+
