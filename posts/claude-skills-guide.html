@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Skills - A Complete Guide to Creating Custom AI Workflows - CHSAMI</title>
+    <meta name="description"
+        content="Learn how to create Claude Skills - modular instruction sets that enhance Claude's capabilities. Discover folder structure, activation logic, and best practices.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/claude-skills-guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/claude-skills-guide.html">
+    <meta property="og:title" content="Claude Skills - A Complete Guide to Creating Custom AI Workflows">
+    <meta property="og:description"
+        content="Learn how to create Claude Skills - modular instruction sets that enhance Claude's capabilities. Discover folder structure, activation logic, and best practices.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-06">
+    <meta property="article:author" content="Sami">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Skills - A Complete Guide to Creating Custom AI Workflows">
+    <meta name="twitter:description"
+        content="Learn how to create Claude Skills - modular instruction sets that enhance Claude's capabilities. Discover folder structure, activation logic, and best practices.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Skills - A Complete Guide to Creating Custom AI Workflows",
+    "description": "Learn how to create Claude Skills - modular instruction sets that enhance Claude's capabilities. Discover folder structure, activation logic, and best practices.",
+    "image": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-skills-guide.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        /* Method Cards */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .method-card {
+            background: var(--bg-card);
+            padding: 48px;
+            position: relative;
+        }
+
+        .method-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--text-primary);
+        }
+
+        .method-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .method-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .method-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .method-highlight {
+            background: var(--bg-primary);
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-primary);
+            border-left: 3px solid var(--text-primary);
+        }
+
+        /* Code Section */
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .heading {
+            color: #60A5FA;
+        }
+
+        /* Hierarchy Diagram */
+        .hierarchy-container {
+            background: var(--bg-card);
+            padding: 48px;
+            margin-top: 48px;
+        }
+
+        .hierarchy-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .hierarchy-tree {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .hierarchy-tree .folder {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .hierarchy-tree .file {
+            color: var(--text-secondary);
+        }
+
+        .hierarchy-tree .highlight {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 2px 8px;
+            margin-left: 8px;
+        }
+
+        .hierarchy-tree .note {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Flow Diagram */
+        .flow-container {
+            background: var(--bg-card);
+            padding: 48px;
+            margin-top: 48px;
+        }
+
+        .flow-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            position: relative;
+        }
+
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-color);
+        }
+
+        .flow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-primary);
+            border: 3px solid var(--text-primary);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--bg-card);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 24px 32px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        .aspect-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .file-reference {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 4px 10px;
+            display: inline-block;
+            margin: 2px 4px 2px 0;
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border-left: 4px solid var(--text-primary);
+        }
+
+        .tip-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tip-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Pro Tip Callout */
+        .pro-tip {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .pro-tip-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .pro-tip-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pro-tip-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .method-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .flow-steps::before {
+                display: none;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .method-card {
+                padding: 32px;
+            }
+
+            .flow-steps {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .hierarchy-container {
+                padding: 32px 20px;
+                overflow-x: auto;
+            }
+
+            .hierarchy-tree {
+                font-size: 12px;
+                min-width: 400px;
+            }
+
+            .code-block {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            .code-block pre {
+                font-size: 12px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .comparison-table {
+                min-width: 600px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 16px;
+                font-size: 13px;
+            }
+
+            .pro-tip {
+                padding: 32px 24px;
+            }
+
+            .pro-tip-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .method-number {
+                font-size: 48px;
+            }
+
+            .method-title {
+                font-size: 20px;
+            }
+
+            .step-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-label animate">Guide - Claude AI</div>
+        <h1 class="hero-title animate delay-1">
+            Skills
+            <span>A Complete Guide to Creating Custom Claude Workflows</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            Claude Skills are modular, reusable instruction sets that enhance Claude's capabilities for specialized
+            tasks. Learn how to create them, structure your files, and understand how Claude decides when to activate
+            each skill.
+        </p>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Section 1: What Are Claude Skills? -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">What Are Claude Skills?</h2>
+                    <p class="section-subtitle">Understanding the Concept</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">{}</div>
+                    <h3 class="feature-title">Modular Instruction Sets</h3>
+                    <p class="feature-desc">
+                        Skills are self-contained modules that package instructions, workflows, and resources together.
+                        Think of them as teaching Claude a specialized task once, then reusing that knowledge whenever
+                        needed.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">↻</div>
+                    <h3 class="feature-title">Reusable Workflows</h3>
+                    <p class="feature-desc">
+                        Once created, a Skill can be applied across multiple conversations and projects. Create a report
+                        generator once, use it for quarterly reports, monthly summaries, or any data analysis task.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Automatic Activation</h3>
+                    <p class="feature-desc">
+                        Claude automatically identifies and loads relevant Skills based on your request context. No
+                        manual selection needed. Just ask, and Claude matches your task to available Skills.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="table-container animate delay-6">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>CLAUDE.md / AGENTS.md</th>
+                            <th>Skill</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="aspect-label">Scope</td>
+                            <td>One project</td>
+                            <td>Any project</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-label">Trigger</td>
+                            <td>Automatic in directory</td>
+                            <td>Task-based (description matching)</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-label">Portability</td>
+                            <td>Tied to repo</td>
+                            <td>Shareable package</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-label">Contents</td>
+                            <td>Instructions only</td>
+                            <td>Instructions + scripts + assets</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-label">Version control</td>
+                            <td>With your code</td>
+                            <td>Separate distribution</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-label">Use case</td>
+                            <td>"How we do things here"</td>
+                            <td>"How to do this type of task"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 2: Creating a Custom Skill -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">Creating a Custom Skill</h2>
+                    <p class="section-subtitle">Two Approaches</p>
+                </div>
+            </div>
+
+            <div class="method-grid">
+                <div class="method-card animate delay-1">
+                    <div class="method-number">A</div>
+                    <h3 class="method-title">Manual Creation</h3>
+                    <p class="method-desc">
+                        Build your Skill from scratch using a text editor. Create the folder structure, write the
+                        <code>SKILL.md</code> file with YAML frontmatter, add instructions, and include any supporting
+                        resources.
+                    </p>
+                    <div class="method-highlight">
+                        Best for: Developers who want full control over skill structure and content
+                    </div>
+                </div>
+
+                <div class="method-card animate delay-2">
+                    <div class="method-number">B</div>
+                    <h3 class="method-title">Claude Web Wizard</h3>
+                    <p class="method-desc">
+                        Use Claude's guided creation interface at claude.ai. Claude walks you through defining the
+                        purpose, writing instructions, and generating all necessary files automatically.
+                    </p>
+                    <div class="method-highlight">
+                        Best for: Quick skill creation with Claude's assistance and guidance
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKILL.md Structure -->
+            <div class="code-section">
+                <div class="code-header">SKILL.md File Structure</div>
+                <div class="code-block">
+                    <pre><span class="comment">---</span>
+<span class="key">name:</span> <span class="value">Sales Report Generator</span>
+<span class="key">description:</span> <span class="value">Generates monthly sales reports in Excel format based on provided data</span>
+<span class="comment">---</span>
+
+<span class="heading"># Sales Report Generator</span>
+
+<span class="heading">## Instructions</span>
+1. Receive raw sales data in CSV format
+2. Process the data to calculate total sales, average sales, and growth
+3. Generate an Excel report with charts and summaries
+4. Format according to company branding guidelines
+
+<span class="heading">## Examples</span>
+
+<span class="heading">### Input</span>
+CSV file containing: date, product, quantity, revenue
+
+<span class="heading">### Output</span>
+Excel report titled "Monthly Sales Report" including:
+- Summary dashboard
+- Revenue breakdown by product
+- Trend charts
+- YoY comparison</pre>
+                </div>
+            </div>
+
+            <!-- Key Components -->
+            <div class="features-grid features-grid-2" style="margin-top: 48px;">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">—</div>
+                    <h3 class="feature-title">YAML Frontmatter</h3>
+                    <p class="feature-desc">
+                        The <code>name</code> field (max 64 chars) identifies your Skill. The <code>description</code>
+                        field (max 200 chars) tells Claude when to use it. This description is crucial for activation.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">#</div>
+                    <h3 class="feature-title">Instructions & Examples</h3>
+                    <p class="feature-desc">
+                        Clear, step-by-step instructions guide Claude's execution. Concrete examples demonstrate
+                        expected inputs and outputs. Both are essential for consistent Skill behavior.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Folder Structure -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Folder Structure</h2>
+                    <p class="section-subtitle">Organizing Your Skill</p>
+                </div>
+            </div>
+
+            <div class="hierarchy-container animate delay-3">
+                <div class="hierarchy-title">Skill Directory Layout</div>
+                <div class="hierarchy-tree">
+                    <div><span class="folder">my-skill/</span></div>
+                    <div>├── <span class="file">SKILL.md</span> <span class="highlight">Required</span> <span
+                            class="note">Metadata, instructions, examples</span></div>
+                    <div>├── <span class="folder">templates/</span></div>
+                    <div>│ ├── <span class="file">report-template.docx</span> <span class="note">← Document
+                            templates</span></div>
+                    <div>│ └── <span class="file">email-template.html</span></div>
+                    <div>├── <span class="folder">scripts/</span></div>
+                    <div>│ └── <span class="file">data-processor.py</span> <span class="note">← Executable code</span>
+                    </div>
+                    <div>└── <span class="folder">resources/</span></div>
+                    <div> ├── <span class="file">brand-guidelines.pdf</span> <span class="note">← Reference
+                            materials</span></div>
+                    <div> └── <span class="file">style-guide.md</span></div>
+                </div>
+            </div>
+
+            <div class="features-grid" style="margin-top: 48px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">SKILL.md</h3>
+                    <p class="feature-desc">
+                        The core file containing metadata and instructions. Claude reads this first to understand the
+                        Skill's purpose and how to execute it.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Templates</h3>
+                    <p class="feature-desc">
+                        Pre-formatted documents, spreadsheets, or presentation templates. Claude uses these as starting
+                        points for generated output.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">Scripts & Resources</h3>
+                    <p class="feature-desc">
+                        Executable code for data processing and reference materials like style guides. Claude can invoke
+                        scripts and consult resources during execution.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Packaging Note -->
+            <div class="code-section">
+                <div class="code-header">Packaging for Upload</div>
+                <div class="code-block">
+                    <pre><span class="comment"># Compress your skill folder into a ZIP file</span>
+<span class="key">zip</span> <span class="value">-r my-skill.zip my-skill/</span>
+
+<span class="comment"># The ZIP should contain your skill folder as root:</span>
+<span class="value">my-skill.zip</span>
+└── <span class="value">my-skill/</span>
+    ├── <span class="value">SKILL.md</span>
+    └── <span class="value">...</span>
+
+<span class="comment"># Upload via: Settings → Capabilities → Skills → Upload skill</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: How Claude Uses Skills -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">How Claude Uses Skills</h2>
+                    <p class="section-subtitle">Progressive Loading System</p>
+                </div>
+            </div>
+
+            <div class="flow-container animate delay-3">
+                <div class="flow-title">Skill Loading Pipeline</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-icon">1</div>
+                        <div class="step-title">Receive Request</div>
+                        <div class="step-desc">User submits a task or question to Claude</div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-icon">2</div>
+                        <div class="step-title">Scan Metadata</div>
+                        <div class="step-desc">Claude evaluates all Skill descriptions for relevance</div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-icon">3</div>
+                        <div class="step-title">Load Instructions</div>
+                        <div class="step-desc">If relevant, Claude reads the full SKILL.md file</div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="step-icon">4</div>
+                        <div class="step-title">Execute</div>
+                        <div class="step-desc">Claude follows instructions and loads resources as needed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2" style="margin-top: 48px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Lazy Loading</h3>
+                    <p class="feature-desc">
+                        Claude doesn't load all Skills into memory. It only reads the full instructions and resources
+                        when a Skill's description matches the current task, keeping responses fast and efficient.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Resource On-Demand</h3>
+                    <p class="feature-desc">
+                        Templates, scripts, and reference files are loaded only when the instructions require them. This
+                        progressive approach minimizes overhead while maximizing capability.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Skill Activation Logic -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Skill Activation Logic</h2>
+                    <p class="section-subtitle">How Claude Decides</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Description Matching</h3>
+                    <p class="feature-desc">
+                        The <code>description</code> field is the primary activation trigger. Claude compares your
+                        request against all Skill descriptions to find the best match. Write descriptions that clearly
+                        state what the Skill does and when to use it.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Task Relevance</h3>
+                    <p class="feature-desc">
+                        Claude assesses whether the Skill's purpose aligns with what you're asking. A presentation Skill
+                        won't activate for data analysis requests, even if keywords partially match.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">Contextual Cues</h3>
+                    <p class="feature-desc">
+                        The full conversation context influences activation. If you've been discussing quarterly
+                        reports, Claude is more likely to activate report-related Skills even for ambiguous requests.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">Enabled Status</h3>
+                    <p class="feature-desc">
+                        Skills must be toggled ON in Settings to be considered. Disabled Skills are invisible to the
+                        activation system. Use this to temporarily disable Skills without deleting them.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">Specificity Wins</h3>
+                    <p class="feature-desc">
+                        When multiple Skills could match, Claude prefers the more specific one. A "Q3 Financial Report"
+                        Skill beats a generic "Report Generator" for quarterly finance requests.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-6">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">Multi-Skill Chaining</h3>
+                    <p class="feature-desc">
+                        Complex tasks may activate multiple Skills sequentially. Claude can use a data processing Skill,
+                        then a visualization Skill, chaining them together automatically.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Best Practices & Tips -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <div>
+                    <h2 class="section-title">Best Practices & Tips</h2>
+                    <p class="section-subtitle">Optimize Your Skills</p>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">Tip 01</div>
+                    <h4 class="tip-title">Write Precise Descriptions</h4>
+                    <p class="tip-desc">Your description (max 200 chars) is the most important field. Be specific about
+                        what the Skill does and when it should activate. Vague descriptions lead to missed or incorrect
+                        activations.</p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">Tip 02</div>
+                    <h4 class="tip-title">Include Concrete Examples</h4>
+                    <p class="tip-desc">Examples in your SKILL.md show Claude exactly what you expect. Include
+                        input/output pairs, edge cases, and formatting requirements. More examples mean more consistent
+                        results.</p>
+                </div>
+
+                <div class="tip-card animate delay-3">
+                    <div class="tip-number">Tip 03</div>
+                    <h4 class="tip-title">Keep Instructions Step-by-Step</h4>
+                    <p class="tip-desc">Break complex workflows into numbered steps. Claude follows sequential
+                        instructions better than paragraph-form descriptions. Each step should be a single, clear
+                        action.</p>
+                </div>
+
+                <div class="tip-card animate delay-4">
+                    <div class="tip-number">Tip 04</div>
+                    <h4 class="tip-title">Test with Edge Cases</h4>
+                    <p class="tip-desc">After creating a Skill, test it with unusual inputs and ambiguous requests.
+                        Refine the description and instructions based on where Claude makes mistakes or misinterprets
+                        intent.</p>
+                </div>
+            </div>
+
+            <!-- Pro Tip -->
+            <div class="pro-tip animate delay-5">
+                <div class="pro-tip-label">Pro Tip</div>
+                <div class="pro-tip-title">Let Claude Create Your Skills</div>
+                <p class="pro-tip-desc">
+                    Claude Web at claude.ai can create Skills directly for you through a guided wizard. Just describe
+                    what you want the Skill to do, and Claude will generate the SKILL.md file, suggest folder structure,
+                    and even help write examples. It's the fastest way to get started.
+                </p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Get Started</div>
+                <div class="cta-title">Build Your First Claude Skill</div>
+                <p class="cta-desc">
+                    Start by identifying a repeatable task in your workflow. Create a SKILL.md with a clear description
+                    and step-by-step instructions. Upload it to Claude and watch your custom workflow activate
+                    automatically.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2025 CHSAMI - Claude Skills Guide</span>
+            <a href="https://claude.ai" target="_blank" class="footer-link">
+                Try Claude →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>
