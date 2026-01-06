@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porterminal - Web-Based Terminal Access Anywhere - CHSAMI</title>
+    <meta name="description"
+        content="Discover Porterminal, an open-source tool for quick web-based terminal access. Tunnel securely between your phone and PC with a simple, browser-based interface.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/porterminal.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/porterminal.html">
+    <meta property="og:title" content="Porterminal - Web-Based Terminal Access Anywhere">
+    <meta property="og:description"
+        content="Discover Porterminal, an open-source tool for quick web-based terminal access. Tunnel securely between your phone and PC with a simple, browser-based interface.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-06">
+    <meta property="article:author" content="Sami">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Porterminal - Web-Based Terminal Access Anywhere">
+    <meta name="twitter:description"
+        content="Discover Porterminal, an open-source tool for quick web-based terminal access. Tunnel securely between your phone and PC with a simple, browser-based interface.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Porterminal - Web-Based Terminal Access Anywhere",
+    "description": "Discover Porterminal, an open-source tool for quick web-based terminal access. Tunnel securely between your phone and PC.",
+    "image": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/porterminal.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .features-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        /* Installation Steps */
+        .install-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .install-step {
+            background: var(--bg-card);
+            padding: 32px 40px;
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .install-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--text-primary);
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--border-color);
+            line-height: 1;
+            min-width: 64px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .step-code {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            padding: 16px 20px;
+            overflow-x: auto;
+        }
+
+        /* Code Section */
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .symbol {
+            color: #60A5FA;
+        }
+
+        /* Terminal Demo */
+        .terminal-demo {
+            background: var(--text-primary);
+            padding: 0;
+            margin-top: 48px;
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #2D2D2D;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red {
+            background: #FF5F56;
+        }
+
+        .terminal-dot.yellow {
+            background: #FFBD2E;
+        }
+
+        .terminal-dot.green {
+            background: #27CA3F;
+        }
+
+        .terminal-title {
+            margin-left: 16px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+        }
+
+        .terminal-body .prompt {
+            color: #10B981;
+        }
+
+        .terminal-body .command {
+            color: #F8F6F1;
+        }
+
+        .terminal-body .output {
+            color: #6B7280;
+        }
+
+        .terminal-body .success {
+            color: #10B981;
+        }
+
+        .terminal-body .url {
+            color: #60A5FA;
+        }
+
+        /* Use Case Cards */
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .use-case-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+        }
+
+        .use-case-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--text-primary);
+        }
+
+        .use-case-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--border-color);
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .use-case-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .use-case-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Callout */
+        .callout {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .callout-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .callout-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .callout-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        /* Security Grid */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .security-item {
+            background: var(--bg-card);
+            padding: 32px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .security-icon {
+            font-size: 24px;
+            min-width: 32px;
+        }
+
+        .security-content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .security-content p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Link Button */
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            transition: all 0.2s ease;
+            margin-top: 32px;
+        }
+
+        .link-button:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            margin-top: 32px;
+            transition: all 0.2s ease;
+        }
+
+        .cta-link:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .install-step {
+                flex-direction: column;
+                gap: 16px;
+                padding: 24px;
+            }
+
+            .step-number {
+                font-size: 36px;
+                min-width: auto;
+            }
+
+            .features-grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .callout {
+                padding: 32px 24px;
+            }
+
+            .callout-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .step-code {
+                font-size: 12px;
+                padding: 12px 16px;
+            }
+
+            .use-case-number {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-label animate">Developer Tool - Terminal Access</div>
+        <h1 class="hero-title animate delay-1">
+            Porterminal
+            <span>Web-Based Terminal Access, Anywhere</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            A web-based terminal that facilitates secure tunneling between your phone and PC.
+            Just run <code
+                style="background: var(--text-primary); color: var(--bg-primary); padding: 4px 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px;">uvx ptn</code>
+            and you're in.
+        </p>
+        <div class="hero-meta animate delay-3">
+            <div class="hero-meta-item">
+                <span>By lyehe</span>
+            </div>
+            <div class="hero-meta-item">
+                <span>v0.3.4</span>
+            </div>
+            <div class="hero-meta-item">
+                <span>MIT License</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Section 1: What is Porterminal? -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">What is Porterminal?</h2>
+                    <p class="section-subtitle">Terminal Access Simplified</p>
+                </div>
+            </div>
+
+            <p class="hero-desc" style="margin-top: 0; margin-bottom: 48px;">
+                Porterminal provides a user-friendly web interface for terminal access. No complex SSH configurations,
+                no VPN setups, no installation — just <code
+                    style="background: var(--border-color); padding: 2px 8px; font-family: 'JetBrains Mono', monospace;">uvx ptn</code>
+                and you have a browser-based terminal that works across devices.
+            </p>
+
+            <div class="features-grid-4 features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Web-Based</h3>
+                    <p class="feature-desc">
+                        Access your terminal from any device with a web browser. No additional software needed on
+                        client devices.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Secure Tunnel</h3>
+                    <p class="feature-desc">
+                        Establishes secure tunneling between your devices, keeping data protected during remote
+                        sessions.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Cross-Platform</h3>
+                    <p class="feature-desc">
+                        Works seamlessly across different operating systems. Connect from phone to PC regardless of
+                        platform.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">One Command</h3>
+                    <p class="feature-desc">
+                        Just run <code>uvx ptn</code> and you're done. No installation, no configuration, no setup.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Terminal Demo -->
+            <div class="terminal-demo animate delay-5">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">porterminal — bash</span>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="command">uvx ptn</span></div>
+                    <div><span class="output">Starting Porterminal server...</span></div>
+                    <div><span class="success">✓</span> <span class="output">Server running on</span> <span
+                            class="url">http://localhost:5000</span></div>
+                    <div><span class="success">✓</span> <span class="output">Tunnel ready. Scan QR code or visit URL
+                            from your device.</span></div>
+                    <div style="margin-top: 12px;"><span class="prompt">$</span> <span class="command">_</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Installation -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">Installation</h2>
+                    <p class="section-subtitle">One Command Away</p>
+                </div>
+            </div>
+
+            <div class="callout animate delay-1" style="margin-top: 0;">
+                <div class="callout-label">Fastest Way</div>
+                <div class="callout-title">One Command. That's It.</div>
+                <p class="callout-desc">
+                    With uvx, you can run Porterminal instantly without any installation or setup:
+                </p>
+                <div class="step-code" style="margin-top: 20px; font-size: 18px; letter-spacing: 0.05em;">uvx ptn</div>
+            </div>
+
+            <p class="hero-desc animate delay-2" style="margin-top: 48px; margin-bottom: 24px;">
+                Don't have uvx? Here's the traditional setup:
+            </p>
+
+            <div class="install-steps">
+                <div class="install-step animate delay-3">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Clone the Repository</h3>
+                        <p class="step-desc">Start by cloning Porterminal from GitHub:</p>
+                        <div class="step-code">git clone https://github.com/lyehe/porterminal.git && cd porterminal
+                        </div>
+                    </div>
+                </div>
+
+                <div class="install-step animate delay-4">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Install & Run</h3>
+                        <p class="step-desc">Install dependencies and start the server:</p>
+                        <div class="step-code">pip install -r requirements.txt && python app.py</div>
+                    </div>
+                </div>
+
+                <div class="install-step animate delay-5">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Access via Browser</h3>
+                        <p class="step-desc">Open your browser and navigate to the local server:</p>
+                        <div class="step-code">http://localhost:5000</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Use Cases -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Use Cases</h2>
+                    <p class="section-subtitle">Where Porterminal Shines</p>
+                </div>
+            </div>
+
+            <div class="use-case-grid">
+                <div class="use-case-card animate delay-1">
+                    <div class="use-case-number">01</div>
+                    <h3 class="use-case-title">Remote System Administration</h3>
+                    <p class="use-case-desc">
+                        Manage servers and workstations remotely without complex VPN setups. Perfect for quick
+                        maintenance tasks or checking system status on the go.
+                    </p>
+                </div>
+
+                <div class="use-case-card animate delay-2">
+                    <div class="use-case-number">02</div>
+                    <h3 class="use-case-title">Development on the Go</h3>
+                    <p class="use-case-desc">
+                        Continue coding or debugging sessions from your phone or tablet. Access your development
+                        environment without being tethered to a specific workstation.
+                    </p>
+                </div>
+
+                <div class="use-case-card animate delay-3">
+                    <div class="use-case-number">03</div>
+                    <h3 class="use-case-title">Educational Purposes</h3>
+                    <p class="use-case-desc">
+                        Teach command-line operations in a controlled environment. Students can follow along on their
+                        own devices while the instructor demonstrates live.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Security -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">Security Considerations</h2>
+                    <p class="section-subtitle">Best Practices</p>
+                </div>
+            </div>
+
+            <p class="hero-desc" style="margin-top: 0; margin-bottom: 32px;">
+                While Porterminal offers convenient remote access, implementing proper security measures is crucial
+                for protecting your systems.
+            </p>
+
+            <div class="security-grid">
+                <div class="security-item animate delay-1">
+                    <div class="security-icon">🔐</div>
+                    <div class="security-content">
+                        <h4>Authentication</h4>
+                        <p>Implement strong authentication mechanisms. Restrict access to authorized users only with
+                            robust passwords or key-based auth.</p>
+                    </div>
+                </div>
+
+                <div class="security-item animate delay-2">
+                    <div class="security-icon">🔒</div>
+                    <div class="security-content">
+                        <h4>Encryption</h4>
+                        <p>Use HTTPS to encrypt communication between client and server. Safeguard sensitive data from
+                            potential interception.</p>
+                    </div>
+                </div>
+
+                <div class="security-item animate delay-3">
+                    <div class="security-icon">🛡️</div>
+                    <div class="security-content">
+                        <h4>Firewall Configuration</h4>
+                        <p>Configure your firewall to allow access only from trusted IP addresses. Minimize exposure to
+                            potential threats.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Tech Stack -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Tech Stack</h2>
+                    <p class="section-subtitle">What Powers Porterminal</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🐍</div>
+                    <h3 class="feature-title">Python Backend</h3>
+                    <p class="feature-desc">
+                        The core server is built with Python (63% of the codebase), handling terminal sessions,
+                        WebSocket connections, and tunneling logic efficiently.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">TypeScript Frontend</h3>
+                    <p class="feature-desc">
+                        The web interface is built with TypeScript (29% of the codebase), providing a responsive,
+                        type-safe terminal experience in the browser.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Modern CSS</h3>
+                    <p class="feature-desc">
+                        Clean, responsive styling ensures the terminal interface looks great on any device — from
+                        desktop monitors to mobile screens.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">📦</div>
+                    <h3 class="feature-title">Active Development</h3>
+                    <p class="feature-desc">
+                        With 21 releases and counting, Porterminal is actively maintained. The latest v0.3.4 includes
+                        bug fixes and improvements.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contributing -->
+            <div class="code-section">
+                <div class="code-header">Contributing</div>
+                <div class="code-block">
+                    <pre><span class="comment"># Clone and set up for development</span>
+<span class="key">git clone</span> <span class="value">https://github.com/lyehe/porterminal.git</span>
+<span class="key">cd</span> <span class="value">porterminal</span>
+
+<span class="comment"># Install dependencies</span>
+<span class="key">pip install</span> <span class="value">-r requirements.txt</span>
+
+<span class="comment"># Run in development mode</span>
+<span class="key">python</span> <span class="value">app.py --debug</span></pre>
+                </div>
+            </div>
+
+            <a href="https://github.com/lyehe/porterminal" target="_blank" class="link-button animate delay-5">
+                View on GitHub
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+            </a>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Get Started</div>
+                <div class="cta-title">uvx ptn — That's All</div>
+                <p class="cta-desc">
+                    One command. No installation. Your terminal is now accessible from any browser, any device,
+                    anywhere. It really is that simple.
+                </p>
+                <a href="https://github.com/lyehe/porterminal" target="_blank" class="cta-link">
+                    View on GitHub →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2026 CHSAMI - Porterminal</span>
+            <a href="https://github.com/lyehe/porterminal" target="_blank" class="footer-link">
+                GitHub →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>
