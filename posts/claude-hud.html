@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude HUD - Real-Time Visibility into Your Claude Code Sessions - CHSAMI</title>
+    <meta name="description"
+        content="Discover Claude HUD, a plugin that displays context usage, active tools, running agents, and todo progress in your Claude Code terminal. Always visible, always informative.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/claude-hud.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/claude-hud.html">
+    <meta property="og:title" content="Claude HUD - Real-Time Visibility into Your Claude Code Sessions">
+    <meta property="og:description"
+        content="Discover Claude HUD, a plugin that displays context usage, active tools, running agents, and todo progress in your Claude Code terminal. Always visible, always informative.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-06">
+    <meta property="article:author" content="Sami">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude HUD - Real-Time Visibility into Your Claude Code Sessions">
+    <meta name="twitter:description"
+        content="Discover Claude HUD, a plugin that displays context usage, active tools, running agents, and todo progress in your Claude Code terminal. Always visible, always informative.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude HUD - Real-Time Visibility into Your Claude Code Sessions",
+    "description": "Discover Claude HUD, a plugin that displays context usage, active tools, running agents, and todo progress in your Claude Code terminal.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-hud.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .features-grid-5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        /* Installation Steps */
+        .install-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .install-step {
+            background: var(--bg-card);
+            padding: 32px 40px;
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .install-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--text-primary);
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--border-color);
+            line-height: 1;
+            min-width: 64px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .step-code {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            padding: 16px 20px;
+            overflow-x: auto;
+        }
+
+        /* Code Section */
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .symbol {
+            color: #60A5FA;
+        }
+
+        /* HUD Display Example */
+        .hud-example {
+            background: var(--text-primary);
+            padding: 40px;
+            margin-top: 48px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 2;
+            color: var(--bg-primary);
+            overflow-x: auto;
+        }
+
+        .hud-example .project {
+            color: #60A5FA;
+        }
+
+        .hud-example .model {
+            color: #A78BFA;
+        }
+
+        .hud-example .bar {
+            color: #10B981;
+        }
+
+        .hud-example .bar-empty {
+            color: #4B5563;
+        }
+
+        .hud-example .percent {
+            color: #F59E0B;
+        }
+
+        .hud-example .count {
+            color: #EC4899;
+        }
+
+        .hud-example .time {
+            color: #6EE7B7;
+        }
+
+        .hud-example .check {
+            color: #10B981;
+        }
+
+        .hud-example .tool {
+            color: #F8F6F1;
+        }
+
+        .hud-example .label {
+            color: #6B7280;
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--bg-card);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 24px 32px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        .info-table td {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-table tr:hover td {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Callout */
+        .callout {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .callout-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .callout-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .callout-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        /* Link Button */
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            transition: all 0.2s ease;
+            margin-top: 32px;
+        }
+
+        .link-button:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            margin-top: 32px;
+            transition: all 0.2s ease;
+        }
+
+        .cta-link:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-5 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .install-step {
+                flex-direction: column;
+                gap: 16px;
+                padding: 24px;
+            }
+
+            .step-number {
+                font-size: 36px;
+                min-width: auto;
+            }
+
+            .features-grid-5 {
+                grid-template-columns: 1fr;
+            }
+
+            .hud-example {
+                padding: 24px;
+                font-size: 11px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .info-table {
+                min-width: 500px;
+            }
+
+            .callout {
+                padding: 32px 24px;
+            }
+
+            .callout-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .step-code {
+                font-size: 12px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-label animate">Plugin - Claude Code</div>
+        <h1 class="hero-title animate delay-1">
+            Claude HUD
+            <span>Real-Time Visibility into Your Claude Code Sessions</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            A Claude Code plugin that shows what's happening — context usage, active tools, running agents, and todo
+            progress. Always visible below your input, no separate window required.
+        </p>
+        <div class="hero-meta animate delay-3">
+            <div class="hero-meta-item">
+                <span>By jarrodwatts</span>
+            </div>
+            <div class="hero-meta-item">
+                <span>★ 1.1k stars</span>
+            </div>
+            <div class="hero-meta-item">
+                <span>MIT License</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Section 1: What is Claude HUD? -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">What is Claude HUD?</h2>
+                    <p class="section-subtitle">Session Visibility at a Glance</p>
+                </div>
+            </div>
+
+            <p class="hero-desc" style="margin-top: 0; margin-bottom: 48px;">
+                Claude HUD gives you better insights into what's happening in your Claude Code session. It uses Claude
+                Code's native statusline API — no separate window, no tmux required, works in any terminal.
+            </p>
+
+            <div class="features-grid-5 features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📁</div>
+                    <h3 class="feature-title">Project</h3>
+                    <p class="feature-desc">
+                        Always know which project you're working in with the current directory name displayed.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Context</h3>
+                    <p class="feature-desc">
+                        Know exactly how full your context window is before it's too late with color-coded visual meter.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">Tools</h3>
+                    <p class="feature-desc">
+                        Watch Claude read, edit, and search files as it happens with real-time tool activity tracking.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Agents</h3>
+                    <p class="feature-desc">
+                        See which subagents are running and what they're doing with live agent status.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">Todos</h3>
+                    <p class="feature-desc">
+                        Track task completion in real-time with progress counters and status updates.
+                    </p>
+                </div>
+            </div>
+
+            <!-- HUD Display Example -->
+            <div class="code-header" style="margin-top: 48px;">What It Looks Like</div>
+            <div class="hud-example animate delay-6">
+                <div><span class="label">Session:</span> <span class="project">📁 my-project</span> | <span
+                        class="model">[Opus 4.5]</span> <span class="bar">████</span><span
+                        class="bar-empty">░░░░░░</span> <span class="percent">19%</span> | <span class="count">2
+                        CLAUDE.md</span> | <span class="count">8 rules</span> | <span class="count">6 MCPs</span> |
+                    <span class="count">6 hooks</span> | <span class="time">⏱️ 1m</span>
+                </div>
+                <div style="margin-top: 8px;"><span class="label">Tools:</span> <span class="check">✓</span> <span
+                        class="tool">TaskOutput ×2</span> | <span class="check">✓</span> <span
+                        class="tool">mcp_context7 ×1</span> | <span class="check">✓</span> <span class="tool">Glob
+                        ×1</span> | <span class="check">✓</span> <span class="tool">Skill ×1</span></div>
+                <div style="margin-top: 8px;"><span class="label">Agents:</span> <span class="check">✓</span> <span
+                        class="tool">Explore: Explore home directory structure</span> <span
+                        class="time">(5s)</span></div>
+                <div style="margin-top: 8px;"><span class="label">Todos:</span> <span class="check">✓</span> <span
+                        class="tool">All todos complete</span> <span class="time">(5/5)</span></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Installation -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">Installation</h2>
+                    <p class="section-subtitle">Three Simple Steps</p>
+                </div>
+            </div>
+
+            <div class="install-steps">
+                <div class="install-step animate delay-1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Add the Marketplace</h3>
+                        <p class="step-desc">Inside a Claude Code instance, add the plugin marketplace:</p>
+                        <div class="step-code">/plugin marketplace add jarrodwatts/claude-hud</div>
+                    </div>
+                </div>
+
+                <div class="install-step animate delay-2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Install the Plugin</h3>
+                        <p class="step-desc">Install claude-hud from the marketplace:</p>
+                        <div class="step-code">/plugin install claude-hud</div>
+                    </div>
+                </div>
+
+                <div class="install-step animate delay-3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Configure the Statusline</h3>
+                        <p class="step-desc">Run the setup command to configure the HUD:</p>
+                        <div class="step-code">/claude-hud:setup</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout animate delay-4">
+                <div class="callout-label">Ready to Use</div>
+                <div class="callout-title">No Restart Required</div>
+                <p class="callout-desc">
+                    The HUD appears immediately after setup — no restart needed. It updates every ~300ms with native
+                    token data from Claude Code, not estimates.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Understanding the Display -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Understanding the Display</h2>
+                    <p class="section-subtitle">What Each Line Shows</p>
+                </div>
+            </div>
+
+            <div class="table-container animate delay-3">
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="info-label">Project</td>
+                            <td>Current working directory folder name</td>
+                            <td><code>📁 my-project</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Model</td>
+                            <td>Current model in use</td>
+                            <td><code>[Opus 4.5]</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Context Bar</td>
+                            <td>Visual meter with color coding (green → yellow → red)</td>
+                            <td><code>████░░░░░░ 19%</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Config Counts</td>
+                            <td>Number of CLAUDE.md files, rules, MCPs, and hooks loaded</td>
+                            <td><code>2 CLAUDE.md | 8 rules | 6 MCPs</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Duration</td>
+                            <td>How long the session has been running</td>
+                            <td><code>⏱️ 1m</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Running Tools</td>
+                            <td>Shows spinner with target file for active tools</td>
+                            <td><code>⟳ Read src/index.ts</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Completed Tools</td>
+                            <td>Aggregate by type with counts</td>
+                            <td><code>✓ TaskOutput ×2</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Agent Status</td>
+                            <td>Agent type and what it's working on with elapsed time</td>
+                            <td><code>✓ Explore: Research patterns (5s)</code></td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Todo Progress</td>
+                            <td>Current task or completion status with counter</td>
+                            <td><code>✓ All complete (5/5)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: How It Works -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="section-subtitle">Under the Hood</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">→</div>
+                    <h3 class="feature-title">Native Statusline API</h3>
+                    <p class="feature-desc">
+                        Claude HUD uses Claude Code's native statusline API. No separate window, no tmux required,
+                        works in any terminal. The HUD is always visible below your input.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real Token Data</h3>
+                    <p class="feature-desc">
+                        Context usage comes directly from Claude Code — not estimated. The plugin parses the transcript
+                        for tool/agent activity and updates every ~300ms.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">{}</div>
+                    <h3 class="feature-title">JSON Streaming</h3>
+                    <p class="feature-desc">
+                        Claude Code sends stdin JSON to claude-hud, which processes it and outputs to stdout for
+                        display in your terminal. Clean, efficient, lightweight.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">Transcript Parsing</h3>
+                    <p class="feature-desc">
+                        The plugin reads the transcript JSONL file to track tools, agents, and todos. This gives you
+                        accurate, real-time information about your session.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Architecture Diagram -->
+            <div class="code-section">
+                <div class="code-header">Data Flow</div>
+                <div class="code-block">
+                    <pre><span class="comment">Claude Code</span> <span class="symbol">→</span> <span class="value">stdin JSON</span> <span class="symbol">→</span> <span class="key">claude-hud</span> <span class="symbol">→</span> <span class="value">stdout</span> <span class="symbol">→</span> <span class="comment">displayed in terminal</span>
+           <span class="symbol">↘</span> <span class="comment">transcript JSONL (tools, agents, todos)</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Requirements & Development -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Requirements</h2>
+                    <p class="section-subtitle">What You Need</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">▶</div>
+                    <h3 class="feature-title">Claude Code v1.0.80+</h3>
+                    <p class="feature-desc">
+                        The statusline API was introduced in version 1.0.80. Make sure you're running a compatible
+                        version of Claude Code.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">⬡</div>
+                    <h3 class="feature-title">Node.js 18+ or Bun</h3>
+                    <p class="feature-desc">
+                        The plugin is built with TypeScript and requires Node.js 18 or later. Bun is also supported as
+                        an alternative runtime.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Development Section -->
+            <div class="code-section">
+                <div class="code-header">Contributing</div>
+                <div class="code-block">
+                    <pre><span class="comment"># Clone the repository</span>
+<span class="key">git clone</span> <span class="value">https://github.com/jarrodwatts/claude-hud</span>
+<span class="key">cd</span> <span class="value">claude-hud</span>
+
+<span class="comment"># Install dependencies and build</span>
+<span class="key">npm ci</span> <span class="symbol">&&</span> <span class="key">npm run build</span>
+
+<span class="comment"># Run tests</span>
+<span class="key">npm test</span></pre>
+                </div>
+            </div>
+
+            <a href="https://github.com/jarrodwatts/claude-hud" target="_blank" class="link-button animate delay-3">
+                View on GitHub
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+            </a>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Get Started</div>
+                <div class="cta-title">Never Lose Track of Your Claude Session</div>
+                <p class="cta-desc">
+                    Install Claude HUD in three commands and gain instant visibility into context usage, tool activity,
+                    agent progress, and todo completion. Know what's happening, always.
+                </p>
+                <a href="https://github.com/jarrodwatts/claude-hud" target="_blank" class="cta-link">
+                    Install Claude HUD →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2025 CHSAMI - Claude HUD</span>
+            <a href="https://github.com/jarrodwatts/claude-hud" target="_blank" class="footer-link">
+                GitHub →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>
+
