@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Claude Integration Options: CLI, API, SDK, and Azure Foundry - CHSAMI</title>
+    <meta name="description"
+        content="A comprehensive guide for .NET developers: comparing Claude Code CLI, Anthropic API, official SDKs including C#, and Azure AI Foundry integration. Learn the differences between API keys and auth tokens.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/claude-integration-options.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/claude-integration-options.html">
+    <meta property="og:title" content="Understanding Claude Integration Options: CLI, API, SDK, and Azure Foundry">
+    <meta property="og:description"
+        content="A comprehensive guide for .NET developers: comparing Claude Code CLI, Anthropic API, official SDKs including C#, and Azure AI Foundry integration.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-18">
+    <meta property="article:author" content="Sami">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Understanding Claude Integration Options: CLI, API, SDK, and Azure Foundry">
+    <meta name="twitter:description"
+        content="A comprehensive guide for .NET developers: comparing Claude Code CLI, Anthropic API, official SDKs including C#, and Azure AI Foundry integration.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Understanding Claude Integration Options: CLI, API, SDK, and Azure Foundry",
+    "description": "A comprehensive guide for .NET developers: comparing Claude Code CLI, Anthropic API, official SDKs including C#, and Azure AI Foundry integration.",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-18",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-integration-options.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        .feature-list {
+            margin-top: 16px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .feature-list li {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .flow-container {
+            background: var(--bg-card);
+            padding: 48px;
+            margin-top: 48px;
+        }
+
+        .flow-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            position: relative;
+        }
+
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-color);
+        }
+
+        .flow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-primary);
+            border: 3px solid var(--text-primary);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .heading {
+            color: #60A5FA;
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 24px 32px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        .command-cell {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 4px 10px;
+            display: inline-block;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border-left: 4px solid var(--text-primary);
+        }
+
+        .tip-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tip-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .pro-tip {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .pro-tip-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .pro-tip-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pro-tip-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        .pro-tip-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+        }
+
+        .diagram-container {
+            background: var(--bg-card);
+            padding: 48px;
+            margin-top: 48px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .diagram-container pre {
+            margin: 0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .cta-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .cta-link {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--bg-primary);
+            text-decoration: none;
+            padding: 16px 32px;
+            border: 2px solid var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+
+        .cta-link:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps::before {
+                display: none;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .flow-container {
+                padding: 32px 20px;
+            }
+
+            .code-block {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            .code-block pre {
+                font-size: 12px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .comparison-table {
+                min-width: 600px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 16px;
+                font-size: 13px;
+            }
+
+            .pro-tip {
+                padding: 32px 24px;
+            }
+
+            .pro-tip-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .diagram-container {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            .diagram-container pre {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .step-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-label animate">Guide - .NET Development</div>
+        <h1 class="hero-title animate delay-1">
+            Claude Integration
+            <span>CLI, API, SDK, and Azure Foundry</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            As AI becomes central to software development, choosing the right integration method for Claude can
+            significantly impact your project's success. This guide breaks down each option for .NET developers
+            in the public procurement sector.
+        </p>
+    </section>
+
+    <div class="content">
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">Claude Code (CLI)</h2>
+                    <p class="section-subtitle">The Terminal-Native Experience</p>
+                </div>
+            </div>
+
+            <div class="feature-card animate delay-3" style="max-width: 800px;">
+                <div class="feature-icon">$_</div>
+                <h3 class="feature-title">What is it?</h3>
+                <p class="feature-desc">
+                    Claude Code is Anthropic's command-line agentic coding tool. It lives in your terminal,
+                    understands your codebase, and helps you code faster through natural language commands.
+                </p>
+            </div>
+
+            <div class="features-grid" style="margin-top: 32px;">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Agentic by Design</h3>
+                    <p class="feature-desc">
+                        Claude Code doesn't just answer questions—it executes tasks, modifies files, runs commands,
+                        and handles entire git workflows autonomously.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">📂</div>
+                    <h3 class="feature-title">Context-Aware</h3>
+                    <p class="feature-desc">
+                        It reads your project structure, understands relationships between files, and maintains
+                        conversation history throughout your session.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">🖥️</div>
+                    <h3 class="feature-title">Terminal-Native</h3>
+                    <p class="feature-desc">
+                        Perfect for developers who live in the command line, integrating seamlessly with bash, git,
+                        and other CLI tools.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Installation</div>
+                <div class="code-block">
+                    <pre><span class="comment"># macOS/Linux (recommended)</span>
+<span class="key">curl</span> -fsSL https://claude.ai/install.sh | sh
+
+<span class="comment"># Or via npm (deprecated but still works)</span>
+<span class="key">npm</span> install -g @anthropic-ai/claude-code</pre>
+                </div>
+            </div>
+
+            <div class="tips-grid" style="margin-top: 48px;">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">When to Use</div>
+                    <h4 class="tip-title">Best For</h4>
+                    <p class="tip-desc">
+                        Interactive coding sessions, code reviews, refactoring, debugging, git workflow automation,
+                        learning new codebases, and quick prototyping.
+                    </p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">When to Avoid</div>
+                    <h4 class="tip-title">Not For</h4>
+                    <p class="tip-desc">
+                        Production applications needing programmatic AI integration, automated pipelines requiring
+                        API responses, or applications needing fine-grained control over parameters.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">Claude API</h2>
+                    <p class="section-subtitle">Direct HTTP Access</p>
+                </div>
+            </div>
+
+            <div class="feature-card animate delay-3" style="max-width: 800px;">
+                <div class="feature-icon">{}</div>
+                <h3 class="feature-title">What is it?</h3>
+                <p class="feature-desc">
+                    The Claude API is the foundational RESTful interface at <code>https://api.anthropic.com</code>.
+                    It's the raw HTTP endpoint that all other integrations ultimately use.
+                </p>
+            </div>
+
+            <div class="features-grid" style="margin-top: 32px;">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Universal Compatibility</h3>
+                    <p class="feature-desc">
+                        Works with any programming language that can make HTTP requests. No SDK dependencies required.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">🎛️</div>
+                    <h3 class="feature-title">Full Control</h3>
+                    <p class="feature-desc">
+                        Direct access to all parameters, headers, and response handling. Complete flexibility over
+                        every aspect of the request.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">○</div>
+                    <h3 class="feature-title">Stateless</h3>
+                    <p class="feature-desc">
+                        Each request is independent; you manage conversation history yourself. Full control over
+                        context management.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Basic Example (cURL)</div>
+                <div class="code-block">
+                    <pre><span class="key">curl</span> https://api.anthropic.com/v1/messages \
+  --header <span class="value">"x-api-key: $ANTHROPIC_API_KEY"</span> \
+  --header <span class="value">"anthropic-version: 2023-06-01"</span> \
+  --header <span class="value">"content-type: application/json"</span> \
+  --data <span class="value">'{
+    "model": "claude-sonnet-4-5",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "Analyze this tender document for compliance issues"}
+    ]
+  }'</span></pre>
+                </div>
+            </div>
+
+            <div class="pro-tip animate delay-3">
+                <div class="pro-tip-label">When to Use Raw API</div>
+                <div class="pro-tip-title">Direct HTTP Access Scenarios</div>
+                <p class="pro-tip-desc">
+                    Languages without official SDK support, serverless environments with strict dependency constraints,
+                    learning/understanding how Claude's API works internally, or custom HTTP clients and proxy scenarios.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Claude SDK</h2>
+                    <p class="section-subtitle">The Developer-Friendly Wrapper</p>
+                </div>
+            </div>
+
+            <div class="feature-card animate delay-3" style="max-width: 800px;">
+                <div class="feature-icon">#</div>
+                <h3 class="feature-title">What is it?</h3>
+                <p class="feature-desc">
+                    Anthropic provides official SDKs for Python, TypeScript, Java, Go, C#, Ruby, and PHP. These SDKs
+                    wrap the API, providing type safety, automatic retries, streaming support, and error handling.
+                </p>
+            </div>
+
+            <div class="pro-tip animate delay-3" style="margin-top: 32px; margin-bottom: 32px;">
+                <div class="pro-tip-label">Important Note</div>
+                <div class="pro-tip-title">C# SDK Version History</div>
+                <p class="pro-tip-desc">
+                    As of version 10+, the <code>Anthropic</code> NuGet package is the official SDK. Earlier versions
+                    (3.x and below) were the community-built tryAGI SDK, which has moved to <code>tryAGI.Anthropic</code>.
+                </p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Installation</div>
+                <div class="code-block">
+                    <pre><span class="key">dotnet</span> add package <span class="value">Anthropic</span></pre>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Basic Usage (C#)</div>
+                <div class="code-block">
+                    <pre><span class="heading">using</span> Anthropic;
+<span class="heading">using</span> Anthropic.Models.Messages;
+
+<span class="key">AnthropicClient</span> client = <span class="heading">new</span>();
+
+<span class="key">MessageCreateParams</span> parameters = <span class="heading">new</span>()
+{
+    MaxTokens = <span class="value">1024</span>,
+    Messages =
+    [
+        <span class="heading">new</span>()
+        {
+            Role = Role.User,
+            Content = <span class="value">"Analyze this procurement document for compliance"</span>,
+        },
+    ],
+    Model = Model.ClaudeSonnet4_5_20250929,
+};
+
+<span class="heading">var</span> message = <span class="heading">await</span> client.Messages.Create(parameters);
+Console.WriteLine(message);</pre>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Streaming Support</div>
+                <div class="code-block">
+                    <pre><span class="heading">await foreach</span> (<span class="heading">var</span> chunk <span class="heading">in</span> client.Messages.CreateStreaming(parameters))
+{
+    Console.Write(chunk);
+}</pre>
+                </div>
+            </div>
+
+            <div class="features-grid" style="margin-top: 48px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">Type Safety</h3>
+                    <p class="feature-desc">
+                        Strongly-typed request/response models. Catch errors at compile time rather than runtime.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">↻</div>
+                    <h3 class="feature-title">Automatic Retries</h3>
+                    <p class="feature-desc">
+                        Built-in exponential backoff for transient failures. Handle rate limits gracefully.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🔌</div>
+                    <h3 class="feature-title">IChatClient Support</h3>
+                    <p class="feature-desc">
+                        Integrates with <code>Microsoft.Extensions.AI.Abstractions</code> for standardized AI interfaces.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">Comparison Matrix</h2>
+                    <p class="section-subtitle">Side-by-Side Overview</p>
+                </div>
+            </div>
+
+            <div class="table-container animate delay-3">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Claude Code (CLI)</th>
+                            <th>API (Direct HTTP)</th>
+                            <th>SDK (C#/.NET)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Interactive coding</td>
+                            <td>Universal access</td>
+                            <td>Application integration</td>
+                        </tr>
+                        <tr>
+                            <td>Learning Curve</td>
+                            <td><span class="command-cell">Low</span></td>
+                            <td><span class="command-cell">Medium</span></td>
+                            <td><span class="command-cell">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td>Type Safety</td>
+                            <td>N/A</td>
+                            <td>None</td>
+                            <td>Full</td>
+                        </tr>
+                        <tr>
+                            <td>Retry Logic</td>
+                            <td>Built-in</td>
+                            <td>Manual</td>
+                            <td>Built-in</td>
+                        </tr>
+                        <tr>
+                            <td>Streaming</td>
+                            <td>Native</td>
+                            <td>Manual parsing</td>
+                            <td>IAsyncEnumerable</td>
+                        </tr>
+                        <tr>
+                            <td>Best For</td>
+                            <td>Developers</td>
+                            <td>Any language</td>
+                            <td>.NET applications</td>
+                        </tr>
+                        <tr>
+                            <td>Authentication</td>
+                            <td>OAuth token or API key</td>
+                            <td>API key</td>
+                            <td>API key or Auth token</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Azure AI Foundry</h2>
+                    <p class="section-subtitle">Enterprise Cloud Integration</p>
+                </div>
+            </div>
+
+            <div class="feature-card animate delay-3" style="max-width: 800px;">
+                <div class="feature-icon">☁️</div>
+                <h3 class="feature-title">What is Azure AI Foundry?</h3>
+                <p class="feature-desc">
+                    Azure AI Foundry (formerly Azure AI Studio) is Microsoft's unified platform for AI development.
+                    As of November 2025, Claude models are available directly through Foundry, making Azure the only
+                    cloud provider offering both Claude and GPT frontier models on a single platform.
+                </p>
+            </div>
+
+            <div class="features-grid" style="margin-top: 32px;">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">4.5</div>
+                    <h3 class="feature-title">Claude Opus 4.5</h3>
+                    <p class="feature-desc">
+                        Most intelligent model—ideal for complex coding, agents, and enterprise workflows.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">S</div>
+                    <h3 class="feature-title">Claude Sonnet 4.5</h3>
+                    <p class="feature-desc">
+                        Best-in-class for coding and building agents. Balanced performance and cost.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">H</div>
+                    <h3 class="feature-title">Claude Haiku 4.5</h3>
+                    <p class="feature-desc">
+                        Near-frontier performance at one-third the cost—perfect for high-volume applications.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tips-grid" style="margin-top: 48px;">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">Benefit 01</div>
+                    <h4 class="tip-title">Consolidated Billing</h4>
+                    <p class="tip-desc">
+                        Use existing Azure agreements and MACC (Microsoft Azure Consumption Commitment).
+                    </p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">Benefit 02</div>
+                    <h4 class="tip-title">Enterprise Compliance</h4>
+                    <p class="tip-desc">
+                        Leverage Azure's security, governance, and compliance frameworks.
+                    </p>
+                </div>
+
+                <div class="tip-card animate delay-3">
+                    <div class="tip-number">Benefit 03</div>
+                    <h4 class="tip-title">Familiar Tooling</h4>
+                    <p class="tip-desc">
+                        Integrate with Azure Monitor, Log Analytics, and Cost Management.
+                    </p>
+                </div>
+
+                <div class="tip-card animate delay-4">
+                    <div class="tip-number">Benefit 04</div>
+                    <h4 class="tip-title">Single Platform</h4>
+                    <p class="tip-desc">
+                        Access both Claude and GPT models without managing multiple vendor relationships.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">API Key Authentication</div>
+                <div class="code-block">
+                    <pre><span class="comment">// Set environment variable</span>
+<span class="comment">// ANTHROPIC_FOUNDRY_API_KEY=your-azure-api-key</span>
+
+<span class="heading">var</span> client = <span class="heading">new</span> <span class="key">AnthropicClient</span>
+{
+    BaseUrl = <span class="value">"https://{resource}.services.ai.azure.com/anthropic"</span>
+};</pre>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Microsoft Entra ID (Azure AD) Authentication</div>
+                <div class="code-block">
+                    <pre><span class="heading">using</span> Azure.Identity;
+
+<span class="comment">// Supports Azure CLI login, Managed Identity, etc.</span>
+<span class="heading">var</span> credential = <span class="heading">new</span> <span class="key">DefaultAzureCredential</span>();
+<span class="heading">var</span> token = <span class="heading">await</span> credential.GetTokenAsync(
+    <span class="heading">new</span> <span class="key">TokenRequestContext</span>(<span class="heading">new</span>[] { <span class="value">"https://cognitiveservices.azure.com/.default"</span> })
+);</pre>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Environment Variables</div>
+                <div class="code-block">
+                    <pre><span class="comment"># Environment variables for Azure Foundry</span>
+<span class="key">export</span> ANTHROPIC_FOUNDRY_RESOURCE=<span class="value">{your-resource-name}</span>
+<span class="comment"># Or full URL:</span>
+<span class="key">export</span> ANTHROPIC_FOUNDRY_BASE_URL=<span class="value">https://{resource}.services.ai.azure.com</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <div>
+                    <h2 class="section-title">API Key vs Auth Token</h2>
+                    <p class="section-subtitle">Understanding Authentication</p>
+                </div>
+            </div>
+
+            <p class="hero-desc" style="margin-bottom: 32px; margin-top: 0;">
+                This is one of the most confusing aspects of Claude authentication. Let's clarify the differences.
+            </p>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">🔑</div>
+                    <h3 class="feature-title">API Key (ANTHROPIC_API_KEY)</h3>
+                    <p class="feature-desc">
+                        A static secret string generated in the Anthropic Console. Format: <code>sk-ant-api03-...</code>
+                        Sent via the <code>x-api-key</code> HTTP header.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Long-lived: Doesn't expire unless revoked</li>
+                        <li>Pay-as-you-go: Billed based on token usage</li>
+                        <li>Programmatic: Designed for server-to-server communication</li>
+                        <li>Workspace-scoped: Can be tied to specific workspaces</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🎫</div>
+                    <h3 class="feature-title">Auth Token (ANTHROPIC_AUTH_TOKEN)</h3>
+                    <p class="feature-desc">
+                        An OAuth 2.0 bearer token obtained through authentication flow.
+                        Used with the <code>Authorization: Bearer</code> header.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Time-limited: Typically expires after 1 hour</li>
+                        <li>Subscription-based: Uses your Claude Pro/Max plan</li>
+                        <li>User-scoped: Tied to your personal account</li>
+                        <li>Interactive: Designed for tools like Claude Code</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tips-grid" style="margin-top: 48px;">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">API Key</div>
+                    <h4 class="tip-title">When to Use</h4>
+                    <p class="tip-desc">
+                        Backend services and APIs, automated pipelines, production applications, and team/enterprise
+                        environments where billing is centralized.
+                    </p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">Auth Token</div>
+                    <h4 class="tip-title">When to Use</h4>
+                    <p class="tip-desc">
+                        Claude Code CLI sessions, personal development with Claude Pro/Max subscription, and
+                        interactive tools that can handle OAuth flows.
+                    </p>
+                </div>
+            </div>
+
+            <div class="diagram-container animate delay-3">
+                <div class="flow-title">The Authentication Hierarchy</div>
+                <pre>
+┌─────────────────────────────────────────────────────────────┐
+│                    Authentication Methods                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────┐          ┌─────────────────┐          │
+│  │    API Key      │          │   Auth Token    │          │
+│  │ (x-api-key)     │          │ (Authorization) │          │
+│  └────────┬────────┘          └────────┬────────┘          │
+│           │                            │                    │
+│           ▼                            ▼                    │
+│  ┌─────────────────┐          ┌─────────────────┐          │
+│  │ Pay-per-use     │          │ Subscription    │          │
+│  │ billing         │          │ (Pro/Max plan)  │          │
+│  └─────────────────┘          └─────────────────┘          │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘</pre>
+            </div>
+
+            <div class="pro-tip animate delay-3">
+                <div class="pro-tip-label">Common Pitfall</div>
+                <div class="pro-tip-title">Auth Conflict Warning</div>
+                <p class="pro-tip-desc">
+                    If you have both authentication methods configured, you'll see:
+                    "Auth conflict: Both a token (ANTHROPIC_AUTH_TOKEN) and an API key (ANTHROPIC_API_KEY) are set.
+                    This may lead to unexpected behavior."
+                    <br><br>
+                    Resolution: For Claude Code with subscription, unset <code>ANTHROPIC_API_KEY</code>.
+                    For programmatic access, unset <code>ANTHROPIC_AUTH_TOKEN</code>.
+                </p>
+            </div>
+        </section>
+
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Get Started</div>
+                <div class="cta-title">Choose Your Integration Path</div>
+                <p class="cta-desc">
+                    Whether you're building tender analysis systems, document processing pipelines, or intelligent
+                    assistants, understanding these integration options ensures you pick the right tool for the job.
+                </p>
+                <div class="cta-links">
+                    <a href="https://docs.anthropic.com/en/api/getting-started" target="_blank" class="cta-link">
+                        API Docs →
+                    </a>
+                    <a href="https://www.nuget.org/packages/Anthropic" target="_blank" class="cta-link">
+                        C# SDK →
+                    </a>
+                    <a href="https://ai.azure.com/" target="_blank" class="cta-link">
+                        Azure Foundry →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2026 CHSAMI - Claude Integration Guide</span>
+            <a href="https://docs.anthropic.com" target="_blank" class="footer-link">
+                Anthropic Docs →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>

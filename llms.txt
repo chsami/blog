@@ -25,6 +25,16 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### Claude Code Task Management - JSON-Based Task Tracking
+- URL: /posts/claude-code-task-management.html
+- Published: 2026-01-27
+- Description: Claude Code introduces a sophisticated task management system inspired by Beads. JSON-based task tracking with complex dependencies, parallel sub-agents, and version control integration. Covers task structure, lifecycle, context optimization, and comparison with Ralph Wiggum Loop philosophy.
+
+#### Claude Integration Options: CLI, API, SDK, and Azure Foundry
+- URL: /posts/claude-integration-options.html
+- Published: 2026-01-18
+- Description: A comprehensive guide for .NET developers comparing Claude Code CLI, Anthropic API, official SDKs including C#, and Azure AI Foundry integration. Covers API keys vs auth tokens, comparison matrices, and when to use each integration method.
+
 #### Claude Reflect - Self-Learning Memory for Claude Code
 - URL: /posts/claude-reflect.html
 - Published: 2026-01-06

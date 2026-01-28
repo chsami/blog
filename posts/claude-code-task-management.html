@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Task Management - JSON-Based Task Tracking with Dependencies - CHSAMI</title>
+  <meta name="description" content="Claude Code introduces a sophisticated task management system inspired by Beads. JSON-based task tracking with dependencies, parallel sub-agents, and version control integration.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-code-task-management.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-code-task-management.html">
+  <meta property="og:title" content="Claude Code Task Management - JSON-Based Task Tracking with Dependencies">
+  <meta property="og:description" content="Claude Code introduces a sophisticated task management system inspired by Beads. JSON-based task tracking with dependencies, parallel sub-agents, and version control integration.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=630&fit=crop&q=80">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-01-27">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code Task Management - JSON-Based Task Tracking with Dependencies">
+  <meta name="twitter:description" content="Claude Code introduces a sophisticated task management system inspired by Beads. JSON-based task tracking with dependencies, parallel sub-agents, and version control integration.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=630&fit=crop&q=80">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Code Task Management - JSON-Based Task Tracking with Dependencies",
+    "description": "Claude Code introduces a sophisticated task management system inspired by Beads. JSON-based task tracking with dependencies, parallel sub-agents, and version control integration.",
+    "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=630&fit=crop&q=80",
+    "datePublished": "2026-01-27",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-code-task-management.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .workflow-container {
+      background: var(--bg-card);
+      padding: 48px;
+      margin-top: 48px;
+    }
+
+    .workflow-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+
+    .workflow-steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--border-color);
+    }
+
+    .workflow-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-card);
+      border: 3px solid var(--text-primary);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step-command {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 6px 12px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .code-block .comment {
+      color: #6B7280;
+    }
+
+    .code-block .command {
+      color: #F59E0B;
+    }
+
+    .code-block .string {
+      color: #10B981;
+    }
+
+    .code-block .flag {
+      color: #60A5FA;
+    }
+
+    .code-block .key {
+      color: #A78BFA;
+    }
+
+    .comparison-table {
+      width: 100%;
+      background: var(--bg-card);
+      margin-top: 48px;
+      border-collapse: collapse;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 20px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comparison-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+    }
+
+    .comparison-table td {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-content {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .cta-command {
+      display: inline-block;
+      background: rgba(248, 246, 241, 0.1);
+      border: 1px solid rgba(248, 246, 241, 0.2);
+      padding: 16px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--bg-primary);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+    .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+    @media (max-width: 1100px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .workflow-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .workflow-steps::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 48px 24px;
+      }
+      .hero-title {
+        font-size: 42px;
+      }
+      .hero-title span {
+        font-size: 18px;
+      }
+      .hero-desc {
+        font-size: 17px;
+      }
+      .content {
+        padding: 0 24px 48px;
+      }
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
+      }
+      .section-number {
+        font-size: 48px;
+      }
+      .section-title {
+        font-size: 24px;
+      }
+      .workflow-steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .feature-card {
+        padding: 28px;
+      }
+      .workflow-container {
+        padding: 32px 24px;
+      }
+      .cta-section {
+        padding: 40px 24px;
+      }
+      .cta-title {
+        font-size: 24px;
+      }
+      .cta-command {
+        font-size: 12px;
+        padding: 12px 20px;
+        word-break: break-all;
+      }
+      .header, .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .comparison-table {
+        font-size: 12px;
+      }
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+      .hero-title {
+        font-size: 32px;
+      }
+      .hero-title span {
+        font-size: 14px;
+        margin-top: 8px;
+      }
+      .hero-desc {
+        font-size: 15px;
+        margin-top: 24px;
+      }
+      .content {
+        padding: 0 20px 40px;
+      }
+      .section-number {
+        font-size: 36px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+      .feature-title {
+        font-size: 18px;
+      }
+      .step-number {
+        width: 48px;
+        height: 48px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="../index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-label animate">Feature - Claude Code CLI</div>
+    <h1 class="hero-title animate delay-1">
+      Task Management
+      <span>JSON-Based Task Tracking with Dependencies</span>
+    </h1>
+    <p class="hero-desc animate delay-2">
+      Claude Code has introduced a sophisticated task management system inspired by <strong>Beads</strong>, moving beyond simple to-do lists to a robust structure of JSON-based task tracking. This upgrade enables complex dependency management, parallel sub-agents, and optimized context window usage across long development sessions.
+    </p>
+  </section>
+
+  <div class="content">
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">What's New?</h2>
+          <p class="section-subtitle">Beyond Simple To-Do Lists</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">📋</div>
+          <h3 class="feature-title">JSON-Based Tasks</h3>
+          <p class="feature-desc">
+            Tasks are stored as structured JSON files rather than plain markdown. Each task includes metadata like status, dependencies, blockers, and ownership. This enables programmatic manipulation and precise tracking across sessions.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">🔗</div>
+          <h3 class="feature-title">Dependency Graphs</h3>
+          <p class="feature-desc">
+            Tasks can declare <code>blocks</code> and <code>blockedBy</code> relationships. Claude Code understands which tasks must complete before others can start, preventing work on blocked items and surfacing ready-to-work tasks automatically.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Parallel Sub-Agents</h3>
+          <p class="feature-desc">
+            Multiple tasks without dependencies can be processed concurrently using sub-agents. This parallelization significantly reduces total completion time for complex projects with many independent work items.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">Task Structure</h2>
+          <p class="section-subtitle">The JSON Schema</p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Task Object Structure</div>
+        <div class="code-block">
+          <pre>{
+  <span class="key">"id"</span>: <span class="string">"task-001"</span>,
+  <span class="key">"subject"</span>: <span class="string">"Implement user authentication"</span>,
+  <span class="key">"description"</span>: <span class="string">"Add JWT-based auth with refresh tokens"</span>,
+  <span class="key">"status"</span>: <span class="string">"in_progress"</span>,
+  <span class="key">"activeForm"</span>: <span class="string">"Implementing authentication"</span>,
+  <span class="key">"owner"</span>: <span class="string">"main-agent"</span>,
+  <span class="key">"blocks"</span>: [<span class="string">"task-003"</span>, <span class="string">"task-004"</span>],
+  <span class="key">"blockedBy"</span>: [<span class="string">"task-002"</span>],
+  <span class="key">"metadata"</span>: {
+    <span class="key">"priority"</span>: <span class="string">"high"</span>,
+    <span class="key">"component"</span>: <span class="string">"auth"</span>
+  }
+}</pre>
+        </div>
+      </div>
+
+      <div class="workflow-container">
+        <div class="workflow-title">Task Lifecycle</div>
+        <div class="workflow-steps">
+          <div class="workflow-step animate delay-1">
+            <div class="step-number">01</div>
+            <div class="step-title">Pending</div>
+            <code class="step-command">TaskCreate</code>
+            <p class="step-desc">Task created, waiting to be claimed by an agent</p>
+          </div>
+
+          <div class="workflow-step animate delay-2">
+            <div class="step-number">02</div>
+            <div class="step-title">In Progress</div>
+            <code class="step-command">TaskUpdate</code>
+            <p class="step-desc">Agent claims task and begins work</p>
+          </div>
+
+          <div class="workflow-step animate delay-3">
+            <div class="step-number">03</div>
+            <div class="step-title">Blocked</div>
+            <code class="step-command">blockedBy</code>
+            <p class="step-desc">Waiting on dependency tasks to complete</p>
+          </div>
+
+          <div class="workflow-step animate delay-4">
+            <div class="step-number">04</div>
+            <div class="step-title">Completed</div>
+            <code class="step-command">status: completed</code>
+            <p class="step-desc">Work finished, unblocks dependent tasks</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">Context Optimization</h2>
+          <p class="section-subtitle">Preventing Long Session Degradation</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">External State Storage</h3>
+          <p class="feature-desc">
+            Tasks live in files, not in the conversation context. This means Claude Code can offload state management to the filesystem, preserving context window space for actual code analysis and generation work.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">📉</div>
+          <h3 class="feature-title">Reduced Context Bloat</h3>
+          <p class="feature-desc">
+            Traditional approaches accumulate task lists in conversation history. The JSON-based system keeps only active task references in context, with full details fetched on-demand via <code>TaskGet</code>.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Session Recovery</h3>
+          <p class="feature-desc">
+            If a session crashes or is interrupted, task state persists on disk. A new Claude Code session can pick up exactly where the previous one left off by reading the task files.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">👥</div>
+          <h3 class="feature-title">Multi-Agent Handoff</h3>
+          <p class="feature-desc">
+            Sub-agents spawned via the Task tool can claim specific tasks. Each agent works independently, updating shared task state. The parent agent monitors progress without holding full task context.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Progress Visibility</h3>
+          <p class="feature-desc">
+            The <code>TaskList</code> tool provides a lightweight summary view. Users see overall progress, blocked items, and what's being worked on without dumping full task details into the conversation.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-6">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Focused Execution</h3>
+          <p class="feature-desc">
+            Claude Code can focus on one task at a time, fetching only the relevant task details. This task-centric approach prevents the scattered attention that emerges in long, unstructured sessions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">Version Control Integration</h2>
+          <p class="section-subtitle">Git-Friendly Task Management</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">📁</div>
+          <h3 class="feature-title">File-Based Storage</h3>
+          <p class="feature-desc">
+            Tasks are stored as regular files that can be committed to your repository. Track task history alongside code changes. See which tasks were active when specific commits were made.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">🔀</div>
+          <h3 class="feature-title">Branch Synchronization</h3>
+          <p class="feature-desc">
+            Different branches can have different task states. Feature branches carry their own task context. Merge task files just like code when branches converge.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🤝</div>
+          <h3 class="feature-title">Multi-Machine Sync</h3>
+          <p class="feature-desc">
+            Push task files to a remote repository and pull them on another machine. Continue a Claude Code session from your laptop that you started on your desktop.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Task Files in Repository</div>
+        <div class="code-block">
+          <pre><span class="string">my-project/</span>
+├── <span class="string">.claude/</span>
+│   └── <span class="command">tasks/</span>
+│       ├── <span class="flag">task-001.json</span>     <span class="comment"># Individual task files</span>
+│       ├── <span class="flag">task-002.json</span>
+│       └── <span class="flag">task-003.json</span>
+├── <span class="string">src/</span>
+└── <span class="string">.gitignore</span>
+
+<span class="comment"># Add to .gitignore if you want private tasks</span>
+<span class="comment"># .claude/tasks/</span>
+
+<span class="comment"># Or commit them for team visibility</span>
+<span class="command">git add</span> <span class="string">.claude/tasks/</span>
+<span class="command">git commit</span> <span class="flag">-m</span> <span class="string">"Add authentication tasks"</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <h2 class="section-title">Parallel Sub-Agents</h2>
+          <p class="section-subtitle">Concurrent Task Execution</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🚀</div>
+          <h3 class="feature-title">Independent Execution</h3>
+          <p class="feature-desc">
+            Tasks without blockers can be assigned to separate sub-agents. Each agent runs in its own context, working independently. The main agent orchestrates and monitors progress.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">📈</div>
+          <h3 class="feature-title">Throughput Scaling</h3>
+          <p class="feature-desc">
+            A project with 10 independent tasks can potentially complete 10x faster with parallel execution. Dependencies create serialization points, but independent work proceeds concurrently.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🎛️</div>
+          <h3 class="feature-title">Resource Management</h3>
+          <p class="feature-desc">
+            Sub-agents consume API tokens independently. Complex projects can be configured to run multiple agents in parallel, with the task system preventing conflicts through ownership tracking.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Spawning Parallel Agents</div>
+        <div class="code-block">
+          <pre><span class="comment"># Main agent identifies parallelizable tasks</span>
+<span class="command">TaskList</span>  <span class="comment"># Shows: task-002 (pending), task-003 (pending), task-004 (blocked)</span>
+
+<span class="comment"># Spawn sub-agents for independent tasks</span>
+<span class="command">Task</span> {
+  <span class="key">"subagent_type"</span>: <span class="string">"general-purpose"</span>,
+  <span class="key">"prompt"</span>: <span class="string">"Claim and complete task-002"</span>,
+  <span class="key">"run_in_background"</span>: <span class="flag">true</span>
+}
+
+<span class="command">Task</span> {
+  <span class="key">"subagent_type"</span>: <span class="string">"general-purpose"</span>,
+  <span class="key">"prompt"</span>: <span class="string">"Claim and complete task-003"</span>,
+  <span class="key">"run_in_background"</span>: <span class="flag">true</span>
+}
+
+<span class="comment"># Both agents work simultaneously</span>
+<span class="comment"># task-004 unblocks when task-002 completes</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">06</span>
+        <div>
+          <h2 class="section-title">vs. Ralph Wiggum Loop</h2>
+          <p class="section-subtitle">Different Philosophies</p>
+        </div>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Task Management System</th>
+            <th>Ralph Wiggum Loop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Approach</td>
+            <td>Explicit, manageable task lists</td>
+            <td>Single continuous autonomous prompt</td>
+          </tr>
+          <tr>
+            <td>State Management</td>
+            <td>JSON files on disk</td>
+            <td>PROMPT.md + @fix_plan.md</td>
+          </tr>
+          <tr>
+            <td>Dependencies</td>
+            <td>First-class support with blocks/blockedBy</td>
+            <td>Implicit through task ordering</td>
+          </tr>
+          <tr>
+            <td>Parallelization</td>
+            <td>Native sub-agent support</td>
+            <td>Single sequential loop</td>
+          </tr>
+          <tr>
+            <td>Session Boundaries</td>
+            <td>Tasks persist across sessions</td>
+            <td>Loop continues until complete</td>
+          </tr>
+          <tr>
+            <td>User Intervention</td>
+            <td>Granular control per task</td>
+            <td>Minimal, loop runs autonomously</td>
+          </tr>
+          <tr>
+            <td>Best For</td>
+            <td>Complex projects with many dependencies</td>
+            <td>Well-defined, linear projects</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="features-grid" style="margin-top: 48px;">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">When to Use Tasks</h3>
+          <p class="feature-desc">
+            Choose the task management system when you have complex projects with many interdependent components, need to pause and resume work across sessions, or want granular visibility into progress.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">∞</div>
+          <h3 class="feature-title">When to Use Ralph</h3>
+          <p class="feature-desc">
+            Choose Ralph when you have a well-defined project that can be described in a single prompt, want fully autonomous execution, and prefer minimal intervention during development.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Complementary Tools</h3>
+          <p class="feature-desc">
+            These approaches aren't mutually exclusive. Ralph could potentially adopt the task management system internally, gaining dependency tracking while maintaining its autonomous loop philosophy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-number">07</span>
+        <div>
+          <h2 class="section-title">Getting Started</h2>
+          <p class="section-subtitle">Using the Task System</p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Natural Language Task Operations</div>
+        <div class="code-block">
+          <pre><span class="comment"># Create a new task</span>
+<span class="string">"Create a task to implement the login form with email and password fields"</span>
+
+<span class="comment"># List all tasks</span>
+<span class="string">"What tasks do I have?"</span>
+<span class="string">"Show me the task list"</span>
+
+<span class="comment"># Get full task details</span>
+<span class="string">"What are the details of the login form task?"</span>
+
+<span class="comment"># Update task status</span>
+<span class="string">"Start working on the login form task"</span>
+<span class="string">"Mark the authentication task as in progress"</span>
+
+<span class="comment"># Add dependencies</span>
+<span class="string">"The API integration task is blocked by the login form task"</span>
+<span class="string">"Task 3 depends on task 1 and task 2"</span>
+
+<span class="comment"># Mark complete</span>
+<span class="string">"Mark the login form task as done"</span>
+<span class="string">"Complete task 1"</span></pre>
+        </div>
+      </div>
+
+      <p style="margin-top: 24px; font-size: 14px; color: var(--text-muted); line-height: 1.7;">
+        Claude Code handles the underlying tool calls automatically. You interact with the task system using natural language, and Claude translates your requests into the appropriate <code>TaskCreate</code>, <code>TaskList</code>, <code>TaskGet</code>, and <code>TaskUpdate</code> operations.
+      </p>
+    </section>
+
+    <div class="cta-section">
+      <div class="cta-content">
+        <div class="cta-label">Built into Claude Code</div>
+        <div class="cta-title">Structured Task Management for Complex Projects</div>
+        <p class="cta-desc">
+          The task management system is available in Claude Code today. Create explicit task lists, manage dependencies, and leverage parallel sub-agents for faster project completion.
+        </p>
+        <code class="cta-command">TaskCreate, TaskList, TaskGet, TaskUpdate</code>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="../index.html" class="footer-link">
+      ← Back to Blog
+    </a>
+    <div style="display: flex; gap: 32px; align-items: center;">
+      <span class="footer-text">© 2025 CHSAMI - Claude Code Task Management</span>
+      <a href="posts/ralph-claude-code.html" class="footer-link">
+        Read about Ralph →
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>
