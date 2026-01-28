@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparing Your Codebase for Agentic Coding - CHSAMI</title>
+    <meta name="description"
+        content="Learn why making your codebase AI-agent friendly is the most important investment you can make for developer productivity in 2026 and beyond.">
+    <meta name="author" content="Sami">
+    <link rel="canonical" href="https://chsami.com/posts/agentic-ready-codebase.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chsami.com/posts/agentic-ready-codebase.html">
+    <meta property="og:title" content="Preparing Your Codebase for Agentic Coding">
+    <meta property="og:description"
+        content="Learn why making your codebase AI-agent friendly is the most important investment you can make for developer productivity in 2026 and beyond.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop">
+    <meta property="og:site_name" content="CHSAMI">
+    <meta property="article:published_time" content="2026-01-28">
+    <meta property="article:author" content="Sami">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Preparing Your Codebase for Agentic Coding">
+    <meta name="twitter:description"
+        content="Learn why making your codebase AI-agent friendly is the most important investment you can make for developer productivity in 2026 and beyond.">
+    <meta name="twitter:image"
+        content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Preparing Your Codebase for Agentic Coding",
+    "description": "Learn why making your codebase AI-agent friendly is the most important investment you can make for developer productivity in 2026 and beyond.",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop",
+    "datePublished": "2026-01-28",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/agentic-ready-codebase.html"
+    }
+  }
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #F8F6F1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #888888;
+            --text-light: #A8A4A0;
+            --border-color: #E8E4DC;
+            --accent: #1A1A1A;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 48px 60px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .hero {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-weight: 400;
+            font-size: 28px;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-top: 32px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-top: 64px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 96px;
+            font-weight: 500;
+            color: var(--border-color);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .features-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--text-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .feature-desc code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-primary);
+            padding: 2px 6px;
+        }
+
+        .code-section {
+            margin-top: 48px;
+        }
+
+        .code-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--text-primary);
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--bg-primary);
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6B7280;
+        }
+
+        .code-block .key {
+            color: #F59E0B;
+        }
+
+        .code-block .value {
+            color: #10B981;
+        }
+
+        .code-block .heading {
+            color: #60A5FA;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border-left: 4px solid var(--text-primary);
+        }
+
+        .tip-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tip-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .pro-tip {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+
+        .pro-tip-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .pro-tip-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pro-tip-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        .comparison-container {
+            background: var(--bg-card);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 24px 32px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        .bad-cell {
+            color: #DC2626;
+        }
+
+        .good-cell {
+            color: #059669;
+        }
+
+        .cta-section {
+            background: var(--text-primary);
+            padding: 64px;
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .cta-content {
+            color: var(--bg-primary);
+        }
+
+        .cta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 24px;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-title span {
+                font-size: 20px;
+            }
+
+            .hero-desc {
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 0 24px 48px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 48px;
+            }
+
+            .section-number {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-card {
+                padding: 28px;
+            }
+
+            .code-block {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            .code-block pre {
+                font-size: 12px;
+            }
+
+            .comparison-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .comparison-table {
+                min-width: 500px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 16px;
+                font-size: 13px;
+            }
+
+            .pro-tip {
+                padding: 32px 24px;
+            }
+
+            .pro-tip-title {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .header,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-title span {
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+                margin-top: 24px;
+            }
+
+            .content {
+                padding: 0 20px 40px;
+            }
+
+            .section-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .feature-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+        </a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-label animate">Guide - Developer Productivity</div>
+        <h1 class="hero-title animate delay-1">
+            Agent-Ready
+            <span>Preparing Your Codebase for Agentic Coding</span>
+        </h1>
+        <p class="hero-desc animate delay-2">
+            The difference between a 10-minute task and a 2-hour struggle often comes down to whether your codebase speaks the same language as your AI agent. Here's how to make that happen.
+        </p>
+    </section>
+
+    <div class="content">
+        <!-- Section 1: The Reality Check -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">The Reality Check</h2>
+                    <p class="section-subtitle">Why Most Codebases Fail with AI Agents</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">?!</div>
+                    <h3 class="feature-title">The Tribal Knowledge Problem</h3>
+                    <p class="feature-desc">
+                        Last week I asked Claude to add a new API endpoint. It created the file in the wrong directory, used the old authentication pattern we deprecated months ago, and imported a testing library we never use. The code was technically correct — but completely wrong for our project.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">↻↻</div>
+                    <h3 class="feature-title">The Repetition Tax</h3>
+                    <p class="feature-desc">
+                        Every session starts the same way: "We use TypeScript strict mode", "Put API routes in /api/v2", "Always use the logger from @internal/logging". You're paying a repetition tax that compounds with every interaction.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">The Context Window Crunch</h3>
+                    <p class="feature-desc">
+                        AI agents have limited memory. When your project lacks clear structure, the agent wastes precious context tokens figuring out basics instead of solving your actual problem. A well-organized codebase means more room for what matters.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pro-tip animate delay-6">
+                <div class="pro-tip-label">The Core Insight</div>
+                <div class="pro-tip-title">AI Agents Are Junior Developers with Perfect Memory</div>
+                <p class="pro-tip-desc">
+                    Think of an AI agent as a brilliant junior developer who joined your team today. They can write excellent code, but they don't know your conventions, your architecture decisions, or why you chose PostgreSQL over MongoDB. The difference is: unlike a human, you only have to tell them once — if you write it down properly.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: The Foundation -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">The Foundation</h2>
+                    <p class="section-subtitle">Instruction Files That Actually Work</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">CLAUDE.md / AGENTS.md</h3>
+                    <p class="feature-desc">
+                        This is your project's instruction manual for AI agents. Not a README — those are for humans and tend to be vague. This file contains specific, actionable rules: where files go, which patterns to use, what to avoid. I keep mine under 500 lines but packed with context.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🏠</div>
+                    <h3 class="feature-title">Global vs Local Instructions</h3>
+                    <p class="feature-desc">
+                        Put universal preferences in <code>~/.claude/CLAUDE.md</code> (your preferred model, general coding style, tools you always use). Project-specific rules go in the repo's <code>CLAUDE.md</code>. The agent reads both — global first, then local overrides.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">Example: A Real CLAUDE.md Structure</div>
+                <div class="code-block">
+                    <pre><span class="heading"># Project: E-commerce API</span>
+
+<span class="heading">## Tech Stack</span>
+<span class="value">- Node.js 20 with TypeScript 5.3 (strict mode)</span>
+<span class="value">- PostgreSQL 16 with Drizzle ORM</span>
+<span class="value">- Express.js with Zod validation</span>
+<span class="value">- Jest for testing, Biome for linting</span>
+
+<span class="heading">## Project Structure</span>
+<span class="value">- /src/api/v2/* - All new endpoints go here</span>
+<span class="value">- /src/services/* - Business logic, one file per domain</span>
+<span class="value">- /src/db/schema/* - Drizzle schema definitions</span>
+<span class="value">- Tests are colocated: user.service.ts → user.service.test.ts</span>
+
+<span class="heading">## Code Conventions</span>
+<span class="value">- Named exports only, no default exports</span>
+<span class="value">- Use Result&lt;T, E&gt; pattern for error handling</span>
+<span class="value">- All API responses use ApiResponse&lt;T&gt; wrapper</span>
+<span class="value">- Database queries go through repository layer</span>
+
+<span class="heading">## What NOT to Do</span>
+<span class="key">- Never use console.log — use logger from @internal/logging</span>
+<span class="key">- Never use any type — always define interfaces</span>
+<span class="key">- Never commit .env files or hardcode credentials</span>
+<span class="key">- Don't use /api/v1/* — it's deprecated</span>
+
+<span class="heading">## Running the Project</span>
+<span class="comment"># Install: pnpm install</span>
+<span class="comment"># Dev: pnpm dev (runs on port 3001)</span>
+<span class="comment"># Test: pnpm test -- --watch</span>
+<span class="comment"># DB migrations: pnpm db:migrate</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Structure Matters -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Structure Matters</h2>
+                    <p class="section-subtitle">How AI Agents Navigate Your Code</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📁</div>
+                    <h3 class="feature-title">Predictable Directory Structure</h3>
+                    <p class="feature-desc">
+                        When I ask Claude to create a new user service, it should know exactly where to put it without asking. <code>/src/services/user.service.ts</code> — not <code>/lib/user/service.js</code> or <code>/backend/users/UserService.ts</code>. Pick a convention and document it.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🏷️</div>
+                    <h3 class="feature-title">Consistent Naming Patterns</h3>
+                    <p class="feature-desc">
+                        Is it <code>getUserById</code> or <code>findUserById</code> or <code>fetchUser</code>? Pick one. AI agents learn from your existing code. If your naming is inconsistent, the generated code will be too. I grep my codebase quarterly to catch drift.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">Clear Import Boundaries</h3>
+                    <p class="feature-desc">
+                        Use path aliases and barrel exports to make imports obvious. When Claude sees <code>import { UserService } from '@services'</code> it understands the architecture instantly. Relative import spaghetti like <code>../../../services</code> confuses everyone.
+                    </p>
+                </div>
+            </div>
+
+            <div class="comparison-container animate delay-4">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Agent-Hostile</th>
+                            <th>Agent-Friendly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>File location</td>
+                            <td class="bad-cell">"Put it wherever makes sense"</td>
+                            <td class="good-cell">/src/services/*.service.ts</td>
+                        </tr>
+                        <tr>
+                            <td>Function naming</td>
+                            <td class="bad-cell">get, fetch, find, retrieve (mixed)</td>
+                            <td class="good-cell">findById, findMany, create, update, delete</td>
+                        </tr>
+                        <tr>
+                            <td>Error handling</td>
+                            <td class="bad-cell">throw, return null, return -1 (mixed)</td>
+                            <td class="good-cell">Result&lt;T, E&gt; everywhere</td>
+                        </tr>
+                        <tr>
+                            <td>Config access</td>
+                            <td class="bad-cell">process.env scattered everywhere</td>
+                            <td class="good-cell">Config object from @config</td>
+                        </tr>
+                        <tr>
+                            <td>Test files</td>
+                            <td class="bad-cell">/tests/__tests__/unit/services/</td>
+                            <td class="good-cell">Colocated: user.service.test.ts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: Documentation as Code -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">Documentation as Code</h2>
+                    <p class="section-subtitle">The Parts AI Agents Actually Read</p>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card animate delay-1">
+                    <div class="tip-number">Tip 01</div>
+                    <h4 class="tip-title">Type Definitions Are Documentation</h4>
+                    <p class="tip-desc">AI agents read your types more carefully than your comments. A well-defined <code>interface User { id: string; email: string; createdAt: Date }</code> tells Claude more than a paragraph of prose. Invest in your type system.</p>
+                </div>
+
+                <div class="tip-card animate delay-2">
+                    <div class="tip-number">Tip 02</div>
+                    <h4 class="tip-title">JSDoc for Complex Functions</h4>
+                    <p class="tip-desc">For functions with non-obvious behavior, JSDoc comments get parsed and understood. Not every function — just the ones where the name doesn't tell the whole story. Include @example blocks for common usage patterns.</p>
+                </div>
+
+                <div class="tip-card animate delay-3">
+                    <div class="tip-number">Tip 03</div>
+                    <h4 class="tip-title">Architecture Decision Records</h4>
+                    <p class="tip-desc">Why did you choose Drizzle over Prisma? Put it in <code>/docs/adr/</code>. When Claude needs to make architectural decisions, these records prevent it from suggesting solutions you've already rejected.</p>
+                </div>
+
+                <div class="tip-card animate delay-4">
+                    <div class="tip-number">Tip 04</div>
+                    <h4 class="tip-title">Example Files Beat Descriptions</h4>
+                    <p class="tip-desc">Instead of describing your API response format, show it. Keep a <code>/examples</code> directory with sample requests, responses, and data structures. Claude will pattern-match against these rather than inventing formats.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Quick Wins -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">The Quick Wins</h2>
+                    <p class="section-subtitle">Do These Today</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">1</div>
+                    <h3 class="feature-title">Create Your CLAUDE.md</h3>
+                    <p class="feature-desc">
+                        Start with just 50 lines. Tech stack, directory structure, three things to always do, three things to never do. You can expand it over time as you notice the agent making the same mistakes.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">2</div>
+                    <h3 class="feature-title">Add Path Aliases</h3>
+                    <p class="feature-desc">
+                        Configure <code>@services</code>, <code>@utils</code>, <code>@types</code> in your tsconfig.json. This makes imports self-documenting and helps Claude understand your module boundaries without traversing directories.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">3</div>
+                    <h3 class="feature-title">Standardize One Pattern</h3>
+                    <p class="feature-desc">
+                        Pick your biggest inconsistency and fix it. If you have 5 different error handling approaches, standardize on one. The agent will then generate consistent code based on the pattern it sees most frequently.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">4</div>
+                    <h3 class="feature-title">Add a .cursorrules / Repo Instructions</h3>
+                    <p class="feature-desc">
+                        If you use Cursor, create <code>.cursorrules</code>. For GitHub Copilot, add <code>.github/copilot-instructions.md</code>. Different tools, same idea. Your conventions should follow you everywhere.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-5">
+                    <div class="feature-icon">5</div>
+                    <h3 class="feature-title">Document Your "Why Nots"</h3>
+                    <p class="feature-desc">
+                        Every project has anti-patterns. "We tried Redux but removed it because..." goes in CLAUDE.md. This prevents the agent from suggesting things you've already tried and abandoned.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-6">
+                    <div class="feature-icon">6</div>
+                    <h3 class="feature-title">Keep Scripts in package.json</h3>
+                    <p class="feature-desc">
+                        <code>pnpm test</code>, <code>pnpm lint</code>, <code>pnpm build</code> — standardize these. AI agents look at your package.json to understand how to run things. Undocumented Makefiles or custom scripts get missed.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: The Compound Effect -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <div>
+                    <h2 class="section-title">The Compound Effect</h2>
+                    <p class="section-subtitle">Why This Investment Pays Off</p>
+                </div>
+            </div>
+
+            <div class="features-grid features-grid-2">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Better First Attempts</h3>
+                    <p class="feature-desc">
+                        Before my CLAUDE.md: 60% of generated code needed significant rework. After: 90% is usable with minor tweaks. The agent stopped guessing and started following rules. That's hours saved per week.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Consistent Team Output</h3>
+                    <p class="feature-desc">
+                        When everyone on the team uses AI agents with the same instruction files, code reviews get easier. The AI generates code that matches your standards, not each developer's personal interpretation of "clean code".
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">Faster Onboarding</h3>
+                    <p class="feature-desc">
+                        New team members can use AI agents effectively from day one. They don't need months of tribal knowledge — the CLAUDE.md file captures it all. Ask the agent "how do we handle authentication here?" and get an accurate answer.
+                    </p>
+                </div>
+
+                <div class="feature-card animate delay-4">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Reduced Technical Debt</h3>
+                    <p class="feature-desc">
+                        When AI agents follow your conventions, they don't introduce new patterns that someone else has to clean up later. The code they generate fits your architecture instead of fighting against it.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pro-tip animate delay-5">
+                <div class="pro-tip-label">Real Talk</div>
+                <div class="pro-tip-title">This Isn't Just About AI</div>
+                <p class="pro-tip-desc">
+                    Everything that makes a codebase agent-friendly also makes it human-friendly. Clear structure, consistent patterns, documented decisions — these help new developers, future you, and anyone who touches the code. AI agents just make the ROI on these investments immediate instead of gradual.
+                </p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-label">Start Now</div>
+                <div class="cta-title">Your Codebase Will Thank You</div>
+                <p class="cta-desc">
+                    Create a CLAUDE.md file in your project root today. Start with your tech stack, directory conventions, and three things the agent should never do. Iterate from there. The best time to make your codebase agent-ready was six months ago. The second best time is now.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a href="../index.html" class="footer-link">
+            ← Back to Blog
+        </a>
+        <div style="display: flex; gap: 32px; align-items: center;">
+            <span class="footer-text">© 2026 CHSAMI - Agentic Coding</span>
+            <a href="ai-agents-markdown.html" class="footer-link">
+                Learn about AGENTS.md →
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>

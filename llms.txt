@@ -25,6 +25,11 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### Preparing Your Codebase for Agentic Coding
+- URL: /posts/agentic-ready-codebase.html
+- Published: 2026-01-28
+- Description: A comprehensive guide on why making your codebase AI-agent friendly is the most important investment for developer productivity. Covers the tribal knowledge problem, CLAUDE.md/AGENTS.md instruction files, predictable project structure, consistent naming patterns, and practical quick wins you can implement today.
+
 #### Claude Code Task Management - JSON-Based Task Tracking
 - URL: /posts/claude-code-task-management.html
 - Published: 2026-01-27
