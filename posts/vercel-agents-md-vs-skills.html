@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vercel's Agent Evals: AGENTS.md vs Skills - CHSAMI</title>
+  <meta name="description" content="Vercel hardened their agent evals and found a compressed AGENTS.md index beat skills-based retrieval, reaching 100% pass rate across build, lint, and test.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/vercel-agents-md-vs-skills.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/vercel-agents-md-vs-skills.html">
+  <meta property="og:title" content="Vercel's Agent Evals: AGENTS.md vs Skills">
+  <meta property="og:description" content="A compressed 8KB AGENTS.md index delivered 100% pass rates in Vercel's agent evals, outperforming skills-based retrieval.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-03">
+  <meta property="article:author" content="Sami">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vercel's Agent Evals: AGENTS.md vs Skills">
+  <meta name="twitter:description" content="A compressed 8KB AGENTS.md index delivered 100% pass rates in Vercel's agent evals, outperforming skills-based retrieval.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Vercel's Agent Evals: AGENTS.md vs Skills",
+    "description": "Vercel hardened their agent evals and found a compressed AGENTS.md index beat skills-based retrieval, reaching 100% pass rate across build, lint, and test.",
+    "image": "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-03",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/vercel-agents-md-vs-skills.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    /* Hero */
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    /* Content */
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .example-grid {
+      margin-top: 32px;
+      align-items: start;
+    }
+
+    .example-grid .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .example-grid .code-block {
+      flex: 1;
+    }
+
+    .example-grid .code-block pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* List blocks */
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Code */
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* Checklist */
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .example-grid .card { width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .example-grid { gap: 24px; margin-top: 24px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Agentic Engineering</div>
+      <h1 class="hero-title">AGENTS.md Outperforms Skills<span>Inside Vercel's agent evals</span></h1>
+      <p class="hero-desc">
+        Vercel hardened their agent evals and found an 8KB compressed docs index inside <code>AGENTS.md</code> hit a 100% pass rate—beating skills-based retrieval that stalled at 79% even with explicit trigger instructions. Here’s the setup, why passive context wins right now, and how to apply it to your own projects.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The problem</div>
+          <div class="section-subtitle">Outdated training data vs. fast-moving stacks</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Platform drift</div>
+          <p class="card-desc">
+            New APIs and runtime behaviors land faster than model training cycles; older projects risk the inverse (models proposing capabilities they don’t ship). Agents hallucinate or miss config changes.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Two teaching models</div>
+          <p class="card-desc">
+            Skills package tools + docs for on-demand retrieval. <code>AGENTS.md</code> injects project instructions on every turn. Vercel built both: a reusable skill and a compressed docs index stored in <code>AGENTS.md</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">Eval setup</div>
+          <div class="section-subtitle">Hardened, behavior-first tests</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Scope</div>
+          <div class="card-title">Fresh platform APIs</div>
+          <p class="card-desc">Coverage included new caching primitives, request/response helpers, authorization branches, async request state, and proxy routing—APIs unlikely to be in model training data.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Method</div>
+          <div class="card-title">Behavior over shape</div>
+          <p class="card-desc">Removed leaky tests and asserted observable outcomes (build, lint, test) with retries to smooth model variance.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Variants</div>
+          <div class="card-title">Four configurations</div>
+          <p class="card-desc">Baseline (no docs), skill (default), skill with explicit invocation instructions, and compressed docs index injected into <code>AGENTS.md</code>.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Results</div>
+          <div class="section-subtitle">Passive context wins decisively</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Pass rates</div>
+          <div class="list">
+            <div class="list-item">
+              <div class="list-label">Baseline</div>
+              <div class="list-body">53% overall; 84/95/63 across build/lint/test.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Skill</div>
+              <div class="list-body">53% without instructions; 79% with “explore project, then invoke skill” guidance (95/100/84 breakdown).</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">AGENTS.md</div>
+              <div class="list-body"><strong>100% across build, lint, and test</strong> using an ~8KB compressed docs index plus a “prefer retrieval-led reasoning” note.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Why skills underperformed</div>
+          <p class="card-desc">
+            Skills weren’t invoked in 56% of cases. Trigger wording was brittle: “invoke skill first” fixed some tasks but missed config edits; “explore then invoke” worked better yet stayed below parity with passive context.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">Why passive context helps</div>
+          <div class="section-subtitle">No decision points, consistent availability</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Zero trigger risk</div>
+          <p class="card-desc">Instructions live in the system prompt every turn—no tool invocation required.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Stable ordering</div>
+          <p class="card-desc">Avoids sequencing pitfalls (docs first vs project first) that change behavior.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Context discipline</div>
+          <p class="card-desc">Compression to ~8KB preserved a 100% pass rate while keeping a minimal footprint.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Apply it to your repo</div>
+          <div class="section-subtitle">One command setup</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="meta">Command</div>
+        <div class="code-block">
+          <pre># add compressed docs index to AGENTS.md
+echo "[Docs Index]|root: ./framework-docs|IMPORTANT: Prefer retrieval-led reasoning|...compressed index..." >> AGENTS.md</pre>
+        </div>
+        <div class="list" style="margin-top:24px;">
+          <div class="list-item">
+            <div class="list-label">Detect</div>
+            <div class="list-body">Read your runtime/framework version.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Download</div>
+            <div class="list-body">Store matching docs locally (e.g., <code>./framework-docs/</code>).</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Inject</div>
+            <div class="list-body">Adds the compressed docs index + “prefer retrieval-led reasoning” line to <code>AGENTS.md</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2 example-grid">
+        <div class="card">
+          <div class="meta">Example</div>
+          <div class="card-title">AGENTS.md (repo root)</div>
+          <div class="code-block">
+            <pre># Repo: ./AGENTS.md
+[Docs Index]|root: ./framework-docs|IMPORTANT: Prefer retrieval-led reasoning over pre-training-led reasoning
+01-guides:{00-intro.md,01-routing.md,02-data.md}
+02-apis:{cache.md,cookies.md,headers.md,auth.md}</pre>
+          </div>
+          <p class="card-desc" style="margin-top:16px;">Place <code>AGENTS.md</code> at the repository root so agents read it every turn; keep compressed entries pointing to locally checked-in docs under <code>./framework-docs/</code>.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Example</div>
+          <div class="card-title">Skill package (./skills/framework-docs/skill.json)</div>
+          <div class="code-block">
+            <pre>{
+  "name": "framework-docs",
+  "description": "Framework docs with caching/auth examples",
+  "version": "1.0.0",
+  "docs": "./framework-docs",
+  "tools": []
+}</pre>
+          </div>
+          <p class="card-desc" style="margin-top:16px;">Place skills under <code>./skills/&lt;skill-name&gt;/skill.json</code>; the agent must choose to invoke this skill to read the same docs your <code>AGENTS.md</code> index references.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Practical guidance</div>
+          <div class="section-subtitle">What to do today</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Checklist</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>Run the codemod and commit <code>AGENTS.md</code> + <code>.next-docs/</code> (or your framework equivalent).</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>Keep the index compressed; avoid pasting full docs unless your agent supports long contexts.</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Retain a single instruction: “Prefer retrieval-led reasoning over pre-training-led reasoning.”</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>Use skills for explicit, vertical workflows (upgrades, migrations) rather than general framework literacy.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">For framework authors</div>
+          <p class="card-desc">
+            Ship a ready-to-paste <code>AGENTS.md</code> snippet and a compressed index for your docs. Users get correct, version-matched hints without relying on tool invocation reliability. Skills can stay as opt-in, workflow-specific accelerators.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Takeaway</div>
+        <div class="cta-title">Reduce decisions, raise pass rates</div>
+        <p class="cta-desc">
+          Until agents reliably trigger tools, keep the critical context in <code>AGENTS.md</code>. Compress aggressively, point to local docs, and reserve skills for tasks that need explicit user intent.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026-02-03 • 8 min read</div>
+    <a class="footer-link" href="https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals" target="_blank" rel="noopener noreferrer">Read Vercel's original post →</a>
+  </footer>
+</body>
+</html>
