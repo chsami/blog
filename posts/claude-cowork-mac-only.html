@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Cowork: Why It's Mac Only (For Now) - CHSAMI</title>
+  <meta name="description" content="Claude Cowork uses Apple's Virtualization Framework to sandbox a Linux VM on your Mac. Here's how it works under the hood and when Windows and Linux users can expect support.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-cowork-mac-only.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-cowork-mac-only.html">
+  <meta property="og:title" content="Claude Cowork: Why It's Mac Only (For Now)">
+  <meta property="og:description" content="Claude Cowork uses Apple's Virtualization Framework to sandbox a Linux VM on your Mac. Here's how it works under the hood and when Windows and Linux users can expect support.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-06">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Cowork: Why It's Mac Only (For Now)">
+  <meta name="twitter:description" content="Claude Cowork uses Apple's Virtualization Framework to sandbox a Linux VM on your Mac. Here's how it works under the hood and when Windows and Linux users can expect support.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Cowork: Why It's Mac Only (For Now)",
+    "description": "Claude Cowork uses Apple's Virtualization Framework to sandbox a Linux VM on your Mac. Here's how it works under the hood and when Windows and Linux users can expect support.",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-cowork-mac-only.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI Tools</div>
+      <h1 class="hero-title">Claude Cowork Is Mac Only<span>And here's the technical reason why</span></h1>
+      <p class="hero-desc">
+        Anthropic launched Claude Cowork in January 2026 and it immediately turned heads. It can organize your files, draft documents, and automate desktop workflows. But if you're on Windows or Linux, you're locked out. The reason comes down to one Apple API that made the whole thing possible: <code>VZVirtualMachine</code>.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">What is Claude Cowork?</div>
+          <div class="section-subtitle">Claude Code for the rest of your work</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Your AI desktop assistant</div>
+          <p class="card-desc">
+            Cowork lives inside the Claude Desktop app on macOS. You give it access to a folder on your machine, describe what you need done, and it gets to work. Think of it as Claude Code but for everyday tasks instead of writing software. It reads your files, creates new ones, reorganizes folders, and builds documents from scratch.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Real world examples</div>
+          <p class="card-desc">
+            I pointed it at my Downloads folder and asked it to sort everything from the last month into subfolders by type. It created folders for PDFs, images, spreadsheets, and installers, then moved 140+ files in about 30 seconds. I also gave it a folder of receipt screenshots and it turned them into a clean expense spreadsheet with dates, vendors, and amounts.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">How it works under the hood</div>
+          <div class="section-subtitle">A sandboxed Linux VM on your Mac</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Foundation</div>
+          <div class="card-title">Apple's Virtualization Framework</div>
+          <p class="card-desc">Cowork uses <code>VZVirtualMachine</code>, an API that Apple ships as part of macOS. It spins up a lightweight Linux virtual machine directly on your Mac with near native performance. No Docker, no third party hypervisor, just a clean Apple API.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Sandbox</div>
+          <div class="card-title">Custom Linux filesystem</div>
+          <p class="card-desc">When you start a Cowork session, it downloads and boots a custom Linux root filesystem inside that VM. Your designated folder gets mounted at a path like <code>/sessions/&lt;name&gt;/mnt/</code>. Claude can only see files in that mount, nothing else on your system.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Isolation</div>
+          <div class="card-title">Filesystem boundary</div>
+          <p class="card-desc">The VM acts as a hard security boundary. Even if something goes wrong, the damage is contained to the sandbox. Your system files, other apps, and the rest of your filesystem remain completely untouched.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The architecture in one sentence</div>
+        <p class="card-desc">Cowork is essentially Claude Code wrapped in a friendlier interface, running inside a sandboxed Linux VM powered by Apple's native virtualization, with your chosen folder mounted as the only accessible path.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Why Mac only?</div>
+          <div class="section-subtitle">It all comes down to VZVirtualMachine</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The Apple dependency</div>
+          <p class="card-desc">
+            <code>VZVirtualMachine</code> is exclusive to macOS. It is part of Apple's Virtualization framework that launched with macOS Big Sur and has been refined since. It provides a clean, performant way to spin up Linux VMs with minimal overhead. There is no equivalent single API on Windows or Linux that offers the same combination of simplicity, performance, and native integration that Anthropic built their sandbox around.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Why not just use Docker?</div>
+          <p class="card-desc">
+            Docker would add a layer of complexity and a dependency that many non technical users don't want to deal with. Cowork's whole pitch is that it's simple: open Claude Desktop, pick a folder, describe your task. Apple's VM framework lets Anthropic ship that experience without asking users to install anything extra. On Windows or Linux, they would need to find or build something that provides the same invisible sandbox experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">What Windows and Linux lack</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Windows</div>
+            <div class="list-body">Windows has WSL2 and Hyper V, but neither offers the same tightly integrated, single API experience as Apple's framework. WSL2 is close but requires separate enablement and has edge cases around filesystem permissions that would complicate the seamless folder mounting Cowork depends on.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Linux</div>
+            <div class="list-body">Linux has KVM and containers natively, but the ecosystem is fragmented across distributions. What works on Ubuntu might need different configuration on Fedora or Arch. Building a consistent, zero configuration sandbox across all major distros is a significant engineering challenge.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">When is Windows coming?</div>
+          <div class="section-subtitle">Confirmed for mid 2026</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Official confirmation</div>
+          <p class="card-desc">
+            Anthropic has confirmed that Windows support is in active development. The target is mid 2026. They haven't shared which virtualization approach they'll use, but WSL2 integration or a custom Hyper V based sandbox seem like the most likely paths. Either way, Windows users should expect Cowork before the end of the year.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">What to expect</div>
+          <p class="card-desc">
+            The Windows version will likely ship inside Claude Desktop for Windows, just like it does on Mac. You'll pick a folder, describe your task, and Claude handles the rest. The sandbox technology will differ under the hood but the user experience should feel identical.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">What about Linux?</div>
+          <div class="section-subtitle">No official timeline yet</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">The honest answer</div>
+        <p class="card-desc">
+          Anthropic has not announced a timeline for Linux support. Windows is explicitly on the roadmap. Linux is not. That doesn't mean it won't happen, but it's clearly not the next priority. If you're a Linux user who wants Cowork today, your realistic options are limited. Some open source projects like Open Cowork and Claude Cowork forks on GitHub are trying to recreate the experience, but they're community efforts and not officially supported.
+        </p>
+        <div class="list" style="margin-top: 24px;">
+          <div class="list-item">
+            <div class="list-label">Why?</div>
+            <div class="list-body">Linux desktop users are a small percentage of the total market. Anthropic is prioritizing the platforms where most of their paying subscribers are: macOS first, Windows second.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Irony</div>
+            <div class="list-body">The VM that Cowork runs is itself Linux. The sandboxed environment boots a custom Linux filesystem. So the technology clearly works on Linux. The missing piece is the Desktop app wrapper and a consistent sandbox bootstrapping mechanism across distros.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Current requirements</div>
+          <div class="section-subtitle">What you need to get started today</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">System requirements</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>macOS with Claude Desktop app installed</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>A paid Claude subscription (Pro, Max, Team, or Enterprise)</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Active internet connection throughout the session</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>Claude Desktop must stay open while tasks run</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Getting started</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>Open Claude Desktop on your Mac</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>Switch from Chat to the Cowork tab</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Select a folder you want Claude to work with</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>Describe your task and review Claude's proposed approach</span></div>
+            <div class="check-item"><span class="check-bullet">5</span><span>Approve the plan and let it run</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">07</div>
+        <div>
+          <div class="section-title">The bigger picture</div>
+          <div class="section-subtitle">Why this matters beyond platform availability</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Plugins are here</div>
+          <p class="card-desc">
+            On January 30, Anthropic rolled out plugins for Cowork. These extend its capabilities into sales, finance, marketing, and legal workflows. The plugin system sent software stocks tumbling because it showed Cowork isn't just a file organizer. It's becoming a platform that can replace chunks of specialized SaaS tools.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Opus 4.6 makes it better</div>
+          <p class="card-desc">
+            With the launch of Claude Opus 4.6, Cowork got significantly more capable. Opus 4.6 handles complex, multi step tasks with more precision. It breaks down ambitious requests into concrete steps and follows through on all of them. Inside Cowork, where Claude can multitask autonomously, this translates to noticeably better results on longer workflows.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Summary</div>
+        <div class="cta-title">Mac today. Windows by mid 2026. Linux TBD.</div>
+        <p class="cta-desc">
+          Claude Cowork is Mac only because it was built on Apple's <code>VZVirtualMachine</code> API. Windows support is confirmed and coming. Linux has no official timeline. If you're on a Mac, it's worth trying today. If you're not, keep an eye on the Claude Desktop releases.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026·02·06 · 7 min read</div>
+    <a class="footer-link" href="https://support.claude.com/en/articles/13345190-getting-started-with-cowork" target="_blank" rel="noopener noreferrer">Cowork docs →</a>
+  </footer>
+</body>
+</html>
