@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Suite: France's Open-Source Replacement for Teams, Zoom, and Google - CHSAMI</title>
+  <meta name="description" content="France's government built La Suite Numérique — a full open-source productivity stack replacing Teams, Zoom, and Google Workspace. It's MIT-licensed, already serves 500,000 users across 15 ministries, and it's not vaporware.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/france-sovereignty-la-suite.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/france-sovereignty-la-suite.html">
+  <meta property="og:title" content="La Suite: France's Open-Source Replacement for Teams, Zoom, and Google">
+  <meta property="og:description" content="France's government built La Suite Numérique — a full open-source productivity stack replacing Teams, Zoom, and Google Workspace. It's MIT-licensed, already serves 500,000 users across 15 ministries, and it's not vaporware.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-07">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="La Suite: France's Open-Source Replacement for Teams, Zoom, and Google">
+  <meta name="twitter:description" content="France's government built La Suite Numérique — a full open-source productivity stack replacing Teams, Zoom, and Google Workspace. It's MIT-licensed, already serves 500,000 users across 15 ministries, and it's not vaporware.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "La Suite: France's Open-Source Replacement for Teams, Zoom, and Google",
+    "description": "France's government built La Suite Numérique — a full open-source productivity stack replacing Teams, Zoom, and Google Workspace. It's MIT-licensed, already serves 500,000 users across 15 ministries, and it's not vaporware.",
+    "image": "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-07",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/france-sovereignty-la-suite.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .series-nav {
+      display: grid;
+      gap: 8px;
+      margin-top: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .series-nav a {
+      color: var(--bg-primary);
+      opacity: 0.7;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .series-nav a:hover {
+      opacity: 1;
+    }
+
+    .series-nav .current {
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&larr; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Digital Sovereignty &middot; Part 2 of 3</div>
+      <h1 class="hero-title">La Suite<span>France built an open-source replacement for Teams, Zoom, and Google</span></h1>
+      <p class="hero-desc">
+        After years of talk about digital sovereignty, France did something unusual — they actually built it. La Suite Num&eacute;rique is a full open-source productivity stack developed by DINUM, France's interministerial digital agency. It replaces Microsoft Teams, Zoom, Google Workspace, and Dropbox with sovereign alternatives. It's MIT-licensed, it's on GitHub, and it already serves over 500,000 public sector workers across 15 ministries every month. This isn't a press release. It's production software.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">What's in the box</div>
+          <div class="section-subtitle">Nine tools, all open source</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Messaging</div>
+          <div class="card-title">Tchap</div>
+          <p class="card-desc">Built on the Matrix protocol with end-to-end encryption. Already mandatory for all French state employees — 600,000 agents use it daily. It's a fork of Element, the most widely used Matrix client. Federated architecture means no single point of failure.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Video</div>
+          <div class="card-title">Visio</div>
+          <p class="card-desc">The video conferencing tool replacing Zoom and Teams. Built on LiveKit, an open-source WebRTC framework. Currently serving 40,000 to 60,000+ users and scaling to handle all 2.5 million civil servants by 2027. Hosted on SecNumCloud-certified infrastructure. CNRS is replacing 34,000 Zoom seats with it by March 2026.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Documents</div>
+          <div class="card-title">Docs</div>
+          <p class="card-desc">Collaborative document editor built on BlockNote.js with Yjs CRDT sync for real-time collaboration. Over 15,900 GitHub stars. Not a full Word replacement — it's a modern collaborative editor for everyday government work. Django backend, Next.js frontend.</p>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top: 24px;">
+        <div class="card">
+          <div class="meta">Spreadsheets</div>
+          <div class="card-title">Grist</div>
+          <p class="card-desc">Collaborative spreadsheet and database tool. What makes this interesting: Grist Labs is a NYC-based company. The French government contributes code back and funds development. Government developers review code. Proof that sovereignty and international collaboration aren't mutually exclusive.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Files</div>
+          <div class="card-title">France Transfert + Fichiers</div>
+          <p class="card-desc">Large file sharing with multi-gigabyte support and expiration controls, plus cloud storage. Replaces Dropbox and OneDrive for government file sharing. All data stays on French-hosted infrastructure.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Identity</div>
+          <div class="card-title">ProConnect</div>
+          <p class="card-desc">Single sign-on using OpenID Connect and SAML. The authentication layer tying everything together. One login for all government digital services.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">What it actually feels like</div>
+          <div class="section-subtitle">A morning with La Suite</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The switch nobody wanted to make</div>
+          <p class="card-desc">When CNRS started migrating 34,000 researchers off Zoom in late 2025, the reaction was exactly what you'd expect. People had years of muscle memory built around Zoom's interface. They knew where the mute button was without looking. They had recurring meeting links bookmarked. Visio's interface is clean and responsive, and the call quality holds up well on French government infrastructure. But it's the small things that trip people up: the meeting invitation flow is different, the calendar integration with Outlook isn't as polished, and screen sharing requires an extra click. None of these are dealbreakers. All of them generate help desk tickets.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Where it works, where it doesn't</div>
+          <p class="card-desc">Tchap for messaging is the easiest win. If you've used Slack or Element, you already know how it works. The encryption is invisible to the user, and the fact that messages stay on French servers doesn't change the experience at all. Docs is where the gap shows. A policy analyst drafting a 40-page regulatory impact assessment will hit formatting limitations that don't exist in Word. Grist handles basic spreadsheet work fine, but a finance team running complex budget models with macros and pivot tables will feel the difference immediately. The honest summary: La Suite covers 80% of what most civil servants need. The remaining 20% is where careers get built in government IT.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">How they built it</div>
+          <div class="section-subtitle">Assemble, don't reinvent</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Top-tier bricks</div>
+          <p class="card-desc">DINUM's approach isn't to build everything from scratch. They assembled the best existing open-source projects: Matrix for messaging, LiveKit for video, BlockNote for documents, Grist for spreadsheets. Django backend, React frontend, custom UI kit. Everything MIT-licensed. The philosophy: combine proven components rather than writing a 100-million-line office suite from zero.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">The GitHub irony</div>
+          <p class="card-desc">All the code lives at github.com/suitenumerique/. Yes, GitHub — owned by Microsoft. Commenters on Hacker News called out the contradiction. But the defenders have a point: Git is distributed, the code is fully portable, and there's no vendor lock-in. Hosting open-source code on GitHub doesn't create the same dependency as hosting confidential government data on Azure.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">All data exportable</div>
+        <p class="card-desc">Every document, spreadsheet, and file in La Suite can be exported in standard formats — .ppt, .xls, .odt. There's no proprietary format lock-in. If the project fails or a better option emerges, nothing is trapped.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">France's open-source DNA</div>
+          <div class="section-subtitle">This didn't come from nowhere</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Media</div>
+          <div class="card-title">VLC &amp; FFmpeg</div>
+          <p class="card-desc">VLC (VideoLAN) started as a student project at &Eacute;cole Centrale Paris. FFmpeg and QEMU were created by Fabrice Bellard, arguably the most prolific open-source developer alive. Both are used by virtually every device that plays video.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Infrastructure</div>
+          <div class="card-title">Docker &amp; scikit-learn</div>
+          <p class="card-desc">Docker was originally dotCloud, founded in Paris. Scikit-learn, one of the most important machine learning libraries in existence, was developed at INRIA, France's national research institute. OCaml and Prolog were also born at INRIA.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Community</div>
+          <div class="card-title">Framasoft &amp; CryptPad</div>
+          <p class="card-desc">Framasoft has been running a "de-Google" initiative for 20 years, offering dozens of free services. CryptPad provides encrypted real-time collaboration. Lichess, the open-source chess platform, is French. The culture for this exists.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">The money</div>
+          <div class="section-subtitle">EUR 109 billion and counting</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">AI investment</div>
+          <p class="card-desc">In February 2025, Macron announced EUR 109 billion in AI infrastructure investment — the largest sovereign AI program outside the US and China. Mistral AI, France's answer to OpenAI, has raised EUR 2.8 billion and is valued at EUR 13.6 billion. In January 2026, Mistral landed a framework agreement with the French Ministry of Armed Forces.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Cloud and digital</div>
+          <p class="card-desc">EUR 3 billion for sovereign cloud R&amp;D through France 2030. Bpifrance deployed EUR 10 billion into the AI ecosystem. At the European Digital Sovereignty Summit in November 2025, European tech leaders pledged over EUR 12 billion. The cost savings are real too: Visio saves roughly EUR 1 million per year per 100,000 users by eliminating commercial licenses.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Who's actually building this</div>
+          <div class="section-subtitle">It's not just French government employees</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">NYC</div>
+          <div class="card-title">Grist Labs</div>
+          <p class="card-desc">A New York City company deeply integrated with the French government effort. They build the spreadsheet component. The government contributes code back and funds development. Government developers review Grist's code. Sovereignty doesn't mean isolationism — it means controlling your dependencies while collaborating openly.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Germany</div>
+          <div class="card-title">BlockNote &amp; OpenDesk</div>
+          <p class="card-desc">DINUM and Germany's OpenDesk have been sponsoring BlockNote, the document editor, for approximately 1.5 years. Germany runs a parallel project called OpenDesk at opencode.de. The Netherlands contributes through "Mijn Bureau." Four countries — France, Germany, Netherlands, Italy — formed the Digital Commons-EDIC.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Foundation</div>
+          <div class="card-title">Matrix &amp; LiveKit</div>
+          <p class="card-desc">The Matrix protocol behind Tchap is maintained by the Matrix Foundation. A French government official confirmed direct support. LiveKit, the WebRTC framework powering Visio, is open source. Speaker diarization and transcription come from Pyannote, a French AI startup.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">07</div>
+        <div>
+          <div class="section-title">Europe is following</div>
+          <div class="section-subtitle">France isn't alone</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">The movement across Europe</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Germany</div>
+            <div class="list-body">Schleswig-Holstein migrated 44,000 employee inboxes from Microsoft to open-source. Replaced SharePoint with Nextcloud. Expects EUR 15M+ annual savings from 2026. ODF mandated as national standard from January 2027.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Austria</div>
+            <div class="list-body">Military switched to LibreOffice. Federal Ministry for Economy migrated 1,200 employees to Nextcloud in four months.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Denmark</div>
+            <div class="list-body">Government, Copenhagen, and Aarhus all trialing open-source alternatives.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Italy</div>
+            <div class="list-body">Cities and regions adopting LibreOffice. Part of Digital Commons-EDIC with France.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Next in series</div>
+        <div class="cta-title">But France has tried this before.</div>
+        <p class="cta-desc">In 2009, France invested EUR 285 million in two sovereign cloud companies. Both failed. In Part 3, we look at the ghost of Cloudwatt — and whether this time is actually different.</p>
+        <div class="series-nav">
+          <a href="france-sovereignty-kill-switch.html">Part 1: The Kill Switch</a>
+          <span class="current">Part 2: La Suite (you are here)</span>
+          <a href="france-sovereignty-cloudwatt.html">Part 3: The Ghost of Cloudwatt</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&middot;02&middot;07 &middot; 12 min read &middot; Part 2 of 3</div>
+    <a class="footer-link" href="france-sovereignty-cloudwatt.html">Part 3: The Ghost of Cloudwatt &rarr;</a>
+  </footer>
+</body>
+</html>

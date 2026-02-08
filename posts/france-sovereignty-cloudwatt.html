@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ghost of Cloudwatt - CHSAMI</title>
+  <meta name="description" content="France's first attempt at sovereign cloud cost EUR 285 million and ended in failure. Now they're trying again with La Suite. Here's an honest look at what went wrong, what's different, and whether Europe can actually pull this off.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/france-sovereignty-cloudwatt.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/france-sovereignty-cloudwatt.html">
+  <meta property="og:title" content="The Ghost of Cloudwatt">
+  <meta property="og:description" content="France's first attempt at sovereign cloud cost EUR 285 million and ended in failure. Now they're trying again with La Suite. Here's an honest look at what went wrong, what's different, and whether Europe can actually pull this off.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-07">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Ghost of Cloudwatt">
+  <meta name="twitter:description" content="France's first attempt at sovereign cloud cost EUR 285 million and ended in failure. Now they're trying again with La Suite. Here's an honest look at what went wrong, what's different, and whether Europe can actually pull this off.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Ghost of Cloudwatt",
+    "description": "France's first attempt at sovereign cloud cost EUR 285 million and ended in failure. Now they're trying again with La Suite. Here's an honest look at what went wrong, what's different, and whether Europe can actually pull this off.",
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-07",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/france-sovereignty-cloudwatt.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta a {
+      color: var(--bg-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .cta a:hover {
+      opacity: 0.8;
+    }
+
+    .series-nav {
+      display: grid;
+      gap: 8px;
+      margin-top: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .series-nav a {
+      color: var(--bg-primary);
+      opacity: 0.7;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .series-nav a:hover {
+      opacity: 1;
+    }
+
+    .series-nav .current {
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&larr; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Digital Sovereignty &middot; Part 3 of 3</div>
+      <h1 class="hero-title">The Ghost of Cloudwatt<span>France&rsquo;s EUR 285 million sovereign cloud failure &mdash; and why this time might be different</span></h1>
+      <p class="hero-desc">
+        In 2009, France launched Project Androm&egrave;de. The government invested EUR 150 million through Caisse des D&eacute;p&ocirc;ts to create two sovereign cloud companies: Cloudwatt (backed by Orange) and Numergy (backed by SFR/Bull). The goal was the same as today &mdash; digital independence from American tech giants. Both failed completely. Numergy was acquired in 2019. Cloudwatt shut down in 2020. EUR 285 million, gone. That ghost haunts every conversation about La Suite.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">What went wrong</div>
+          <div class="section-subtitle">The anatomy of a EUR 285 million failure</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Top-down management</div>
+          <p class="card-desc">
+            Cloudwatt and Numergy weren&rsquo;t startups. They were run by executives from large French corporations with government subsidies. There was no startup culture, no urgency, no iteration. They tried to compete with AWS and Azure by building traditional enterprise offerings with traditional enterprise timelines. By the time they launched, they were already behind.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Wrong model</div>
+          <p class="card-desc">
+            Both companies tried to build proprietary alternatives to compete commercially with US hyperscalers. They were playing AWS&rsquo;s game on AWS&rsquo;s terms with a fraction of the resources. They didn&rsquo;t leverage open source, didn&rsquo;t build community, and didn&rsquo;t create anything that couldn&rsquo;t be replaced by a credit card swipe on aws.amazon.com. Seven of ten French companies still preferred American cloud solutions as of early 2024.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">What&rsquo;s different this time</div>
+          <div class="section-subtitle">Open source changes the equation</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Built in the open</div>
+          <p class="card-desc">
+            La Suite is MIT-licensed, on GitHub, accepting contributions from anyone. Cloudwatt was proprietary. This is a fundamental difference. Open source means the project can survive changes in government, attract international contributors, and build on the work of thousands of developers worldwide. If DINUM disappears tomorrow, the code doesn&rsquo;t.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Already deployed at scale</div>
+          <p class="card-desc">
+            Cloudwatt never achieved meaningful adoption before it collapsed. La Suite already serves 500,000+ monthly users across 15 ministries. Tchap is mandatory for 600,000 state employees. CNRS is migrating 34,000 Zoom seats. This isn&rsquo;t a pilot or a proof of concept. The adoption curve that killed Cloudwatt has already been cleared.
+          </p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The key difference in one sentence</div>
+        <p class="card-desc">Cloudwatt tried to out-Amazon Amazon. La Suite is assembling the best open-source tools and adapting them for government use &mdash; a fundamentally different strategy that plays to Europe&rsquo;s strengths rather than competing on Silicon Valley&rsquo;s terms.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">The hard problems that remain</div>
+          <div class="section-subtitle">Honest obstacles</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">63.2%</div>
+          <div class="card-title">User resistance</div>
+          <p class="card-desc">The number one barrier cited by European decision-makers. People know Teams. People know Zoom. The muscle memory runs deep. Asking 2.5 million civil servants to learn new tools is a massive change management challenge. No technology advantage overcomes a user who refuses to switch.</p>
+        </div>
+        <div class="card">
+          <div class="meta">57.9%</div>
+          <div class="card-title">Integration complexity</div>
+          <p class="card-desc">Sovereign platforms need to work with existing systems. The 2026 roadmap acknowledges this directly by adding Visio integration with Outlook and physical conference room equipment. You can&rsquo;t replace Microsoft overnight when your meeting rooms have Teams-certified hardware.</p>
+        </div>
+        <div class="card">
+          <div class="meta">15.8%</div>
+          <div class="card-title">Optimism gap</div>
+          <p class="card-desc">Only 15.8% of European decision-makers believe digital sovereignty is achievable within five years (Wire survey of 270+ leaders, August 2025). The people responsible for implementing this are mostly pessimistic about it working.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The political trap</div>
+          <div class="section-subtitle">Double spending across election cycles</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The double spending problem</div>
+          <p class="card-desc">
+            Replacing infrastructure means paying for both old and new systems simultaneously. You can&rsquo;t turn off Teams on day one. You run both platforms in parallel for years while the new one matures. That means doubling your software budget during a period when European governments are already under fiscal pressure. This isn&rsquo;t a one-term project &mdash; it spans at least two election cycles.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Political continuity</div>
+          <p class="card-desc">
+            What happens when the government changes? The minister who championed La Suite leaves. The new minister has different priorities. The budget gets questioned. This is exactly how Cloudwatt died: political attention moved on, funding dried up, and the project withered. The open-source model partially solves this (the code survives regardless), but the institutional support and funding don&rsquo;t.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">The feasibility scorecard</div>
+          <div class="section-subtitle">An honest assessment</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Where it&rsquo;s working</div>
+          <div class="list">
+            <div class="list-item">
+              <div class="list-label">Video</div>
+              <div class="list-body">High feasibility. Visio and Tchap are already deployed at scale. Video conferencing is relatively commodity technology. This will likely succeed.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">AI</div>
+              <div class="list-body">Surprisingly high feasibility. Mistral AI is genuinely competitive with American labs. EUR 109 billion in investment is serious. France may actually achieve sovereignty in AI specifically.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Messaging</div>
+              <div class="list-body">High feasibility. Tchap on Matrix is already mandatory for 600,000 agents. The protocol is mature and federated.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Where it&rsquo;s hard</div>
+          <div class="list">
+            <div class="list-item">
+              <div class="list-label">Office</div>
+              <div class="list-body">Medium-low feasibility. Docs is not Word. Grist is not Excel. The gap is real for power users who need advanced formatting, macros, and complex spreadsheets. This is a decade-long project at minimum.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Cloud</div>
+              <div class="list-body">Low near-term feasibility. 70% of French data on US clouds cannot be moved quickly. SecNumCloud creates a viable framework but the market share gap is enormous. France controls only 2.4% of the global digital infrastructure market.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Full stack</div>
+              <div class="list-body">Very low feasibility. Chips, operating systems, mobile platforms &mdash; these dependencies can&rsquo;t be addressed by software alone and would require multi-decade industrial policy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">The warnings</div>
+          <div class="section-subtitle">Cautionary tales from the present</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The Solvinity problem</div>
+          <p class="card-desc">
+            In the Netherlands, the government chose Solvinity as an IT provider specifically for digital sovereignty. Then Solvinity was acquired by Kyndryl &mdash; an American company. The sovereignty evaporated overnight through a corporate acquisition. This structural vulnerability applies to any strategy built on specific companies rather than open-source communities.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Sovereignty washing</div>
+          <p class="card-desc">
+            Hyperscalers are offering European data centers while remaining subject to US extraterritorial laws. S3NS (Thales/Google) and Bleu (Capgemini/Orange/Microsoft) both obtained or seek SecNumCloud certification &mdash; but they&rsquo;re partnerships with the same American companies Europe is trying to reduce dependence on. Critics call this &ldquo;sovereignty washing.&rdquo;
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">The upstream funding crisis</div>
+        <p class="card-desc">
+          DINUM actually stopped funding upstream Element development (the Matrix client that Tchap is based on) in 2022-2023. This contributed to Element changing its license to AGPLv3. Government foundation membership is not the same as funding developers. Multiple open-source developers report that French government entities show interest but are unwilling to actually pay for the projects they depend on. If France wants open-source sovereignty, it needs to fund the open-source developers &mdash; not just use their code.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">07</div>
+        <div>
+          <div class="section-title">Where this goes from here</div>
+          <div class="section-subtitle">The next 18 months</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The 2027 deadline</div>
+          <p class="card-desc">
+            All government departments must transition to Visio by 2027. That&rsquo;s 2.5 million civil servants. David Amiel, the Minister for Civil Service, is staking his reputation on it. The France-Germany sovereign AI partnership framework agreement is expected by mid-2026. The Digital Sovereignty Task Force launched at the November 2025 summit is due to report this year.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The real test</div>
+          <p class="card-desc">
+            The technology works. The political will exists (for now). The money is allocated. The real test isn&rsquo;t whether La Suite can replace Zoom for video calls &mdash; it already has. The real test is whether France can sustain the political commitment, the funding, and the institutional support across election cycles, budget pressures, and the relentless gravitational pull of the American tech ecosystem. Cloudwatt couldn&rsquo;t. Whether La Suite can is the question that defines European digital sovereignty for the next decade.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Series complete</div>
+        <div class="cta-title">Three parts. One question.</div>
+        <p class="cta-desc">
+          Can Europe build its way out of digital dependency on America? France is further along than most people realize &mdash; but the hardest part isn&rsquo;t the technology. It&rsquo;s the politics.
+        </p>
+        <div class="series-nav">
+          <a href="france-sovereignty-kill-switch.html">Part 1: The Kill Switch</a>
+          <a href="france-sovereignty-la-suite.html">Part 2: La Suite</a>
+          <span class="current">Part 3: The Ghost of Cloudwatt (you are here)</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&middot;02&middot;07 &middot; 11 min read &middot; Part 3 of 3</div>
+    <a class="footer-link" href="france-sovereignty-la-suite.html">&larr; Part 2: La Suite</a>
+  </footer>
+</body>
+</html>
