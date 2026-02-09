@@ -310,3 +310,197 @@ France has an unusually deep (and underappreciated) history in open source:
 ### HN Threads
 - https://news.ycombinator.com/item?id=46873294 (AP News article discussion)
 - https://news.ycombinator.com/item?id=46923736 (La Suite project discussion)
+
+---
+---
+
+# Blog Inspiration Scan — 2026-02-09
+
+Trending AI & Programming topics from HN, Reddit, and X. Ranked by signal strength.
+
+---
+
+## 1. The Agentic Supply Chain Is Already Compromised
+
+**Signal strength:** 5/5
+**Cross-platform:** Yes (HN, Reddit security subs, X, cybersecurity media)
+
+### What Happened
+- 230+ malicious OpenClaw extensions uploaded to ClawHub since January 27, 2026
+- Malicious entry by user "zaycv" masqueraded as official CLI tool for managing agent skills
+- Multi-stage delivery mechanism bypasses ClawHub's static analysis by keeping malicious logic external to SKILL.md files
+- Reverse shells dropped on host machines via installed skills
+- Active variant "clawdhub1" had ~100 installations before detection
+- Koi Security audit of 2,857 skills on ClawHub found 341 malicious skills across multiple campaigns
+
+### Why It Matters
+- AI agents (OpenClaw, Claude Code, etc.) are granted broad permissions: reading emails, accessing filesystems, executing shell commands
+- One malicious skill inherits all permissions the agent has — compromises every service the agent can touch
+- This is the npm/PyPI supply chain attack playbook replaying on a brand new ecosystem with even less vetting
+- MCP (Model Context Protocol) is becoming standard connective tissue for agentic AI, yet security is an afterthought
+- MIT study (2025): AI model using MCP achieved domain dominance on a corporate network in under an hour with no human intervention
+
+### Discussion Heat
+- Security vendors (Snyk, 1Password, Adversa AI) all publishing analyses
+- Dark Reading called 2026 "the year agentic AI becomes the attack-surface poster child"
+- Active debate on whether MCP servers need a registry/signing system like Docker Hub or npm
+- Remote code execution flaws found in widely used MCP servers
+
+### Blog Angle
+"I installed an MCP skill last week without thinking twice — here's what could have gone wrong." Natural follow-up to existing `claude-skills-guide.html` post, but from the security side. Lead with the user's experience of casually installing tools, then reveal the attack surface.
+
+### Phase 4 Angles
+1. What problem does this solve? You trust your AI tools the way you trust your IDE plugins — but nobody's checking what they actually do
+2. What did they actually build? ClawHub attackers built multi-stage payloads that survive static analysis by keeping exploit logic external
+3. Why is this different? npm attacks took years to emerge; the agentic ecosystem got its first major supply chain campaign within months of launch
+4. Who has an advantage? Attackers — the permission model grants AI agents far more access than a typical npm package gets
+5. What does this mean for users? Anyone using MCP servers, Claude skills, or OpenClaw needs to audit what permissions they've granted
+6. Where is this going? Expect signed skills, sandboxed execution, and permission scoping — or expect much worse incidents
+
+### Sources
+- Snyk: "Inside the 'clawdhub' Malicious Campaign" — https://snyk.io/articles/clawdhub-malicious-campaign-ai-agent-skills/
+- 1Password: "From Magic to Malware: How OpenClaw's Agent Skills Become an Attack Surface" — https://1password.com/blog/from-magic-to-malware-how-openclaws-agent-skills-become-an-attack-surface
+- Adversa AI: "Top MCP Security Resources — February 2026" — https://adversa.ai/blog/top-mcp-security-resources-february-2026/
+- Dark Reading: "2026: The Year Agentic AI Becomes the Attack-Surface Poster Child" — https://www.darkreading.com/threat-intelligence/2026-agentic-ai-attack-surface-poster-child
+- AuthMind: "OpenClaw's 230 Malicious Skills" — https://www.authmind.com/post/openclaw-malicious-skills-agentic-ai-supply-chain
+
+---
+
+## 2. AI Makes the Easy Part Easier and the Hard Part Harder
+
+**Signal strength:** 4/5
+**Cross-platform:** Mostly HN, but "vibe coding" debate active on X
+
+### Core Thesis
+AI makes simple, well-documented problems trivial to solve while making genuinely novel problems harder. Author contrasts vibe-coding a retro emulator (thousands of examples on GitHub) with failing to build a proprietary domain-specific application (no training data references).
+
+### HN Discussion (413 points, 292 comments)
+
+**Agreements:**
+- LLMs excel at "embarrassingly solved problems" — reproducing well-represented patterns from training data
+- Code quality requires foundations: AI outputs improve with well-architected codebases, poor foundations get amplified not fixed
+- Licensing concerns: AI-generated code can reproduce licensed material without attribution
+
+**Disagreements:**
+- "You're prompting wrong" camp vs "AI fundamentally can't do novel work" camp
+- Whether Claude Code itself proves AI builds genuinely novel systems, or just composes existing blocks
+- Some report dramatic productivity gains; others find unpredictability makes AI counterproductive for complex work
+
+### Blog Angle
+"I vibe-coded a retro emulator in a weekend, then spent three weeks failing to build something that actually mattered." The honest reality check on AI-assisted coding — connects to existing agentic codebase posts.
+
+### Phase 4 Angles
+1. What problem does this solve? Developers want to ship faster — AI promises that, but selectively
+2. What did they actually build? Pattern-matching machines that compress GitHub into autocomplete
+3. Why is this different? Previous productivity tools scaled linearly; AI has a cliff where it stops helping
+4. Who has an advantage? Developers with well-documented, common problem domains; disadvantaged if your domain is novel/proprietary
+5. What does this mean for users? Set realistic expectations — AI is a force multiplier for known patterns, not a substitute for thinking
+6. Where is this going? The gap between "AI-easy" and "AI-hard" problems may widen, not shrink
+
+### Sources
+- HN thread: https://news.ycombinator.com/item?id=46939593
+
+---
+
+## 3. Claude Opus 4.6 Found 500 Zero-Days
+
+**Signal strength:** 4/5
+**Cross-platform:** Yes (HN, Slashdot, X, cybersecurity media)
+
+### What Happened
+- Anthropic released Claude Opus 4.6 on February 5, 2026
+- Model discovered 500+ previously unknown high-severity vulnerabilities in open-source software
+- No specialized tooling or custom scaffolding — raw LLM capability
+- Bugs found in heavily fuzzed codebases: Ghostscript (crash via missing bounds check), OpenSC (buffer overflow), CGIF (heap buffer overflow)
+- Some vulnerabilities had gone undetected for decades
+- Trained on 10M+ adversarial prompts with refusal protocols for prohibited activities
+
+### Discussion Heat
+- Wall Street spooked by implications (security industry disruption)
+- Debate on whether 90-day disclosure windows can survive AI-speed bug discovery
+- Questions about asymmetry: finding bugs at AI speed vs fixing them at human speed
+- Concern about offensive use — same capability that finds bugs can find exploits
+
+### Blog Angle
+"The code I wrote five years ago just got audited by an AI — here's what keeps me up at night." Flip from the Anthropic press release to the developer-on-the-receiving-end perspective. What does it feel like when an AI can audit your entire history of open-source contributions overnight?
+
+### Phase 4 Angles
+1. What problem does this solve? Open-source code has latent bugs that fuzzers and humans miss for years
+2. What did they actually build? An LLM that can reason about code paths well enough to find memory safety bugs in C codebases
+3. Why is this different? Fuzzers find bugs through brute force; this finds bugs through understanding — different bug classes become reachable
+4. Who has an advantage? Anthropic positions itself as security partner, not just chatbot company; defenders benefit if they adopt first
+5. What does this mean for users? Your dependencies are about to get a lot of CVEs filed against them; patch fatigue is coming
+6. Where is this going? AI-speed bug discovery + human-speed patching = a vulnerability backlog crisis
+
+### Sources
+- Anthropic: https://red.anthropic.com/2026/zero-days/
+- The Hacker News: https://thehackernews.com/2026/02/claude-opus-46-finds-500-high-severity.html
+- Axios: https://www.axios.com/2026/02/05/anthropic-claude-opus-46-software-hunting
+- Slashdot: https://it.slashdot.org/story/26/02/08/0159234/a-new-era-for-security-anthropics-claude-opus-46-found-500-high-severity-vulnerabilities
+- CyberSecurity News: https://cybersecuritynews.com/claude-opus-4-6-released/
+
+---
+
+## 4. Experts Have World Models, LLMs Have Word Models
+
+**Signal strength:** 3/5
+**Cross-platform:** Mostly HN
+
+### Core Thesis
+LLMs excel at "chess-like" domains (bounded, deterministic) but fail at "poker-like" situations requiring adversarial reasoning and hidden state. Experts build genuine world models through experience; LLMs pattern-match across tokenized text without understanding consequences.
+
+### HN Discussion (129 points, 138 comments)
+
+**Key debate:** Can sufficient text training inherently create world models, or are LLMs fundamentally "models of models" — compressed representations of human descriptions rather than direct understanding?
+
+**Arguments for world models emerging:** Training to predict next tokens accurately may require building implicit world representations. Reasoning models solving previously unsolved math problems suggests something beyond pattern matching.
+
+**Arguments against:** Language is inherently incomplete. Embodied skills (bike-riding, debugging by instinct) involve non-linguistic knowledge. LLMs "can only work with tokenizations of texts written by people who produce those texts to represent their actual models."
+
+### Blog Angle
+"My LLM writes better code than me for problems I've already solved — and worse code for problems nobody has." Sequel energy to the Waymo world model post. The Waymo piece was about literal world models for driving; this is about whether the tools we use every day have anything resembling understanding.
+
+### Sources
+- HN thread: https://news.ycombinator.com/item?id=46936920
+
+---
+
+## 5. GitHub Agentic Workflows
+
+**Signal strength:** 3/5
+**Cross-platform:** HN + X (dev tool influencers)
+
+### What It Is
+Technology preview enabling LLM-based agents to automate repository tasks within GitHub Actions. Users write Markdown descriptions of desired workflows, compiled into YAML-based GitHub Actions. Includes sandboxing, firewalls, and restricted agent permissions.
+
+### HN Discussion (278 points, 127 comments)
+
+**Dominant sentiment: skepticism.**
+- PRs showing agents making incorrect dependency choices — "replace statements" instead of proper version pinning
+- Agents "string-edit package.json and hallucinate versions" instead of using proper tools
+- Developers arguing GitHub should fix core platform issues (uptime, Actions reliability, security) before adding AI features
+- Some view it as primarily driving token consumption for revenue
+
+### Blog Angle
+"GitHub gave my CI pipeline an AI brain — here's the first PR it opened." Fits with existing agentic codebase and AGENTS.md posts. The gap between demo and production is the story.
+
+### Phase 4 Angles
+1. What problem does this solve? CI/CD workflows are tedious YAML — let AI write and execute them
+2. What did they actually build? Markdown-to-Actions compiler with agent sandboxing
+3. Why is this different? Other AI coding tools generate code; this generates infrastructure
+4. Who has an advantage? GitHub/Microsoft control the platform and the agent — vertical integration play
+5. What does this mean for users? Your CI pipeline may start opening PRs you didn't ask for
+6. Where is this going? Agent-driven DevOps is inevitable; the question is trust and guardrails
+
+### Sources
+- HN thread: https://news.ycombinator.com/item?id=46934107
+
+---
+
+## Recommendation
+
+**Top pick: #1 (Agentic Supply Chain)** — highest signal, cross-platform presence, direct connection to existing skills guide post, and it's a story happening right now with active exploits. The user-perspective angle writes itself: you've been installing skills and MCP servers for months, and the ecosystem just got its first real attack.
+
+**Runner-up: #3 (Claude Opus 4.6 Zero-Days)** — pairs well with #1 as a "two sides of AI security" story. Could even be a two-part series.
+
+**Existing post overlap:** Topics #2 and #5 overlap with `agentic-ready-codebase.html` and `claude-skills-guide.html` themes. Still viable but need a sharper differentiating angle.
