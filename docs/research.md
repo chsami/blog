@@ -320,49 +320,7 @@ Trending AI & Programming topics from HN, Reddit, and X. Ranked by signal streng
 
 ---
 
-## 1. The Agentic Supply Chain Is Already Compromised
-
-**Signal strength:** 5/5
-**Cross-platform:** Yes (HN, Reddit security subs, X, cybersecurity media)
-
-### What Happened
-- 230+ malicious OpenClaw extensions uploaded to ClawHub since January 27, 2026
-- Malicious entry by user "zaycv" masqueraded as official CLI tool for managing agent skills
-- Multi-stage delivery mechanism bypasses ClawHub's static analysis by keeping malicious logic external to SKILL.md files
-- Reverse shells dropped on host machines via installed skills
-- Active variant "clawdhub1" had ~100 installations before detection
-- Koi Security audit of 2,857 skills on ClawHub found 341 malicious skills across multiple campaigns
-
-### Why It Matters
-- AI agents (OpenClaw, Claude Code, etc.) are granted broad permissions: reading emails, accessing filesystems, executing shell commands
-- One malicious skill inherits all permissions the agent has — compromises every service the agent can touch
-- This is the npm/PyPI supply chain attack playbook replaying on a brand new ecosystem with even less vetting
-- MCP (Model Context Protocol) is becoming standard connective tissue for agentic AI, yet security is an afterthought
-- MIT study (2025): AI model using MCP achieved domain dominance on a corporate network in under an hour with no human intervention
-
-### Discussion Heat
-- Security vendors (Snyk, 1Password, Adversa AI) all publishing analyses
-- Dark Reading called 2026 "the year agentic AI becomes the attack-surface poster child"
-- Active debate on whether MCP servers need a registry/signing system like Docker Hub or npm
-- Remote code execution flaws found in widely used MCP servers
-
-### Blog Angle
-"I installed an MCP skill last week without thinking twice — here's what could have gone wrong." Natural follow-up to existing `claude-skills-guide.html` post, but from the security side. Lead with the user's experience of casually installing tools, then reveal the attack surface.
-
-### Phase 4 Angles
-1. What problem does this solve? You trust your AI tools the way you trust your IDE plugins — but nobody's checking what they actually do
-2. What did they actually build? ClawHub attackers built multi-stage payloads that survive static analysis by keeping exploit logic external
-3. Why is this different? npm attacks took years to emerge; the agentic ecosystem got its first major supply chain campaign within months of launch
-4. Who has an advantage? Attackers — the permission model grants AI agents far more access than a typical npm package gets
-5. What does this mean for users? Anyone using MCP servers, Claude skills, or OpenClaw needs to audit what permissions they've granted
-6. Where is this going? Expect signed skills, sandboxed execution, and permission scoping — or expect much worse incidents
-
-### Sources
-- Snyk: "Inside the 'clawdhub' Malicious Campaign" — https://snyk.io/articles/clawdhub-malicious-campaign-ai-agent-skills/
-- 1Password: "From Magic to Malware: How OpenClaw's Agent Skills Become an Attack Surface" — https://1password.com/blog/from-magic-to-malware-how-openclaws-agent-skills-become-an-attack-surface
-- Adversa AI: "Top MCP Security Resources — February 2026" — https://adversa.ai/blog/top-mcp-security-resources-february-2026/
-- Dark Reading: "2026: The Year Agentic AI Becomes the Attack-Surface Poster Child" — https://www.darkreading.com/threat-intelligence/2026-agentic-ai-attack-surface-poster-child
-- AuthMind: "OpenClaw's 230 Malicious Skills" — https://www.authmind.com/post/openclaw-malicious-skills-agentic-ai-supply-chain
+## 1. ~~The Agentic Supply Chain Is Already Compromised~~ → Published as `posts/agentic-supply-chain-attack.html`
 
 ---
 
