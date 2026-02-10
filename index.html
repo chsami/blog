@@ -43,6 +43,13 @@
     "blogPost": [
       {
         "@type": "BlogPosting",
+          "headline": "Chrome 146 Quietly Ships WebMCP",
+          "datePublished": "2026-02-10",
+          "author": {"@type": "Person", "name": "Sami"},
+          "url": "https://chsami.com/posts/chrome-146-webmcp-preview.html"
+        },
+      {
+        "@type": "BlogPosting",
           "headline": "I Installed a Skill Without Thinking Twice",
           "datePublished": "2026-02-09",
           "author": {"@type": "Person", "name": "Sami"},
@@ -344,7 +351,7 @@
 
     .sidebar-post:hover {
       background: rgba(26, 26, 26, 0.02);
-      padding-left: 12px;
+      transform: translateX(12px);
     }
 
     .sidebar-post:hover .post-index {
@@ -915,11 +922,21 @@
   <div class="layout">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-header">Archive - <span id="postCount">18</span> Posts</div>
+      <div class="sidebar-header">Archive - <span id="postCount">0</span> Posts</div>
+
+      <div class="sidebar-post" data-category="AI & Industry" data-title="Chrome 146 WebMCP Agents Skip UI"
+        onclick="window.location.href='posts/chrome-146-webmcp-preview.html'">
+        <span class="post-index">01</span>
+        <div class="post-info">
+          <div class="post-meta">AI & Industry · 5 min</div>
+          <h4 class="sidebar-title">Chrome 146 Quietly Ships WebMCP</h4>
+          <span class="sidebar-date" data-date="2026-02-10">10.02.2026</span>
+        </div>
+      </div>
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="Agentic Supply Chain Attack Skills Security"
         onclick="window.location.href='posts/agentic-supply-chain-attack.html'">
-        <span class="post-index">01</span>
+        <span class="post-index">02</span>
         <div class="post-info">
           <div class="post-meta">AI & Industry · 9 min</div>
           <h4 class="sidebar-title">I Installed a Skill Without Thinking Twice</h4>
@@ -929,7 +946,7 @@
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="The Kill Switch Digital Sovereignty France"
         onclick="window.location.href='posts/france-sovereignty-kill-switch.html'">
-        <span class="post-index">02</span>
+        <span class="post-index">03</span>
         <div class="post-info">
           <div class="post-meta">Digital Sovereignty · 9 min</div>
           <h4 class="sidebar-title">The Kill Switch: Europe's Digital Dependency</h4>
@@ -939,7 +956,7 @@
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="La Suite France Open Source Sovereignty"
         onclick="window.location.href='posts/france-sovereignty-la-suite.html'">
-        <span class="post-index">03</span>
+        <span class="post-index">04</span>
         <div class="post-info">
           <div class="post-meta">Digital Sovereignty · 10 min</div>
           <h4 class="sidebar-title">La Suite: France's Open-Source Stack</h4>
@@ -949,7 +966,7 @@
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="Ghost of Cloudwatt France Sovereignty Feasibility"
         onclick="window.location.href='posts/france-sovereignty-cloudwatt.html'">
-        <span class="post-index">04</span>
+        <span class="post-index">05</span>
         <div class="post-info">
           <div class="post-meta">Digital Sovereignty · 11 min</div>
           <h4 class="sidebar-title">The Ghost of Cloudwatt</h4>
@@ -959,7 +976,7 @@
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="Waymo World Model Self-Driving"
         onclick="window.location.href='posts/waymo-world-model.html'">
-        <span class="post-index">05</span>
+        <span class="post-index">06</span>
         <div class="post-info">
           <div class="post-meta">Autonomous Vehicles · 8 min</div>
           <h4 class="sidebar-title">Waymo's World Model: Future of Self-Driving</h4>
@@ -969,7 +986,7 @@
 
       <div class="sidebar-post" data-category="AI Tools" data-title="Claude Cowork Mac Only"
         onclick="window.location.href='posts/claude-cowork-mac-only.html'">
-        <span class="post-index">06</span>
+        <span class="post-index">07</span>
         <div class="post-info">
           <div class="post-meta">AI Tools · 7 min</div>
           <h4 class="sidebar-title">Claude Cowork: Why It's Mac Only</h4>
@@ -979,7 +996,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="AGENTS.md Outperforms Skills"
         onclick="window.location.href='posts/vercel-agents-md-vs-skills.html'">
-        <span class="post-index">07</span>
+        <span class="post-index">08</span>
         <div class="post-info">
           <div class="post-meta">Agentic Engineering · 8 min</div>
           <h4 class="sidebar-title">AGENTS.md Outperforms Skills</h4>
@@ -989,7 +1006,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Preparing Your Codebase for Agentic Coding"
         onclick="window.location.href='posts/agentic-ready-codebase.html'">
-        <span class="post-index">08</span>
+        <span class="post-index">09</span>
         <div class="post-info">
           <div class="post-meta">Development · 10 min</div>
           <h4 class="sidebar-title">Preparing Your Codebase for Agentic Coding</h4>
@@ -999,7 +1016,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Claude Integration Options"
         onclick="window.location.href='posts/claude-integration-options.html'">
-        <span class="post-index">09</span>
+        <span class="post-index">10</span>
         <div class="post-info">
           <div class="post-meta">Development · 12 min</div>
           <h4 class="sidebar-title">Claude Integration Options</h4>
@@ -1009,7 +1026,7 @@
 
       <div class="sidebar-post" data-category="AI Tools" data-title="Claude Reflect - Self-Learning Memory"
         onclick="window.location.href='posts/claude-reflect.html'">
-        <span class="post-index">10</span>
+        <span class="post-index">11</span>
         <div class="post-info">
           <div class="post-meta">Development · 7 min</div>
           <h4 class="sidebar-title">Claude Reflect - Self-Learning Memory</h4>
@@ -1019,7 +1036,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Porterminal - Web-Based Terminal Access"
         onclick="window.location.href='posts/porterminal.html'">
-        <span class="post-index">11</span>
+        <span class="post-index">12</span>
         <div class="post-info">
           <div class="post-meta">Development · 5 min</div>
           <h4 class="sidebar-title">Porterminal - Web-Based Terminal Access</h4>
@@ -1029,7 +1046,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Claude HUD - Real-Time Session Visibility"
         onclick="window.location.href='posts/claude-hud.html'">
-        <span class="post-index">12</span>
+        <span class="post-index">13</span>
         <div class="post-info">
           <div class="post-meta">Development · 6 min</div>
           <h4 class="sidebar-title">Claude HUD - Real-Time Session Visibility</h4>
@@ -1039,7 +1056,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Claude Skills - A Complete Guide"
         onclick="window.location.href='posts/claude-skills-guide.html'">
-        <span class="post-index">13</span>
+        <span class="post-index">14</span>
         <div class="post-info">
           <div class="post-meta">Development · 10 min</div>
           <h4 class="sidebar-title">Claude Skills - A Complete Guide</h4>
@@ -1049,7 +1066,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="Ralph - Autonomous Loop for Claude Code"
         onclick="window.location.href='posts/ralph-claude-code.html'">
-        <span class="post-index">14</span>
+        <span class="post-index">15</span>
         <div class="post-info">
           <div class="post-meta">Development · 9 min</div>
           <h4 class="sidebar-title">Ralph - Autonomous Loop for Claude Code</h4>
@@ -1059,7 +1076,7 @@
 
       <div class="sidebar-post" data-category="Development" data-title="SpecKit - Specification-Driven Development"
         onclick="window.location.href='posts/speckit-specification-driven-development.html'">
-        <span class="post-index">15</span>
+        <span class="post-index">16</span>
         <div class="post-info">
           <div class="post-meta">Development · 7 min</div>
           <h4 class="sidebar-title">SpecKit - Specification-Driven Development</h4>
@@ -1069,7 +1086,7 @@
 
       <div class="sidebar-post" data-category="AI & Industry" data-title="How AI Agents Use Markdown Files"
         onclick="window.location.href='posts/ai-agents-markdown.html'">
-        <span class="post-index">16</span>
+        <span class="post-index">17</span>
         <div class="post-info">
           <div class="post-meta">Development · 8 min</div>
           <h4 class="sidebar-title">How AI Agents Use Markdown Files</h4>
@@ -1079,7 +1096,7 @@
 
       <div class="sidebar-post" data-category="Architecture" data-title="BMAD Method - AI Development Framework"
         onclick="window.location.href='posts/bmad-infographic.html'">
-        <span class="post-index">17</span>
+        <span class="post-index">18</span>
         <div class="post-info">
           <div class="post-meta">Architecture · 10 min</div>
           <h4 class="sidebar-title">BMAD Method - AI Development Framework</h4>
@@ -1101,14 +1118,14 @@
 
       <!-- Hero -->
       <section class="hero-section slide-up delay-100" data-category="AI & Industry"
-        onclick="window.location.href='posts/agentic-supply-chain-attack.html'">
-        <img src="images/agentic-supply-chain-attack-hero.jpg"
-          alt="Agentic Supply Chain Attack - AI Security" class="hero-img">
+        onclick="window.location.href='posts/chrome-146-webmcp-preview.html'">
+        <img src="images/chrome-146-webmcp-hero.jpg"
+          alt="Chrome 146 WebMCP Preview" class="hero-img">
         <div class="hero-content">
-          <div class="hero-meta">AI & Industry · 9 min read</div>
-          <h2 class="hero-title">I Installed a Skill Without Thinking Twice</h2>
-          <p class="hero-excerpt">230 malicious skills uploaded to ClawHub in two weeks. The agentic AI ecosystem just got its first major supply chain attack. I installed skills without auditing them. Here's what could have gone wrong and what every developer needs to do now.</p>
-          <div class="hero-author">By Sami · <span data-date="2026-02-09">09.02.2026</span></div>
+          <div class="hero-meta">AI & Industry · 5 min read</div>
+          <h2 class="hero-title">Chrome 146 quietly ships WebMCP</h2>
+          <p class="hero-excerpt">A hidden WebMCP flag lets agents call site-defined tools without clicking through the UI. Here’s why that matters, the risks, and a checklist to get your SaaS agent-ready.</p>
+          <div class="hero-author">By Sami · <span data-date="2026-02-10">10.02.2026</span></div>
         </div>
       </section>
 
@@ -1179,6 +1196,12 @@
     const featuredCards = document.querySelectorAll('.featured-card');
     const sidebarPosts = document.querySelectorAll('.sidebar-post');
     const postCountEl = document.getElementById('postCount');
+
+    // Initialize sidebar numbering and count
+    sidebarPosts.forEach((post, idx) => {
+      post.querySelector('.post-index').textContent = String(idx + 1).padStart(2, '0');
+    });
+    postCountEl.textContent = `${sidebarPosts.length}`;
 
     const defaultHeroCategory = heroSection.dataset.category;
     const defaultHeroHTML = heroSection.innerHTML;
