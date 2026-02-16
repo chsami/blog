@@ -903,7 +903,7 @@
   <!-- Header -->
   <header class="header">
     <div class="logo-container">
-      <a href="#" class="logo">CH<span>SAMI</span></a>
+      <a href="index.html" class="logo">CH<span>SAMI</span></a>
       <div class="logo-subtitle">&lt;/developer&gt;</div>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -1137,10 +1137,10 @@
       <section class="hero-section slide-up delay-100" data-category="AI Tools"
         onclick="window.location.href='posts/seedance-2-video-generation.html'">
         <img src="images/seedance-2-hero.jpg"
-          alt="Seedance 2.0 AI Video Generation" class="hero-img">
+          alt="Seedance 2.0 AI Video Generation" class="hero-img" width="1200" height="380" loading="eager">
         <div class="hero-content">
           <div class="hero-meta">AI Tools &middot; 7 min read</div>
-          <h2 class="hero-title">Seedance 2.0 is a game-changer for AI video</h2>
+          <h1 class="hero-title">Seedance 2.0 is a game-changer for AI video</h1>
           <p class="hero-excerpt">ByteDance's new video model accepts 12 reference files across 4 modalities, generates native audio with lip sync in 8+ languages, and claims a 90%+ usable output rate. Here's what it does and where it falls short.</p>
           <div class="hero-author">By Sami &middot; <span data-date="2026-02-12">12.02.2026</span></div>
         </div>
@@ -1152,7 +1152,7 @@
         <div class="featured-card" data-category="Development" onclick="window.location.href='posts/agentic-ready-codebase.html'">
           <div class="card-img-wrapper">
             <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&h=400&fit=crop&q=80"
-              alt="Preparing Your Codebase for Agentic Coding" class="card-img">
+              alt="Preparing Your Codebase for Agentic Coding" class="card-img" width="800" height="400" loading="lazy">
           </div>
           <div class="card-content">
             <span class="card-number">01</span>
@@ -1166,7 +1166,7 @@
           onclick="window.location.href='posts/claude-code-task-management.html'">
           <div class="card-img-wrapper">
             <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop&q=80"
-              alt="Claude Code Task Management - JSON-Based Task Tracking" class="card-img">
+              alt="Claude Code Task Management - JSON-Based Task Tracking" class="card-img" width="800" height="400" loading="lazy">
           </div>
           <div class="card-content">
             <span class="card-number">02</span>
@@ -1241,7 +1241,7 @@
       heroSection.innerHTML =
         '<div class="hero-content">' +
           '<div class="hero-meta">' + meta + ' read</div>' +
-          '<h2 class="hero-title">' + title + '</h2>' +
+          '<h1 class="hero-title">' + title + '</h1>' +
           '<div class="hero-author">By Sami · <span data-date="' + date + '">' + formatDate(date) + '</span></div>' +
         '</div>';
     }

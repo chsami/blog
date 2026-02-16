@@ -25,6 +25,46 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### Seedance 2.0 Is a Game-Changer for AI Video
+- URL: /posts/seedance-2-video-generation.html
+- Published: 2026-02-12
+- Description: ByteDance's Seedance 2.0 introduces a 12-file multi-modal input system, native audio with lip sync, and a 90%+ usable output rate. Here's what it does, how it compares, and where it falls short.
+
+#### Chrome 146 Quietly Ships WebMCP
+- URL: /posts/chrome-146-webmcp-preview.html
+- Published: 2026-02-10
+- Description: Chrome 146 ships an early WebMCP preview flag that lets agents call your app's tools without clicking through the UI. Here's what changes and how to prepare.
+
+#### I Installed a Skill Without Thinking Twice
+- URL: /posts/agentic-supply-chain-attack.html
+- Published: 2026-02-09
+- Description: 230 malicious skills uploaded to ClawHub in two weeks. The agentic AI ecosystem just got its first major supply chain attack. Here's what happened and what developers need to do now.
+
+#### The Kill Switch: Europe's Digital Dependency on America
+- URL: /posts/france-sovereignty-kill-switch.html
+- Published: 2026-02-07
+- Description: The Trump administration sanctioned an ICC prosecutor and Microsoft cancelled his email. That single act exposed how deeply Europe depends on American tech — and why France decided to fight back.
+
+#### La Suite: France's Open-Source Replacement for Teams and Zoom
+- URL: /posts/france-sovereignty-la-suite.html
+- Published: 2026-02-07
+- Description: France's government built La Suite Numérique — a full open-source productivity stack replacing Teams, Zoom, and Google Workspace. It's MIT-licensed, already serves 500,000 users across 15 ministries, and it's not vaporware.
+
+#### The Ghost of Cloudwatt: Can France Actually Pull This Off?
+- URL: /posts/france-sovereignty-cloudwatt.html
+- Published: 2026-02-07
+- Description: France's first attempt at sovereign cloud cost EUR 285 million and ended in failure. Now they're trying again with La Suite. Here's an honest look at what went wrong, what's different, and whether Europe can actually pull this off.
+
+#### Waymo's World Model: What It Means for the Future of Self-Driving
+- URL: /posts/waymo-world-model.html
+- Published: 2026-02-07
+- Description: Waymo partnered with DeepMind to build a generative world model that simulates driving scenarios from sensor data. Here's what it means for autonomous vehicles and why Google's vertical integration gives them an edge.
+
+#### Vercel's Agent Evals: AGENTS.md vs Skills
+- URL: /posts/vercel-agents-md-vs-skills.html
+- Published: 2026-02-03
+- Description: Vercel hardened their agent evals and found a compressed AGENTS.md index beat skills-based retrieval, reaching 100% pass rate across build, lint, and test.
+
 #### Preparing Your Codebase for Agentic Coding
 - URL: /posts/agentic-ready-codebase.html
 - Published: 2026-01-28
