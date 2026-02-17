@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portless: Stop Memorizing Localhost Ports - CHSAMI</title>
+  <meta name="description" content="Portless replaces localhost:3000 with readable domain names like app.local. It handles HTTPS, ngrok tunneling, and URL rewriting automatically so you can stop juggling port numbers during development.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/github-portless.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/github-portless.html">
+  <meta property="og:title" content="Portless: Stop Memorizing Localhost Ports">
+  <meta property="og:description" content="Portless replaces localhost:3000 with readable domain names like app.local. It handles HTTPS, ngrok tunneling, and URL rewriting automatically so you can stop juggling port numbers during development.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-16">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portless: Stop Memorizing Localhost Ports">
+  <meta name="twitter:description" content="Portless replaces localhost:3000 with readable domain names like app.local. It handles HTTPS, ngrok tunneling, and URL rewriting automatically so you can stop juggling port numbers during development.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Portless: Stop Memorizing Localhost Ports",
+    "description": "Portless replaces localhost:3000 with readable domain names like app.local. It handles HTTPS, ngrok tunneling, and URL rewriting automatically so you can stop juggling port numbers during development.",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-16",
+    "dateModified": "2026-02-16",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/github-portless.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Developer Tools</div>
+      <h1 class="hero-title">Portless Fixes Localhost<span>No more memorizing which port runs what</span></h1>
+      <p class="hero-desc">
+        You run your frontend on localhost:3000, your API on 8080, your database admin on 5432, and a background job processor on 4000. When you need to share your work, you fire up ngrok and hope you remembered the right port. Portless replaces this entire workflow with readable domain names like <code>app.local</code> and <code>api.local</code>, handles HTTPS automatically, and rewrites URLs on the fly so everything just works.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The localhost port problem</div>
+          <div class="section-subtitle">Why juggling ports is broken</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Mental overhead</div>
+          <p class="card-desc">
+            I work on three different projects each week. One uses 3000 for the frontend and 8000 for the API. Another uses 4000 and 3001. The third has five different services on ports I can never remember. Every time I switch contexts, I open my terminal, scroll back through history to find the right npm run command, or open a README to check which port is which. It is a tiny friction but it happens dozens of times a day.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">HTTPS in development</div>
+          <p class="card-desc">
+            Some browser APIs only work over HTTPS. Testing OAuth flows, service workers, or anything involving secure contexts means generating self signed certificates, ignoring browser warnings, and updating your localhost URLs to use https://. When you add multiple services that need to talk to each other, the certificate setup becomes a small project of its own.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">Sharing work requires manual tunneling</div>
+        <p class="card-desc">
+          When a designer asks to see your progress or you need to test on a mobile device, you fire up ngrok, copy the randomly generated URL, and share it. If your app has hardcoded localhost URLs, they break because the tunnel uses a public domain. You either rewrite your URLs manually or set up environment variables to handle both local and tunneled contexts. It works but it is clunky.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">What Portless does</div>
+          <div class="section-subtitle">Virtual domains with automatic URL rewriting</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Core feature</div>
+          <div class="card-title">Local domain mapping</div>
+          <p class="card-desc">You create a config file that maps localhost:3000 to <code>app.acme.local</code> and localhost:8080 to <code>api.acme.local</code>. Portless runs as a background daemon and intercepts requests to those domains, routing them to the correct port automatically.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Automatic</div>
+          <div class="card-title">Built in HTTPS</div>
+          <p class="card-desc">Portless generates and manages local SSL certificates so <code>https://app.acme.local</code> works without browser warnings. No mkcert, no manual cert installation, no ignoring security errors. It just works.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Smart</div>
+          <div class="card-title">URL rewriting</div>
+          <p class="card-desc">When your app sends HTML, CSS, or JSON over the network, Portless automatically rewrites any localhost URLs to match the domain you are accessing. If you visit <code>app.acme.local</code>, references to localhost:8080 become <code>api.acme.local</code> automatically.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The workflow in practice</div>
+        <p class="card-desc">You define domains in portless.config.js, start the daemon once, and forget it exists. From that point forward, you type <code>app.acme.local</code> instead of localhost:3000. Your app sees requests coming from a real looking domain, HTTPS works, and URLs stay consistent whether you are testing locally or sharing via ngrok.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">How it handles public sharing</div>
+          <div class="section-subtitle">Integrated ngrok tunneling</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Automatic tunnel setup</div>
+          <p class="card-desc">
+            Portless integrates with ngrok directly. You configure a public domain in your config file, run one command, and Portless exposes your local service with a stable URL. The same URL rewriting engine that works locally applies to the tunnel, so hardcoded localhost references transform into the public domain automatically.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Consistent URLs across contexts</div>
+          <p class="card-desc">
+            Your code does not need to know whether it is running locally or publicly. Portless rewrites URLs based on the request host. If someone accesses your app via the ngrok URL, all embedded links and API calls use the public domain. If you access it via <code>app.local</code>, they use local domains. Same codebase, zero conditional logic.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">How it compares to alternatives</div>
+          <div class="section-subtitle">The localhost tooling landscape</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">What other tools do</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Ngrok</div>
+            <div class="list-body">Only handles public tunneling. You still manage localhost ports manually, HTTPS locally requires separate setup, and URL rewriting is not automatic. Ngrok is great at what it does but it does not solve the local domain problem.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Localias</div>
+            <div class="list-body">Provides custom local domain aliases but does not handle URL rewriting or tunneling. It solves the naming problem but you still need to set up HTTPS and manage public sharing separately.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Caddy</div>
+            <div class="list-body">A reverse proxy that can handle local HTTPS and domain routing. More powerful than Portless but requires deeper configuration. It is a general purpose web server, not a dev specific tool. You gain flexibility but lose the zero config experience.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top: 32px;">
+        <div class="card-title">Where Portless fits</div>
+        <p class="card-desc">Portless combines local domain mapping, HTTPS, ngrok tunneling, and URL rewriting in one package. If you want readable local domains and do not want to configure a reverse proxy, it is the most complete solution. If you need advanced routing logic or run dozens of services, Caddy gives you more control.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Who benefits most</div>
+          <div class="section-subtitle">Ideal use cases</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Fullstack developers</div>
+          <p class="card-desc">If you run a frontend and one or more backend services locally, Portless eliminates port confusion. You define domains once and stop thinking about numbers.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Teams sharing work often</div>
+          <p class="card-desc">Designers, product managers, or remote teammates who need to see in progress work benefit from stable ngrok URLs that do not break internal links.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Anyone testing HTTPS features</div>
+          <p class="card-desc">Service workers, web crypto APIs, or OAuth flows all require HTTPS. Portless gives you that without manual certificate management.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">What this means for local dev</div>
+          <div class="section-subtitle">The broader shift toward better DX</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Port numbers are an implementation detail</div>
+          <p class="card-desc">
+            Portless treats localhost ports the way DNS treats IP addresses. You should not need to remember them. The tool maps human readable names to the underlying network details and stays out of your way. This is how local development should work.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Zero config is the goal</div>
+          <p class="card-desc">
+            Developer tools are moving toward less manual setup. Vite auto opens your browser. Next.js handles routing without configuration. Portless follows that pattern: define your domains once and the rest happens automatically. The best tools make infrastructure invisible.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Takeaway</div>
+        <div class="cta-title">Localhost should feel like production</div>
+        <p class="cta-desc">Portless makes local development feel like working with real domain names. No more memorizing ports, no more manual tunneling, no more broken URLs when you share your work. If you run multiple services locally, it is worth trying.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">© 2026 CHSAMI</div>
+    <a class="footer-link" href="../index.html">Back to Home</a>
+  </footer>
+</body>
+</html>
