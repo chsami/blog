@@ -455,6 +455,37 @@ Technology preview enabling LLM-based agents to automate repository tasks within
 
 ---
 
+## 6. Local LLMs + Claude Code (Ollama) to Dodge API Caps
+
+**Signal strength:** 4/5  
+**Cross-platform:** Yes (X, HN, Reddit)
+
+### What Happened
+- X threads show devs hitting Claude Sonnet limits and moving Claude Code into Ollama on consumer i5/8–12GB RAM to avoid daily caps and regain control.
+- HN story "The $2k Laptop That Replaced My $200/Month AI Subscription" (id 47074347, Feb 19) outlines a hybrid pipeline: 80% of tasks on local Qwen3 8B via Ollama, final synthesis via Claude API; costs drop from $8–$15 to ~$0.15 per 50-item job.
+- Reddit r/LocalLLaMA post (747 upvotes) says the open-weight vs proprietary gap is the smallest ever, fueling local deployment momentum.
+
+### Community Insights
+- HN comments: local 8B models are good enough for structured scoring/extraction; frontier models still win on synthesis/judgment, so routing matters.
+- X caution: running Claude locally cuts API spend but not trust risk—executing AI-written scripts can still leak secrets or ship backdoors.
+- Reddit sentiment: Qwen3.5-class open models are nearing Claude/Gemini for many workloads, shrinking the cloud advantage.
+
+### Blog Angle
+"Your IDE just went offline-first: how hybrid local+cloud pipelines change cost, trust, and speed for AI coding." Focus on the developer pain (caps, jitter, outages), why local control differs (VRAM economics, air-gapped security), and what it means for day-to-day shipping.
+
+### Phase 4 Angles
+1. What problem does this solve? API caps and unpredictable cost/latency halt coding workflows.
+2. Why is this different? Claude Code now runs locally via Ollama; hybrid routing (local for pattern-matching, cloud for judgment) delivers 90–95% cost cuts.
+3. What does this mean for users? Teams can keep shipping during rate-limit incidents but must own security hygiene for locally generated code.
+
+### Sources
+- HN: https://news.ycombinator.com/item?id=47074347
+- X (nitter): https://nitter.net/search?f=tweets&q=local%20LLM%20developers
+- X (nitter): https://nitter.net/search?f=tweets&q=AI%20agents
+- Reddit: https://www.reddit.com/r/LocalLLaMA/comments/1r44fzk/the_gap_between_openweight_and_proprietary_model/
+
+---
+
 ## Recommendation
 
 **Top pick: #1 (Agentic Supply Chain)** — highest signal, cross-platform presence, direct connection to existing skills guide post, and it's a story happening right now with active exploits. The user-perspective angle writes itself: you've been installing skills and MCP servers for months, and the ecosystem just got its first real attack.

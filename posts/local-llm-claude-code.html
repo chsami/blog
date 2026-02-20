@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local LLMs + Claude Code: Hybrid Routing Without Rate Limits - CHSAMI</title>
+  <meta name="description" content="Run Claude Code alongside local models in Ollama to cut costs, dodge API caps, and keep shipping when clouds stall.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/local-llm-claude-code.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/local-llm-claude-code.html">
+  <meta property="og:title" content="Local LLMs + Claude Code: Hybrid Routing Without Rate Limits">
+  <meta property="og:description" content="Run Claude Code alongside local models in Ollama to cut costs, dodge API caps, and keep shipping when clouds stall.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/e196c71f-eeec-4c90-ade6-04f27379a8f6/Phoenix_10_A_sleek_developer_workstation_with_a_glowing_local_1.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-20">
+  <meta property="article:author" content="Sami">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Local LLMs + Claude Code: Hybrid Routing Without Rate Limits">
+  <meta name="twitter:description" content="Run Claude Code alongside local models in Ollama to cut costs, dodge API caps, and keep shipping when clouds stall.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/e196c71f-eeec-4c90-ade6-04f27379a8f6/Phoenix_10_A_sleek_developer_workstation_with_a_glowing_local_1.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Local LLMs + Claude Code: Hybrid Routing Without Rate Limits",
+    "description": "Run Claude Code alongside local models in Ollama to cut costs, dodge API caps, and keep shipping when clouds stall.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/e196c71f-eeec-4c90-ade6-04f27379a8f6/Phoenix_10_A_sleek_developer_workstation_with_a_glowing_local_1.jpg",
+    "datePublished": "2026-02-20",
+    "dateModified": "2026-02-20",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/local-llm-claude-code.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .features-grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .feature-desc code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--bg-primary);
+      padding: 2px 6px;
+    }
+
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .tip-card {
+      background: var(--bg-card);
+      padding: 32px;
+      border-left: 4px solid var(--text-primary);
+    }
+
+    .tip-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .tip-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .tip-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-content {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    .delay-6 {
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 48px 24px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .hero-title span {
+        font-size: 20px;
+      }
+
+      .hero-desc {
+        font-size: 17px;
+      }
+
+      .content {
+        padding: 0 24px 48px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
+      }
+
+      .section-number {
+        font-size: 48px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .feature-card {
+        padding: 28px;
+      }
+
+      .code-block {
+        padding: 24px;
+      }
+
+      .code-block pre {
+        font-size: 12px;
+      }
+
+      .cta-section {
+        padding: 40px 24px;
+      }
+
+      .cta-title {
+        font-size: 24px;
+      }
+
+      .header,
+      .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-title span {
+        font-size: 16px;
+        margin-top: 8px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+        margin-top: 24px;
+      }
+
+      .content {
+        padding: 0 20px 40px;
+      }
+
+      .section-number {
+        font-size: 36px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .feature-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="../index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-label animate">Guide - AI Engineering</div>
+    <h1 class="hero-title animate delay-1">
+      Offline-First AI
+      <span>Local LLMs + Claude Code without the rate-limit hangover</span>
+    </h1>
+    <p class="hero-desc animate delay-2">
+      When Sonnet caps or jittery latency stall your day, running Claude Code alongside a local model in Ollama keeps shipping moving. Hybrid routing turns “API pending” into “still building” — with a 90%+ cost drop for the boring parts of the job.
+    </p>
+  </section>
+
+  <div class="content">
+    <!-- Section 1 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">The Pain</h2>
+          <p class="section-subtitle">Why devs are going local again</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">⏳</div>
+          <h3 class="feature-title">Rate limits = blocked sprints</h3>
+          <p class="feature-desc">
+            A recent case study: research jobs that cost $8–$15 per run now choke on caps. Switching 80% of the work to a local 8B model brought runs down to ~$0.40 while staying unblocked.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">💸</div>
+          <h3 class="feature-title">Cost scales with usefulness</h3>
+          <p class="feature-desc">
+            The better your prompts, the more tokens you burn. Local inference makes “try again with a tweak” cheap enough to be the default instead of a budgeting discussion.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">Trust moves on-prem</h3>
+          <p class="feature-desc">
+            X threads show teams hitting Sonnet limits, then moving Claude Code inside Ollama on an i5/8–12GB box. Less API exhaust, more control over what leaves your laptop.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">The Hybrid Pattern</h2>
+          <p class="section-subtitle">Local pattern-matching, cloud judgment</p>
+        </div>
+      </div>
+
+      <div class="features-grid features-grid-2">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🏠</div>
+          <h3 class="feature-title">Stage 1: Local heavy lifting</h3>
+          <p class="feature-desc">
+            Use an 8B–14B coder model in Ollama for scanning repos, scoring snippets, and extracting structure. These are deterministic, pattern-heavy tasks that don’t need frontier creativity.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">☁️</div>
+          <h3 class="feature-title">Stage 2: Cloud synthesis</h3>
+          <p class="feature-desc">
+            Send the distilled context to Claude Code for the judgment call: architecture choices, refactors, final patch. Tiny prompt, big reasoning — and a fraction of the tokens.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🔀</div>
+          <h3 class="feature-title">Router logic</h3>
+          <p class="feature-desc">
+            Route based on task type: extraction → local; generation → cloud. Cache local embeddings; only revalidate deltas. If the cloud call fails, fall back to a smaller local pass to keep moving.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">📉</div>
+          <h3 class="feature-title">Cost profile</h3>
+          <p class="feature-desc">
+            Local GPU run: $0 variable, power aside. Cloud synthesis: cents. Combined, you keep latency predictable and make retries free for 80% of steps.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Minimal hybrid loop (pseudocode)</div>
+        <div class="code-block">
+          <pre># 1) Local scan + score
+local = ollama.chat(model="qwen2.5-coder:8b", messages=[
+  {"role": "user", "content": "Score these files 1-10 for relevance to `bug: auth timeout`:\n" + file_list}
+])
+
+# 2) Compress for cloud
+context = summarize(local, budget=1500)  # keep it cheap
+
+# 3) Cloud synthesis
+claude = anthropic.messages.create(
+  model="claude-3.7-sonnet",
+  max_tokens=600,
+  messages=[{"role": "user", "content": f\"Fix the bug with this context:\\n{context}\"}]
+)
+
+# 4) If cloud fails, retry locally with smaller scope
+if claude.timed_out:
+  fallback = ollama.chat(model="qwen2.5-coder:8b", messages=[...])</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">Setup in 15 Minutes</h2>
+          <p class="section-subtitle">Keep it sharp, keep it simple</p>
+        </div>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card animate delay-1">
+          <div class="tip-number">Step 01</div>
+          <h4 class="tip-title">Install Ollama + a coder model</h4>
+          <p class="tip-desc">Install Ollama, then pull a lightweight coder model (e.g., <code>qwen2.5-coder:8b</code> or <code>llama3.1:8b-instruct</code>). Run it once to warm the cache.</p>
+        </div>
+
+        <div class="tip-card animate delay-2">
+          <div class="tip-number">Step 02</div>
+          <h4 class="tip-title">Wire Claude Code to the router</h4>
+          <p class="tip-desc">Add a simple router: local for scoring/extraction, cloud for synthesis. Keep a max-token ceiling on the cloud leg so retries stay cheap.</p>
+        </div>
+
+        <div class="tip-card animate delay-3">
+          <div class="tip-number">Step 03</div>
+          <h4 class="tip-title">Cache aggressively</h4>
+          <p class="tip-desc">Cache local embeddings and file scores. Re-score only changed files. The less you ship to the cloud, the more predictable your spend.</p>
+        </div>
+
+        <div class="tip-card animate delay-4">
+          <div class="tip-number">Step 04</div>
+          <h4 class="tip-title">Log everything</h4>
+          <p class="tip-desc">Log routed decisions, token counts, and fallbacks. When latency spikes, you should know if the cloud call or the local model is the bottleneck.</p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Beginner quickstart (copy/paste)</div>
+        <div class="code-block">
+          <pre># Hardware: 8–12GB RAM works; GPU helps but isn't required for 8B models.
+
+# 1) Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# 2) Pull a small coder model
+ollama pull qwen2.5-coder:8b
+
+# 3) Smoke test locally
+ollama run qwen2.5-coder:8b "Write a Python function that reverses a string."
+
+# 4) Set your Claude API key for the cloud leg
+export ANTHROPIC_API_KEY=sk-...your-key...
+
+# 5) Minimal router (Python, no deps)
+python - <<'PY'
+import requests, os, json
+files = "auth.js\nuser.js"
+local = requests.post("http://localhost:11434/api/chat", json={
+  "model": "qwen2.5-coder:8b",
+  "messages": [{"role": "user", "content": f"Score these files 1-10 for auth timeout:\n{files}"}],
+})
+context = local.json().get("message", {}).get("content", "")[:1500]
+cloud = requests.post(
+  "https://api.anthropic.com/v1/messages",
+  headers={
+    "x-api-key": os.environ["ANTHROPIC_API_KEY"],
+    "anthropic-version": "2023-06-01"
+  },
+  json={
+    "model": "claude-3.7-sonnet",
+    "max_tokens": 600,
+    "messages": [{"role": "user", "content": f"Fix auth timeout using:\n{context}"}],
+  },
+)
+print(cloud.json()["content"][0]["text"])
+PY</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">Trust and Safety</h2>
+          <p class="section-subtitle">Local ≠ automatically safe</p>
+        </div>
+      </div>
+
+      <div class="features-grid features-grid-2">
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">🧪</div>
+          <h3 class="feature-title">Review the generated code</h3>
+          <p class="feature-desc">Local execution removes API exhaust but not logic errors. Keep human review and automated tests in the loop before shipping patches.</p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🔑</div>
+          <h3 class="feature-title">Secrets stay secret</h3>
+          <p class="feature-desc">Never paste .env contents into prompts. Mount read-only secrets, redact logs, and keep the router from forwarding sensitive buffers to the cloud leg.</p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">🧭</div>
+          <h3 class="feature-title">Document routing rules</h3>
+          <p class="feature-desc">Put the routing policy in your CLAUDE.md: which tasks are local, which are cloud, and token ceilings for each. Agents follow what you write down.</p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Watch the SLOs</h3>
+          <p class="feature-desc">Track p95 latency and dollar-per-task. Hybrid only wins if it’s both faster and cheaper. If not, rebalance the split.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <h2 class="section-title">Sources</h2>
+          <p class="section-subtitle">Signals worth reading</p>
+        </div>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card animate delay-1">
+          <div class="tip-number">Case</div>
+          <h4 class="tip-title">$2k laptop replacing a $200/month AI bill</h4>
+          <p class="tip-desc"><a href="https://news.ycombinator.com/item?id=47074347" class="footer-link">news.ycombinator.com/item?id=47074347</a></p>
+        </div>
+
+        <div class="tip-card animate delay-2">
+          <div class="tip-number">X</div>
+          <h4 class="tip-title">Local LLM developers thread</h4>
+          <p class="tip-desc"><a href="https://nitter.net/search?f=tweets&q=local%20LLM%20developers" class="footer-link">nitter.net/search?q=local LLM developers</a></p>
+        </div>
+
+        <div class="tip-card animate delay-3">
+          <div class="tip-number">Reddit</div>
+          <h4 class="tip-title">Open-weight vs proprietary gap discussion</h4>
+          <p class="tip-desc"><a href="https://www.reddit.com/r/LocalLLaMA/comments/1r44fzk/the_gap_between_openweight_and_proprietary_model/" class="footer-link">r/LocalLLaMA: open-weight gap</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <div class="cta-label">Next Move</div>
+        <div class="cta-title">Make your IDE rate-limit proof</div>
+        <p class="cta-desc">
+          Clone your router, pull a local coder model, and cap the cloud tokens. Your future “API pending” window should say “still building” instead.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-text">Written by Sami — February 20, 2026</div>
+    <a class="footer-link" href="../about.html">About</a>
+  </footer>
+</body>
+
+</html>
