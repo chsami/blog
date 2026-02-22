@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepgram: The Voice-to-Text API That Actually Works for Developers - CHSAMI</title>
+  <meta name="description" content="Deepgram gives you $200 in free credits when you sign up, has genuinely competitive pricing, and its voice activity detection is the best I've used for programming by voice.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/deepgram-voice-to-text.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/deepgram-voice-to-text.html">
+  <meta property="og:title" content="Deepgram: The Voice-to-Text API That Actually Works for Developers">
+  <meta property="og:description" content="Deepgram gives you $200 in free credits when you sign up, has genuinely competitive pricing, and its voice activity detection is the best I've used for programming by voice.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/e196c71f-eeec-4c90-ade6-04f27379a8f6/Phoenix_10_A_sleek_developer_workstation_with_a_glowing_local_1.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-22">
+  <meta property="article:author" content="Sami">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Deepgram: The Voice-to-Text API That Actually Works for Developers">
+  <meta name="twitter:description" content="Deepgram gives you $200 in free credits when you sign up, has genuinely competitive pricing, and its voice activity detection is the best I've used for programming by voice.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/e196c71f-eeec-4c90-ade6-04f27379a8f6/Phoenix_10_A_sleek_developer_workstation_with_a_glowing_local_1.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Deepgram: The Voice-to-Text API That Actually Works for Developers",
+    "description": "Deepgram gives you $200 in free credits when you sign up, has genuinely competitive pricing, and its voice activity detection is the best I've used for programming by voice.",
+    "datePublished": "2026-02-22",
+    "dateModified": "2026-02-22",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/deepgram-voice-to-text.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .features-grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .feature-desc code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--bg-primary);
+      padding: 2px 6px;
+    }
+
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .tip-card {
+      background: var(--bg-card);
+      padding: 32px;
+      border-left: 4px solid var(--text-primary);
+    }
+
+    .tip-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .tip-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .tip-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .pricing-table {
+      background: var(--bg-card);
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pricing-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 20px 28px;
+      text-align: left;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .pricing-table td {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border-color);
+      line-height: 1.5;
+    }
+
+    .pricing-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pricing-table td:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .price-highlight {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .callout {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px 48px;
+      margin: 48px 0;
+    }
+
+    .callout-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+
+    .callout-text {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+    }
+
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-content {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin-top: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 16px 32px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .cta-link:hover {
+      opacity: 0.85;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+    .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+    @media (max-width: 1100px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .features-grid-2 { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 48px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 20px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 48px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 48px; }
+      .section-title { font-size: 24px; }
+      .feature-card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .code-block pre { font-size: 12px; }
+      .cta-section { padding: 40px 24px; }
+      .cta-title { font-size: 24px; }
+      .callout { padding: 28px 24px; }
+      .callout-text { font-size: 18px; }
+      .header, .footer { padding-left: 20px; padding-right: 20px; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+      .pricing-table th, .pricing-table td { padding: 14px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="../index.html" class="back-link">← Back to blog</a>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">Developer Tools &middot; 6 min read &middot; 22.02.2026</div>
+    <h1 class="hero-title">
+      Deepgram
+      <span>The voice-to-text API that finally gets it right</span>
+    </h1>
+    <p class="hero-desc">
+      I have been programming by voice a lot lately and Deepgram is the tool I keep coming back to. $200 in free credits when you sign up, genuinely affordable pricing after that, and — most importantly — it actually knows when you stop talking.
+    </p>
+  </div>
+
+  <div class="content">
+
+    <!-- Section 1 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">$200 Free When You Sign Up</h2>
+          <p class="section-subtitle">No credit card games, no trial tricks</p>
+        </div>
+      </div>
+
+      <div class="features-grid features-grid-2">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">$200</div>
+          <h3 class="feature-title">Free credits on registration</h3>
+          <p class="feature-desc">Create a new account at <a href="https://deepgram.com" class="footer-link" target="_blank" rel="noopener">deepgram.com</a> and you get $200 in API credits automatically. No credit card required to start. That is a serious amount of audio to transcribe before you spend a single cent.</p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Up and running in minutes</h3>
+          <p class="feature-desc">Grab your API key from the console, make one HTTP request (or use their SDK), and you are transcribing audio. The onboarding is one of the cleanest I have seen from any API-first company.</p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🧪</div>
+          <h3 class="feature-title">Plenty of room to experiment</h3>
+          <p class="feature-desc">$200 covers hundreds of hours of audio at standard pricing. That is enough to build a full prototype, test different models, tune your VAD settings, and still have budget left over.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">Pricing That Makes Sense</h2>
+          <p class="section-subtitle">Pay for what you use, nothing else</p>
+        </div>
+      </div>
+
+      <table class="pricing-table animate delay-1">
+        <thead>
+          <tr>
+            <th>Model / Tier</th>
+            <th>Use Case</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nova-3</td>
+            <td>General purpose, highest accuracy</td>
+            <td><span class="price-highlight">$0.0043 / min</span></td>
+          </tr>
+          <tr>
+            <td>Nova-2</td>
+            <td>Strong accuracy, widely used</td>
+            <td><span class="price-highlight">$0.0043 / min</span></td>
+          </tr>
+          <tr>
+            <td>Base</td>
+            <td>Lightweight, fast transcription</td>
+            <td><span class="price-highlight">$0.0025 / min</span></td>
+          </tr>
+          <tr>
+            <td>Streaming (Nova-3)</td>
+            <td>Real-time live transcription</td>
+            <td><span class="price-highlight">$0.0059 / min</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout animate delay-2">
+        <div class="callout-label">Bottom line</div>
+        <div class="callout-text">An hour of audio costs under 30 cents with Nova-2. For day-to-day programming by voice that is essentially free at any reasonable usage level.</div>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card animate delay-3">
+          <div class="tip-number">Pay-as-you-go</div>
+          <h4 class="tip-title">No monthly minimums</h4>
+          <p class="tip-desc">You only pay for the audio you send. There is no seat fee, no platform fee, and no minimum spend. The $200 credit covers you for a very long time if you are using it for personal tooling.</p>
+        </div>
+
+        <div class="tip-card animate delay-4">
+          <div class="tip-number">Volume discounts</div>
+          <h4 class="tip-title">Gets cheaper as you scale</h4>
+          <p class="tip-desc">If you are building a product that processes a lot of audio, Deepgram's enterprise tiers push the per-minute cost down considerably. The pricing page is transparent with no hidden fees buried in the terms.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">Voice Activity Detection That Actually Works</h2>
+          <p class="section-subtitle">The feature that makes or breaks voice tools</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🎙</div>
+          <h3 class="feature-title">It knows when you stop</h3>
+          <p class="feature-desc">This sounds obvious but it is genuinely hard to get right. Deepgram's VAD (voice activity detection) does not cut you off mid-sentence and does not keep the stream open forever after you go quiet. It nails the endpoint.</p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">🔕</div>
+          <h3 class="feature-title">Handles background noise well</h3>
+          <p class="feature-desc">Keyboard clatter, fan noise, the occasional notification ping — none of it triggers false positives. When you are coding, your environment is never completely silent and Deepgram handles that reality gracefully.</p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">⏱</div>
+          <h3 class="feature-title">Low latency streaming</h3>
+          <p class="feature-desc">Using the WebSocket streaming API you get interim transcription results as you speak. By the time you finish a sentence the final transcript is already there. There is no perceivable wait after you stop talking.</p>
+        </div>
+      </div>
+
+      <div class="code-section animate delay-4">
+        <div class="code-header">Python — streaming transcription with endpointing</div>
+        <div class="code-block">
+<pre>import asyncio
+from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
+
+async def transcribe():
+    dg = DeepgramClient("YOUR_API_KEY")
+    conn = await dg.listen.asynclive.v("1")
+
+    async def on_message(self, result, **kwargs):
+        sentence = result.channel.alternatives[0].transcript
+        if result.is_final and sentence:
+            print(f"Final: {sentence}")
+
+    conn.on(LiveTranscriptionEvents.Transcript, on_message)
+
+    options = LiveOptions(
+        model="nova-3",
+        language="en-US",
+        smart_format=True,
+        endpointing=300,   # ms of silence to trigger end-of-utterance
+    )
+
+    await conn.start(options)
+    # feed your microphone stream here
+    await conn.finish()
+
+asyncio.run(transcribe())</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">Using It for Programming by Voice</h2>
+          <p class="section-subtitle">How I actually use this day to day</p>
+        </div>
+      </div>
+
+      <div class="features-grid features-grid-2">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">💬</div>
+          <h3 class="feature-title">Dictating prompts to AI tools</h3>
+          <p class="feature-desc">The biggest win for me is dictating prompts to Claude Code and other AI assistants. Speaking is far faster than typing for longer, more nuanced instructions. I describe what I want, Deepgram transcribes it, it gets sent to the model.</p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">📝</div>
+          <h3 class="feature-title">Writing commit messages and docs</h3>
+          <p class="feature-desc">Commit messages and pull request descriptions are the kind of prose that is painful to type but flows naturally when spoken. I pipe Deepgram output straight into my terminal and it cuts the friction dramatically.</p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Thinking out loud while coding</h3>
+          <p class="feature-desc">Sometimes I just want to narrate what I am building — almost like rubber duck debugging — and capture it as text. With Deepgram running in the background I get a log of my thought process without any extra effort.</p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">🧰</div>
+          <h3 class="feature-title">Easy to integrate into your own tools</h3>
+          <p class="feature-desc">The API is straightforward enough that I built a small hotkey-activated transcription tool in an afternoon. Press a key, speak, release, get text in the clipboard. All powered by Deepgram under the hood.</p>
+        </div>
+      </div>
+
+      <div class="callout animate delay-5">
+        <div class="callout-label">Personal experience</div>
+        <div class="callout-text">I have tried several speech-to-text APIs and Deepgram is the one I have stuck with. The accuracy is excellent, but what keeps me coming back is the reliability of the endpointing — it just feels natural to use.</div>
+      </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <h2 class="section-title">Quick Start</h2>
+          <p class="section-subtitle">From zero to transcription in five minutes</p>
+        </div>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card animate delay-1">
+          <div class="tip-number">Step 01</div>
+          <h4 class="tip-title">Create an account</h4>
+          <p class="tip-desc">Go to <a href="https://console.deepgram.com/signup" class="footer-link" target="_blank" rel="noopener">console.deepgram.com/signup</a>. No credit card needed. Your $200 in credits will be available immediately after email confirmation.</p>
+        </div>
+
+        <div class="tip-card animate delay-2">
+          <div class="tip-number">Step 02</div>
+          <h4 class="tip-title">Generate an API key</h4>
+          <p class="tip-desc">Inside the console go to <strong>API Keys</strong> and create a new key. Copy it somewhere safe — you will not be able to see it again.</p>
+        </div>
+
+        <div class="tip-card animate delay-3">
+          <div class="tip-number">Step 03</div>
+          <h4 class="tip-title">Install the SDK</h4>
+          <p class="tip-desc">Run <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg-primary);padding:2px 6px;">pip install deepgram-sdk</code> (Python) or <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg-primary);padding:2px 6px;">npm install @deepgram/sdk</code> (Node). SDKs are available for most major languages.</p>
+        </div>
+
+        <div class="tip-card animate delay-4">
+          <div class="tip-number">Step 04</div>
+          <h4 class="tip-title">Start transcribing</h4>
+          <p class="tip-desc">Use the pre-recorded API for files or the WebSocket streaming API for live audio. The <a href="https://developers.deepgram.com/docs" class="footer-link" target="_blank" rel="noopener">developer docs</a> are well written and full of working examples.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <div class="cta-label">Try it now</div>
+        <div class="cta-title">Get your $200 in free credits</div>
+        <p class="cta-desc">
+          Sign up for Deepgram, pick up the free credits, and build your own voice-to-text workflow. If you do any amount of programming by voice it will pay for itself immediately.
+        </p>
+        <a href="https://console.deepgram.com/signup" class="cta-link" target="_blank" rel="noopener">Sign up at deepgram.com →</a>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-text">Written by Sami — February 22, 2026</div>
+    <a class="footer-link" href="../about.html">About</a>
+  </footer>
+</body>
+
+</html>
