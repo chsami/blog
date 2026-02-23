@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Cowork Finally Lands on Windows - CHSAMI</title>
+  <meta name="description" content="After months of watching Mac users rave about Claude Cowork, Windows support is finally here. Here's what it's like to use it for the first time.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-cowork-windows.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-cowork-windows.html">
+  <meta property="og:title" content="Claude Cowork Finally Lands on Windows">
+  <meta property="og:description" content="After months of watching Mac users rave about Claude Cowork, Windows support is finally here. Here's what it's like to use it for the first time.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-23">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Cowork Finally Lands on Windows">
+  <meta name="twitter:description" content="After months of watching Mac users rave about Claude Cowork, Windows support is finally here. Here's what it's like to use it for the first time.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Cowork Finally Lands on Windows",
+    "description": "After months of watching Mac users rave about Claude Cowork, Windows support is finally here. Here's what it's like to use it for the first time.",
+    "image": "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1200&h=630&fit=crop",
+    "datePublished": "2026-02-23",
+    "dateModified": "2026-02-23",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-cowork-windows.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI Tools</div>
+      <h1 class="hero-title">Claude Cowork Is Finally on Windows<span>Eight months of watching from the sidelines. Worth the wait?</span></h1>
+      <p class="hero-desc">
+        I've been watching Mac users play with Claude Cowork since January while sitting here on Windows waiting. Today the update finally dropped. Spent the afternoon with it and wanted to write up what it's actually like before the hype cycle kicks in.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The waiting was genuinely frustrating</div>
+          <div class="section-subtitle">Platform envy is real</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Watching Mac users get all the good stuff</div>
+          <p class="card-desc">
+            When Cowork launched the demos were all over my feed. Mac users sorting hundreds of files in 30 seconds, turning receipt photos into expense spreadsheets, building documents out of a folder full of scattered notes. It looked useful in a real way, not just in a controlled demo kind of way. The frustrating part wasn't just missing out. It was that the thing clearly worked and I just couldn't use it because of which OS I'm on.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The announcement landed this morning</div>
+          <p class="card-desc">
+            Anthropic pushed the update to Claude Desktop for Windows this morning. The changelog was short: "Cowork is now available on Windows, powered by WSL2." No blog post, no announcement thread, just a quiet update notification in the app. I already had WSL2 enabled from some old dev work so setup took about 10 seconds. If you've never touched WSL2 before there's one extra step, I'll cover that below.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">First thing I actually tried</div>
+          <div class="section-subtitle">No carefully chosen demo folder</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">I pointed it at a real mess</div>
+        <p class="card-desc">
+          I have a folder called "work-misc" that's been collecting random files for two years. Meeting notes saved as screenshots, half-finished drafts, PDFs I downloaded and never opened, zip files I was "going to deal with later." 340 files. No structure at all. I pointed Cowork at it and asked it to make sense of everything.
+        </p>
+        <div class="list" style="margin-top: 24px;">
+          <div class="list-item">
+            <div class="list-label">Step 1</div>
+            <div class="list-body">Claude proposed a folder structure before touching anything. It showed me what it planned to create and where things would go. I could read through the whole plan and approve or edit before a single file moved.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Step 2</div>
+            <div class="list-body">It ran. 340 files sorted into 12 folders in under two minutes. The groupings made sense. Client documents separate from internal notes, invoices separate from articles, screenshots grouped by topic. I didn't have to correct anything.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Step 3</div>
+            <div class="list-body">After it finished it gave me a short summary of what it did. Which categories it created, how many files went where, and three files it wasn't sure about that I should check myself.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The thing that actually surprised me</div>
+        <p class="card-desc">Those three flagged files were genuinely ambiguous. It got that part right too. Everything else it handled without asking. That's the bit I didn't expect. I figured it would either be overconfident and make bad calls, or keep stopping to ask me what to do. It did neither.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">The WSL2 requirement</div>
+          <div class="section-subtitle">What you need before you start</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Why WSL2?</div>
+          <p class="card-desc">
+            The Mac version uses Apple's Virtualization Framework to spin up a sandboxed Linux VM. On Windows, Anthropic went with WSL2 as the equivalent. The end result is the same: Claude runs inside an isolated Linux environment that can only see the folder you give it. It has no access to the rest of your drive, other apps, or anything else on your system.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Setup if you don't have WSL2</div>
+          <p class="card-desc">
+            If WSL2 isn't enabled, Claude Desktop will walk you through it. Open PowerShell as administrator, run <code>wsl --install</code>, restart. Takes about five minutes total. After that you don't touch it again. Cowork just works from the app like everything else.
+          </p>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">What WSL2 means for you in practice</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Security</div>
+            <div class="list-body">The sandbox is real. Claude can't see anything outside the folder you mount. Give it your Documents folder and that's all it gets. This is enforced at the VM level, not just a setting in the app.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Performance</div>
+            <div class="list-body">File operations through WSL2 on Windows paths are a bit slower than native. I didn't notice it with 340 files, but if you throw a huge deeply nested project at it, expect it to take slightly longer than it would on a Mac.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Stability</div>
+            <div class="list-body">No crashes in my afternoon of use. Two sessions, both completed cleanly. WSL2 has been around long enough that it's solid at this point.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">How to get started</div>
+          <div class="section-subtitle">Five steps from zero to running</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Requirements</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>Windows 10 version 2004 or later (or Windows 11)</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>WSL2 enabled (Claude Desktop will guide you if it isn't)</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Claude Desktop for Windows, updated to the latest version</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>A paid Claude subscription (Pro, Max, Team, or Enterprise)</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Getting started</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>Open Claude Desktop and switch to the Cowork tab</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>Click "New session" and select the folder you want Claude to work with</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Describe your task in plain language, no special syntax needed</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>Review Claude's proposed plan before it runs anything</span></div>
+            <div class="check-item"><span class="check-bullet">5</span><span>Approve it and let it go. Keep Claude Desktop open while it works</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Compared to the Mac version</div>
+          <div class="section-subtitle">Functionally identical, minor differences</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Same</div>
+          <div class="card-title">The core experience</div>
+          <p class="card-desc">Picking a folder, describing a task, reviewing a plan, watching it run. All identical. Same interface, same behavior, same model.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Same</div>
+          <div class="card-title">Plugin support</div>
+          <p class="card-desc">The plugins from January work on Windows too. Sales, finance, legal workflow extensions, all there. Nothing Mac-exclusive that I could find.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Different</div>
+          <div class="card-title">Setup prerequisite</div>
+          <p class="card-desc">On Mac, Apple's VM framework is built into the OS so setup is instant. On Windows you need WSL2 enabled first. It's a one-time thing and takes five minutes, but it's still an extra step Mac users don't have to think about.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Tasks worth trying first</div>
+          <div class="section-subtitle">Where it actually earns its keep</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">File cleanup and organization</div>
+          <p class="card-desc">
+            This is the obvious starting point and it delivers. Point it at any chaotic folder and ask it to sort things. Downloads, old project archives, a desktop that's become a dumping ground. It reads file contents, not just names and extensions, so it can actually tell the difference between an invoice PDF and a whitepaper PDF.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Synthesizing notes into documents</div>
+          <p class="card-desc">
+            Give it a folder of messy notes, bullet points saved as text files, random half-formed ideas, and ask it to build something coherent out of it. I tried this with a month of meeting notes. It came back with something I'd actually send to someone. Organized by topic, readable, not just a dump of everything I wrote.
+          </p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">Extracting data from documents</div>
+          <p class="card-desc">
+            Receipt screenshots, scanned invoices, PDFs with tables. Cowork pulls the data out and builds a spreadsheet. I tested it with a mix of receipt photos and PDF invoices and it correctly grabbed vendor, date, and amount from all of them, including photos taken in bad lighting.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Renaming and restructuring projects</div>
+          <p class="card-desc">
+            If you have a project folder that grew without a plan, inconsistent naming, files in the wrong places, duplicates everywhere, just describe the structure you want and let Cowork sort it out. The kind of thing that takes 20 minutes of careful manual renaming gets done in under a minute.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Bottom line</div>
+        <div class="cta-title">It was worth the wait. Go try it.</div>
+        <p class="cta-desc">
+          Cowork on Windows isn't a cut-down version of the Mac experience. It's the same thing. If you've had a Claude subscription this whole time and were waiting for this, go open the Cowork tab and pick the messiest folder on your machine.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026·02·23 · 7 min read</div>
+    <a class="footer-link" href="https://support.claude.com/en/articles/13345190-getting-started-with-cowork" target="_blank" rel="noopener noreferrer">Cowork docs →</a>
+  </footer>
+</body>
+</html>
