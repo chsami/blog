@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code /remote-control: Start Local, Continue From Your Phone - CHSAMI</title>
+  <meta name="description" content="Claude Code's new /remote-control command lets you start a session in your terminal and pick it up from your phone. Take a walk, see the sun, walk your dog — without losing your flow.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-code-remote-control.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-code-remote-control.html">
+  <meta property="og:title" content="Claude Code /remote-control: Start Local, Continue From Your Phone">
+  <meta property="og:description" content="Claude Code's new /remote-control command lets you start a session in your terminal and pick it up from your phone. Take a walk, see the sun, walk your dog — without losing your flow.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/5c032c48-fa56-434b-874b-7f42d192f808/Phoenix_10_A_developer_walking_outside_in_golden_sunlight_with_0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-24">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code /remote-control: Start Local, Continue From Your Phone">
+  <meta name="twitter:description" content="Claude Code's new /remote-control command lets you start a session in your terminal and pick it up from your phone. Take a walk, see the sun, walk your dog — without losing your flow.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/5c032c48-fa56-434b-874b-7f42d192f808/Phoenix_10_A_developer_walking_outside_in_golden_sunlight_with_0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Code /remote-control: Start Local, Continue From Your Phone",
+    "description": "Claude Code's new /remote-control command lets you start a session in your terminal and pick it up from your phone. Take a walk, see the sun, walk your dog — without losing your flow.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/5c032c48-fa56-434b-874b-7f42d192f808/Phoenix_10_A_developer_walking_outside_in_golden_sunlight_with_0.jpg",
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+"publisher": {
+    "@type": "Organization",
+    "name": "CHSAMI",
+    "url": "https://chsami.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chsami.com/og-image.png"
+    }
+  },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-code-remote-control.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&larr; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI Tools</div>
+      <h1 class="hero-title">/remote-control<span>Start a Claude Code session locally. Continue it from your phone.</span></h1>
+      <p class="hero-desc">
+        I was three hours deep into a refactor when my dog started doing the "I need to go outside right now" dance. Normally that means losing context. With <code>/remote-control</code>, I typed one command, pulled out my phone, and kept reviewing Claude's output while walking through the park. The session never stopped.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The problem it solves</div>
+          <div class="section-subtitle">Your terminal is not portable</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Chained to the desk</div>
+          <p class="card-desc">
+            Claude Code sessions can run for a long time. You kick off a migration, a big refactor, or a test suite and then you wait. But you also need to eat lunch, take a walk, or let the dog out. Until now, you had two options: let it run blind and hope for the best, or sit there watching the terminal scroll.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Context is expensive</div>
+          <p class="card-desc">
+            Stepping away isn't just about missing output. It's about losing your place in the conversation. When Claude asks a clarifying question and you're not there to answer, the whole session stalls. You come back ten minutes later, re-read everything, and try to remember where you left off. That mental reload costs more than the walk itself.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">How /remote-control works</div>
+          <div class="section-subtitle">One command, one URL, any device</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Three steps, zero configuration</div>
+        <p class="card-desc">
+          You type <code>/remote-control</code> in your active Claude Code session. It generates a unique URL and displays a QR code right in your terminal. Scan the QR code with your phone or paste the URL in any browser. That's it. You're now looking at your live session on a second screen.
+        </p>
+        <div class="code-block">
+<pre>$ claude
+&gt; /remote-control
+
+Remote control enabled.
+Scan this QR code or open the URL below:
+
+  https://claude.ai/code/session/a8f3...
+
+  [QR CODE]
+
+Waiting for connection...</pre>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">Full session access</div>
+          <p class="card-desc">
+            The remote view isn't a read-only log viewer. You can read Claude's output, see the full conversation history, and send messages back. When Claude asks "should I proceed with this approach?" you can tap "yes" from the park bench. The session continues as if you never left your desk.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Your terminal stays alive</div>
+          <p class="card-desc">
+            The local session keeps running normally. Your terminal doesn't lock, the process doesn't pause. If you walk back to your desk, you can continue from the terminal and the phone connection gracefully disconnects. Both ends work simultaneously if you want them to.
+          </p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The real unlock</div>
+        <p class="card-desc">This isn't about working from your phone. Nobody wants to write code on a 6-inch screen. It's about never being blocked because you stepped away. Approve a plan, answer a question, check progress — then put the phone back in your pocket.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Real scenarios where this saves you</div>
+          <div class="section-subtitle">Tested during an actual week of coding</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Scenario</div>
+          <div class="card-title">The dog walk</div>
+          <p class="card-desc">Claude was generating API routes for a new service. I needed to approve the schema choices. Scanned the QR code, walked the dog, approved two decisions from the sidewalk. Came back to a finished implementation.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Scenario</div>
+          <div class="card-title">The lunch break</div>
+          <p class="card-desc">Kicked off a test suite refactor and went to grab food. Claude hit a question about mocking strategy halfway through. I answered from the restaurant. By the time I got back, the refactor was done and all 47 tests were passing.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Scenario</div>
+          <div class="card-title">The meeting</div>
+          <p class="card-desc">Had a standup while Claude was working through a bug. Glanced at my phone under the table, saw Claude found the root cause and was asking whether to fix just the symptom or refactor the whole module. Tapped "refactor" and went back to pretending to pay attention.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">What you can and can't do remotely</div>
+          <div class="section-subtitle">It's a remote control, not a remote desktop</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">What works great</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">+</span><span>Read the full conversation and output history</span></div>
+            <div class="check-item"><span class="check-bullet">+</span><span>Send messages and respond to Claude's questions</span></div>
+            <div class="check-item"><span class="check-bullet">+</span><span>Approve or reject proposed changes</span></div>
+            <div class="check-item"><span class="check-bullet">+</span><span>Monitor progress on long-running tasks</span></div>
+            <div class="check-item"><span class="check-bullet">+</span><span>Review diffs and file changes</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">What's better at the desk</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">-</span><span>Writing long, detailed prompts (phone keyboard)</span></div>
+            <div class="check-item"><span class="check-bullet">-</span><span>Reviewing large diffs across multiple files</span></div>
+            <div class="check-item"><span class="check-bullet">-</span><span>Copy-pasting code snippets into the conversation</span></div>
+            <div class="check-item"><span class="check-bullet">-</span><span>Running your own terminal commands alongside Claude</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Security and session details</div>
+          <div class="section-subtitle">How the connection stays safe</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Authenticated and encrypted</div>
+          <p class="card-desc">
+            The remote URL is tied to your Anthropic account. Opening it requires authentication through claude.ai. The session link contains a unique token that expires when the session ends. Nobody can access your session without being logged into your account.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Session lifecycle</div>
+          <p class="card-desc">
+            The remote connection lives as long as your Claude Code session does. If you close the terminal, the remote view ends. If your phone disconnects (bad signal, screen lock), the session continues running locally. You can reconnect by scanning the QR code again or reopening the URL.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Getting started</div>
+          <div class="section-subtitle">Available now in the latest Claude Code</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Setup in 30 seconds</div>
+        <div class="checklist">
+          <div class="check-item"><span class="check-bullet">1</span><span>Update Claude Code to the latest version: <code>npm install -g @anthropic-ai/claude-code@latest</code></span></div>
+          <div class="check-item"><span class="check-bullet">2</span><span>Start a session normally: <code>claude</code></span></div>
+          <div class="check-item"><span class="check-bullet">3</span><span>Type <code>/remote-control</code> at any point during the session</span></div>
+          <div class="check-item"><span class="check-bullet">4</span><span>Scan the QR code with your phone camera</span></div>
+          <div class="check-item"><span class="check-bullet">5</span><span>Log in to claude.ai if prompted</span></div>
+          <div class="check-item"><span class="check-bullet">6</span><span>Go outside. See the sun. Walk the dog.</span></div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Summary</div>
+        <div class="cta-title">Your session follows you now.</div>
+        <p class="cta-desc">
+          <code>/remote-control</code> turns Claude Code from a desk-bound tool into something that fits your actual day. Start heavy work in the terminal, stay connected from anywhere. The best part: you don't have to choose between productivity and stepping outside.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&middot;02&middot;24 &middot; 6 min read</div>
+    <a class="footer-link" href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener noreferrer">Claude Code docs &rarr;</a>
+  </footer>
+</body>
+</html>
