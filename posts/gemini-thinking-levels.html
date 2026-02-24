@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini 3.1 Pro's Thinking Levels: Pay Only for the Reasoning You Need - CHSAMI</title>
+  <meta name="description" content="Google's new three-tier system lets you dial reasoning up or down per request. Here's how thinking levels work and what they actually save.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/gemini-thinking-levels.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/gemini-thinking-levels.html">
+  <meta property="og:title" content="Gemini 3.1 Pro's Thinking Levels: Pay Only for the Reasoning You Need">
+  <meta property="og:description" content="Google's new three-tier system lets you dial reasoning up or down per request. Here's how thinking levels work and what they actually save.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/55968c63-2644-42df-b48e-e2b33c303242/Phoenix_10_Abstract_visualization_of_three_glowing_tiers_or_le_0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-24">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gemini 3.1 Pro's Thinking Levels: Pay Only for the Reasoning You Need">
+  <meta name="twitter:description" content="Google's new three-tier system lets you dial reasoning up or down per request. Here's how thinking levels work and what they actually save.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/55968c63-2644-42df-b48e-e2b33c303242/Phoenix_10_Abstract_visualization_of_three_glowing_tiers_or_le_0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Gemini 3.1 Pro's Thinking Levels: Pay Only for the Reasoning You Need",
+    "description": "Google's new three-tier system lets you dial reasoning up or down per request. Here's how thinking levels work and what they actually save.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/55968c63-2644-42df-b48e-e2b33c303242/Phoenix_10_Abstract_visualization_of_three_glowing_tiers_or_le_0.jpg",
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/gemini-thinking-levels.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 40px;
+      display: block;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI Tools</div>
+      <h1 class="hero-title">Gemini 3.1 Pro's Thinking Levels<span>Google's new three-tier system lets you dial reasoning up or down per request</span></h1>
+      <p class="hero-desc">
+        Every API call to a frontier model used to cost the same regardless of whether you were formatting a string or untangling a dependency graph. Gemini 3.1 Pro changes that with thinking levels, a simple parameter that controls how much reasoning the model applies to each request. You pick Low, Medium, or High, and you pay accordingly.
+      </p>
+      <div class="hero-image">
+        <img src="../images/gemini-thinking-levels.jpg" alt="Abstract visualization of three glowing tiers representing AI reasoning levels">
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The Problem</div>
+          <div class="section-subtitle">Why most AI tokens go to waste</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">One price for everything</div>
+          <p class="card-desc">
+            Before thinking levels, every request to a frontier model got the same heavy reasoning treatment. You ask it to format a JSON payload, it thinks for 10 seconds. You ask it to refactor an authentication module, same 10 seconds. The cost was flat regardless of complexity. There was no way to tell the model that a task was simple and it should just get it done quickly.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Where I noticed it</div>
+          <p class="card-desc">
+            I was running agentic workflows where roughly 70% of the tasks were simple file reads and string formatting, but I was burning the same tokens as the 30% that actually needed deep reasoning. A typical pipeline might read a config file, extract a value, format it into a template, then do one genuinely hard step like analyzing a stack trace. Three cheap tasks subsidizing one expensive one, every single run.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">How Thinking Levels Work</div>
+          <div class="section-subtitle">Low, Medium, and High</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Low</div>
+          <div class="card-title">Fast completions</div>
+          <p class="card-desc">Minimal internal reasoning. Good for formatting, simple transforms, and boilerplate generation. The model spends very little time in its chain of thought before producing output. Roughly equivalent cost to using a smaller model like Flash, but with Pro's broader knowledge and instruction following. Perfect for the boring 70% of any pipeline.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Medium</div>
+          <div class="card-title">Balanced reasoning</div>
+          <p class="card-desc">Handles moderately complex tasks like code review, debugging straightforward issues, and writing tests. According to early adopters, this level covers about 80% of real coding tasks. It thinks enough to catch non-obvious bugs but does not spiral into over-analysis. This is the default you should start with for most work.</p>
+        </div>
+        <div class="card">
+          <div class="meta">High</div>
+          <div class="card-title">Full depth reasoning</div>
+          <p class="card-desc">Comparable to Gemini 3 Deep Think but in a production-ready package. This is for multi-step refactors, architectural decisions, and complex debugging across multiple files. The model takes its time, explores multiple approaches internally, and gives you its best answer. Reserve this for the tasks that actually justify the cost.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Real World Setup</div>
+          <div class="section-subtitle">Building a two-tier system</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Combine Flash and Pro with thinking levels</div>
+        <p class="card-desc">
+          The approach that worked best for me was using Flash for truly trivial tasks (reading files, simple string operations) and Pro with thinking levels for everything else. Flash handles the bottom tier at rock-bottom cost. Then for Pro requests, I start at Medium and only escalate to High when the first attempt fails or when the task clearly requires it, like refactoring a module that touches six other files.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <pre>import google.genai as genai
+
+client = genai.Client()
+
+def call_gemini(prompt, thinking_level="medium"):
+    response = client.models.generate_content(
+        model="gemini-3.1-pro",
+        contents=prompt,
+        config={
+            "thinking_config": {
+                "thinking_level": thinking_level
+            }
+        }
+    )
+    return response.text
+
+simple_task = call_gemini(
+    "Format this as a TypeScript interface: name, age, email",
+    thinking_level="low"
+)
+
+review_task = call_gemini(
+    "Review this function for edge cases:\n" + code_snippet,
+    thinking_level="medium"
+)
+
+hard_task = call_gemini(
+    "Refactor the auth module to support OAuth2 and session tokens "
+    "while maintaining backward compatibility with the existing API",
+    thinking_level="high"
+)</pre>
+      </div>
+
+      <div class="highlight-box" style="margin-top: 32px;">
+        <div class="card-title">Agentic workflow tip</div>
+        <p class="card-desc">For agentic pipelines, use the customtools endpoint and set the thinking level per tool call. Your orchestrator can classify each step's complexity and route it to the right level automatically. Start everything at Medium, then build a simple retry mechanism that bumps to High on failure. Most tasks never need the retry.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">What I Actually Saved</div>
+          <div class="section-subtitle">Token costs before and after</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The experiment</div>
+          <p class="card-desc">
+            I ran my coding agent pipeline for one week using flat Pro for every request. Then I ran the same pipeline for another week with thinking levels enabled. The workload was identical: processing pull requests, generating tests, reviewing code, and formatting outputs. Same repo, same types of tasks, same volume.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The breakdown</div>
+          <p class="card-desc">
+            With thinking levels, the distribution settled at roughly 65% Low, 25% Medium, and 10% High. Total token spend dropped by about 3.5x compared to the flat Pro week. The quality on Low tasks was identical because those tasks never needed deep reasoning in the first place. Medium caught most bugs on the first pass. High was reserved for the gnarly cross-file dependency issues that actually benefited from extended reasoning.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">Cost comparison</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Before</div>
+            <div class="list-body">Every request hit Pro at full reasoning cost. Simple formatting tasks, file reads, and template generation all consumed the same token budget as complex multi-file refactors. Weekly spend was consistent but high.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">After</div>
+            <div class="list-body">Low-tier tasks (65% of volume) cost a fraction of what they used to. Medium handled the bulk of real work. Only the genuinely hard 10% ran at full price. The net result was a 3.5x reduction in total spend with no measurable drop in output quality.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Where It Falls Short</div>
+          <div class="section-subtitle">Honest limitations</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">What to watch out for</div>
+        <div class="checklist">
+          <div class="check-item"><span class="check-bullet">1</span><span>Choosing the right level is entirely on you. There is no auto-detection yet. If you set Low for something that needed High, you get garbage and have to retry. Sometimes that retry costs more than just using High in the first place.</span></div>
+          <div class="check-item"><span class="check-bullet">2</span><span>The Medium tier occasionally gets stuck in a reasoning loop on certain types of recursive problems. I hit this twice during my testing week, both times on functions with deeply nested callbacks. Bumping to High resolved it immediately.</span></div>
+          <div class="check-item"><span class="check-bullet">3</span><span>Latency on High is noticeably longer than Claude Opus for comparable tasks. In my testing, High was about 15-20% slower on average. If you are latency-sensitive, this matters.</span></div>
+          <div class="check-item"><span class="check-bullet">4</span><span>The cost savings assume you classify tasks correctly. If your orchestrator is too aggressive about using Low, you end up with more retries and the savings shrink. It takes some tuning to find the right thresholds for your specific workload.</span></div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">The Bigger Picture</div>
+          <div class="section-subtitle">Why adjustable reasoning matters</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Industry direction</div>
+          <p class="card-desc">
+            This is not just about Gemini. It signals where the whole industry is heading. Instead of one-size-fits-all pricing for intelligence, we are moving toward granular compute allocation. OpenAI is rumored to be working on something similar for their reasoning models. Anthropic already offers different tiers through model selection, but per-request reasoning control within a single model is the next logical step.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">What it changes for builders</div>
+          <p class="card-desc">
+            For developers building AI-powered products, this changes the unit economics fundamentally. Features that would have been too expensive at flat-rate pricing become viable when you can route 65% of requests through the cheap tier. Think about a code review tool that uses Low for style checks, Medium for logic review, and High only for security audits. That product was not economically feasible before. Now it is.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Summary</div>
+        <div class="cta-title">Pay for the reasoning you actually need.</div>
+        <p class="cta-desc">
+          Thinking levels turn AI spending from a flat tax into a sliding scale. Start with Medium, drop to Low for the boring stuff, and save High for when it counts.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026·02·24 · 8 min read</div>
+    <a class="footer-link" href="https://ai.google.dev/gemini-api/docs/gemini-3" target="_blank" rel="noopener noreferrer">Gemini API Docs →</a>
+  </footer>
+</body>
+</html>

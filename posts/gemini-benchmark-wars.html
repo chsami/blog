@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini 3.1 Pro Beats Claude on 6 Out of 10 Benchmarks. So Why Do I Still Reach for Claude? - CHSAMI</title>
+  <meta name="description" content="What benchmark numbers miss about how developers actually pick their tools">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/gemini-benchmark-wars.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/gemini-benchmark-wars.html">
+  <meta property="og:title" content="Gemini 3.1 Pro Beats Claude on 6 Out of 10 Benchmarks. So Why Do I Still Reach for Claude?">
+  <meta property="og:description" content="What benchmark numbers miss about how developers actually pick their tools">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/106909d9-e21c-4670-ba61-22d4452d196b/Phoenix_10_Abstract_visualization_of_competing_AI_benchmark_ch_0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-24">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gemini 3.1 Pro Beats Claude on 6 Out of 10 Benchmarks. So Why Do I Still Reach for Claude?">
+  <meta name="twitter:description" content="What benchmark numbers miss about how developers actually pick their tools">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/106909d9-e21c-4670-ba61-22d4452d196b/Phoenix_10_Abstract_visualization_of_competing_AI_benchmark_ch_0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Gemini 3.1 Pro Beats Claude on 6 Out of 10 Benchmarks. So Why Do I Still Reach for Claude?",
+    "description": "What benchmark numbers miss about how developers actually pick their tools",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/106909d9-e21c-4670-ba61-22d4452d196b/Phoenix_10_Abstract_visualization_of_competing_AI_benchmark_ch_0.jpg",
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+"publisher": {
+    "@type": "Organization",
+    "name": "CHSAMI",
+    "url": "https://chsami.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chsami.com/og-image.png"
+    }
+  },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/gemini-benchmark-wars.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 40px;
+      display: block;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&larr; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI &amp; Industry</div>
+      <h1 class="hero-title">Gemini 3.1 Pro Beats Claude on 6 Out of 10 Benchmarks.<span>So why do I still reach for Claude?</span></h1>
+      <p class="hero-desc">
+        What benchmark numbers miss about how developers actually pick their tools. Google's newest model wins on paper, but the story changes when you sit down and actually use both of them for real work.
+      </p>
+      <div class="hero-image">
+        <img src="../images/gemini-benchmark-wars.jpg" alt="Abstract visualization of competing AI benchmark charts">
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The Numbers</div>
+          <div class="section-subtitle">What the leaderboards say</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gemini 3.1 Pro is leading on paper</div>
+        <p class="card-desc">
+          Gemini 3.1 Pro dropped on February 19 and immediately topped several leaderboards. ARC-AGI-2: 77.1% vs Claude Opus's 68.8%. GPQA Diamond: 94.3% vs 91.3%. SWE-Bench Verified: 80.6%. It leads the Artificial Analysis Intelligence Index by 4 points over Claude Opus 4.6 while costing less than half as much. On paper, this is a clear win for Google. But I've been using both models daily for the past week, and the story on the ground is more complicated.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">Where Gemini Actually Shines</div>
+          <div class="section-subtitle">The tasks where the benchmarks are right</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Reasoning puzzles and abstract logic</div>
+          <p class="card-desc">
+            Gemini 3.1 Pro is genuinely better at tasks that look like benchmark problems. Give it a complex data transformation, a tricky algorithm design, or a math-heavy computation, and it nails it faster and more reliably. The ARC-AGI-2 lead is real and you feel it. I threw a batch of combinatorial optimization problems at both models last week, and Gemini solved three of them on the first try where Claude needed a second attempt.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Cost efficiency</div>
+          <p class="card-desc">
+            At roughly half the price of Opus with comparable quality on most tasks, the value proposition is hard to ignore. For high-volume API usage, the savings add up fast. I ran my test suite through both and the Gemini bill was 58% lower. If you're building a product where you're making thousands of API calls a day, that difference compounds into serious money over a quarter.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Where Claude Still Wins</div>
+          <div class="section-subtitle">The stuff benchmarks don't measure</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Judgment</div>
+          <div class="card-title">Multi-step refactors with judgment calls</div>
+          <p class="card-desc">When I need to restructure a module and there are five reasonable ways to do it, Claude picks the one that fits the existing patterns. Gemini tends to pick the textbook answer, which is technically correct but doesn't match the codebase style. Last week I asked both to refactor an auth middleware. Claude matched the error handling conventions already in the project. Gemini rewrote it cleanly but in a style that looked nothing like the rest of the code.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Instructions</div>
+          <div class="card-title">Following complex instructions</div>
+          <p class="card-desc">Claude is better at holding a long, nuanced prompt in its head. When I give it a detailed specification with constraints and edge cases, it follows all of them. Gemini occasionally drops one or two requirements, especially on longer prompts. I tested this with a 1,200-word spec for a CLI tool. Claude hit every requirement. Gemini missed the custom error formatting and a flag validation rule.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Tools</div>
+          <div class="card-title">Tool use reliability</div>
+          <p class="card-desc">This is the GDPval-AA gap (1606 Elo vs 1317). Claude's tool use is more consistent. It calls the right function with the right parameters more often. In agentic workflows where one bad tool call derails the whole chain, this matters more than any benchmark. I run multi-step coding agents daily, and Claude's tool calls just fail less often.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The Benchmark Shopping Problem</div>
+          <div class="section-subtitle">Every company wins if they pick the right test</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Benchmark selection is a marketing exercise</div>
+        <p class="card-desc">
+          Google highlights ARC-AGI-2, Artificial Analysis, and SWE-Bench. Anthropic highlights GDPval-AA, HLE with tools, and Arena Elo. OpenAI highlights their own set. Each company leads on the benchmarks they choose to report. The result is that every model launch comes with a "we're number one" narrative, and consumers are left to figure out which numbers actually matter for their use case.
+        </p>
+        <div class="list" style="margin-top: 24px;">
+          <div class="list-item">
+            <div class="list-label">Google</div>
+            <div class="list-body">Leads with ARC-AGI-2 (77.1%), GPQA Diamond (94.3%), Artificial Analysis Intelligence Index, and SWE-Bench Verified (80.6%). These are the numbers you see in their blog post.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Anthropic</div>
+            <div class="list-body">Leads with GDPval-AA tool use (1606 Elo), HLE with tools (21.6%), and Chatbot Arena overall Elo. These are the numbers you see in their blog post.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Result</div>
+            <div class="list-body">Every company gets to say they're the best at something. The press picks up the headline number. Developers have to do their own testing to figure out what actually works for their specific tasks.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">What Actually Matters</div>
+          <div class="section-subtitle">A practical decision framework</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Skip the leaderboards. Test your own tasks.</div>
+        <p class="card-desc">
+          Instead of comparing benchmark scores, here's what I actually look at when deciding which model to use for a project.
+        </p>
+        <div class="checklist" style="margin-top: 24px;">
+          <div class="check-item"><span class="check-bullet">1</span><span>Latency on your actual tasks. Run your 10 most common prompts through both models and time them. Averages across benchmark suites don't tell you how fast the model is on your workload.</span></div>
+          <div class="check-item"><span class="check-bullet">2</span><span>Error recovery. When the model makes a mistake, how quickly does it correct on the second attempt? Some models are stubborn about wrong answers. Others pivot fast.</span></div>
+          <div class="check-item"><span class="check-bullet">3</span><span>Context retention. On your actual prompt lengths, does it follow all instructions or start dropping things? This varies a lot between models and matters more than context window size.</span></div>
+          <div class="check-item"><span class="check-bullet">4</span><span>Tool reliability. If you use function calling, test your specific tools with both models. Generic tool-use benchmarks won't tell you how the model handles your particular API schema.</span></div>
+          <div class="check-item"><span class="check-bullet">5</span><span>Cost per useful output. Not cost per token, but cost per task completed successfully. A cheaper model that fails 20% more often might cost you more in the end after retries and manual fixes.</span></div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">My Current Setup</div>
+          <div class="section-subtitle">Using both where they're strongest</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">When I use Gemini 3.1 Pro</div>
+          <p class="card-desc">
+            Initial code generation, data transformations, algorithm design, anything where raw reasoning power matters and the task is self-contained. If I need to solve a well-defined problem with a clear input and output, Gemini is my first pick. It's faster, cheaper, and just as accurate on these kinds of tasks.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">When I use Claude</div>
+          <p class="card-desc">
+            Multi-file refactors, agentic coding workflows, tasks that require following detailed specs, anything where tool use is central to the workflow. When the job involves judgment calls about code style, or when I need the model to hold a complex set of constraints in its head across a long session, Claude is the one I reach for.
+          </p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The bottom line</div>
+        <p class="card-desc">The models are not interchangeable. They have different strengths, and the benchmarks only tell part of the story. The best developer setup in 2026 is not picking a winner. It's knowing when to use each one.</p>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Summary</div>
+        <div class="cta-title">Benchmarks tell you which model is smarter. Usage tells you which model is more useful.</div>
+        <p class="cta-desc">
+          They're not always the same thing.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&middot;02&middot;24 &middot; 7 min read</div>
+    <a class="footer-link" href="https://news.ycombinator.com/item?id=47074735" target="_blank" rel="noopener noreferrer">HN Discussion &rarr;</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1M Tokens vs. Agentic Tools: Which Way Should You Feed Code to an LLM? - CHSAMI</title>
+  <meta name="description" content="I tested both approaches on the same codebase and the answer isn't what I expected. Big context windows vs. agentic file tools for real coding tasks.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/gemini-context-vs-agentic.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/gemini-context-vs-agentic.html">
+  <meta property="og:title" content="1M Tokens vs. Agentic Tools: Which Way Should You Feed Code to an LLM?">
+  <meta property="og:description" content="I tested both approaches on the same codebase and the answer isn't what I expected. Big context windows vs. agentic file tools for real coding tasks.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/f05c62dc-3378-4b3e-b919-1777ae9ff228/Phoenix_10_Split_composition_showing_two_contrasting_approache_0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-24">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="1M Tokens vs. Agentic Tools: Which Way Should You Feed Code to an LLM?">
+  <meta name="twitter:description" content="I tested both approaches on the same codebase and the answer isn't what I expected. Big context windows vs. agentic file tools for real coding tasks.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/f05c62dc-3378-4b3e-b919-1777ae9ff228/Phoenix_10_Split_composition_showing_two_contrasting_approache_0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "1M Tokens vs. Agentic Tools: Which Way Should You Feed Code to an LLM?",
+    "description": "I tested both approaches on the same codebase and the answer isn't what I expected. Big context windows vs. agentic file tools for real coding tasks.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/f05c62dc-3378-4b3e-b919-1777ae9ff228/Phoenix_10_Split_composition_showing_two_contrasting_approache_0.jpg",
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+"publisher": {
+    "@type": "Organization",
+    "name": "CHSAMI",
+    "url": "https://chsami.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chsami.com/og-image.png"
+    }
+  },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/gemini-context-vs-agentic.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 48px;
+      border: 1px solid var(--border-color);
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&#8592; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI &amp; Industry</div>
+      <h1 class="hero-title">1M Tokens vs. Agentic Tools<span>I tested both approaches on the same codebase and the answer isn't what I expected</span></h1>
+      <p class="hero-desc">
+        There's a growing divide in how developers feed code to LLMs. One camp says dump everything into a massive context window. The other says give the model tools and let it explore. I ran both approaches against the same bug in the same repo. Here's what actually happened.
+      </p>
+      <img class="hero-image" src="../images/gemini-context-vs-agentic.jpg" alt="Split view showing big context window approach versus agentic tool-based approach for feeding code to an LLM">
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">Two Schools of Thought</div>
+          <div class="section-subtitle">Big context vs. smart tools</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The big context approach</div>
+          <p class="card-desc">
+            The first philosophy is simple: give the model everything at once. Concatenate your entire repo into one massive prompt, load it into a million-token context window, and let the model see all the connections between files, imports, and data flows simultaneously. No searching, no iteration. Just raw comprehension across the whole codebase in a single pass.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The agentic approach</div>
+          <p class="card-desc">
+            The second philosophy says that's wasteful. Instead, give the model tools to search, read, and navigate files selectively, the way a developer actually works. Start with a hypothesis, grep for relevant code, read specific files, and build understanding incrementally. Gemini 3.1 Pro is interesting here because Google is betting on both simultaneously. They ship the 1M context window and a <code>customtools</code> endpoint tuned for file operations.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">The Test Setup</div>
+          <div class="section-subtitle">Same repo, two approaches</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The codebase</div>
+          <p class="card-desc">
+            I picked a medium-sized TypeScript project I've been working on. About 45,000 lines across 200 files. It's a SaaS backend with auth, billing, and a REST API. Nothing exotic, just a typical production codebase with enough complexity to be a real test. The whole thing fits comfortably in Gemini's 1M token context window when concatenated.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The task</div>
+          <p class="card-desc">
+            Find and fix a bug where user sessions were expiring prematurely after a recent auth refactor. Users were getting logged out every 15 minutes instead of every 24 hours. The bug touched three files and required understanding a timing issue in the token refresh flow. For the big-context test, I fed the whole repo to Gemini 3.1 Pro in one shot. For the agentic test, I used Claude Code with its file search, grep, and read tools.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>Big context:  ~45,000 lines → 1 prompt → Gemini 3.1 Pro (1M window)
+Agentic:      search → read → grep → read → Claude Code (tool-based)
+
+Task:         Session expiry bug after auth refactor
+Files involved: config/auth.ts, middleware/session.ts, services/auth.service.ts</pre>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">What Big Context Gets Right</div>
+          <div class="section-subtitle">Cross-file understanding is real</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">One pass, bug found</div>
+        <p class="card-desc">
+          The 1M context approach found the bug in a single pass. With the entire repo loaded, Gemini could see the token refresh interval in the config file, the middleware that checked expiry, and the auth service that issued new tokens all at once. It identified the mismatch immediately: the config file defined <code>tokenRefreshInterval</code> in seconds (86400), but the middleware was comparing that value against <code>Date.now()</code> which returns milliseconds. So every comparison was off by a factor of 1000, and sessions appeared to expire almost instantly.
+        </p>
+      </div>
+      <div class="grid-3" style="margin-top: 24px;">
+        <div class="card">
+          <div class="meta">Strength</div>
+          <div class="card-title">No iteration needed</div>
+          <p class="card-desc">It didn't need to search for the right files. It could see all of them simultaneously and trace the data flow from config to middleware to service without any back-and-forth.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Strength</div>
+          <div class="card-title">Subtle dependency detection</div>
+          <p class="card-desc">The bug was a unit mismatch between two files that never directly imported each other. Both read from the config, but the inconsistency was only visible if you could see all three files at once.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Strength</div>
+          <div class="card-title">Fast and confident</div>
+          <p class="card-desc">Total time from prompt to correct diagnosis was about 40 seconds. One request, one response, correct answer. No tool calls, no waiting for intermediate results.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">What Agentic Tools Get Right</div>
+          <div class="section-subtitle">Precision over brute force</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Three rounds, but a bonus find</div>
+        <p class="card-desc">
+          The agentic approach took three rounds of searching to find the same bug. First it grepped for "session" and "expir" to locate the relevant files. Then it read the middleware and noticed the <code>Date.now()</code> comparison. Then it pulled in the config file and found the seconds vs. milliseconds mismatch. Same conclusion, more steps. But here's the thing: while navigating through the codebase, it also noticed a related issue in the session cleanup cron job. That job was using <code>setTimeout</code> with the same config value, which meant it would fire every 86 seconds instead of every 24 hours. Under load, this would have caused a completely different bug where active sessions got cleaned up prematurely.
+        </p>
+      </div>
+      <div class="grid-2" style="margin-top: 24px;">
+        <div class="card">
+          <div class="card-title">Following the execution path</div>
+          <p class="card-desc">
+            The selective reading pattern forced the model to follow actual code paths rather than scanning everything at once. This meant it traced the execution flow more carefully, reading the code the way a developer would during debugging. That's how it stumbled on the cleanup job issue. It was reading files in the order they'd execute, not the order they appeared in a concatenated dump.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">90% fewer tokens consumed</div>
+          <p class="card-desc">
+            The agentic approach read maybe 2,000 lines total across its search and read operations. The big-context approach consumed all 45,000 lines. At current API pricing, that's a significant difference. If you're running this kind of analysis across hundreds of PRs in a CI pipeline, the cost difference adds up fast. The agentic approach cost roughly a tenth of what the full-context approach did for this task.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">The Real Tradeoffs</div>
+          <div class="section-subtitle">When to use which</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Big context wins for</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Cross-file dependency bugs where the issue spans multiple files that don't directly reference each other</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Understanding unfamiliar codebases where you need a broad overview before diving deep</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Large refactors where you need to see every usage of a function or type before changing it</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Code review across multiple PRs where context from one change affects another</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Agentic wins for</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Targeted bug fixes where you have a starting point and need to trace a specific code path</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Working in massive repos that exceed even the largest context windows</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Cost-sensitive pipelines where you're paying per token and running analysis at scale</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Iterative development where you're making changes, re-reading files, and verifying fixes in a loop</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The hybrid approach (Google's bet)</div>
+        <p class="card-desc">Use big context for the initial understanding pass, then switch to agentic tools for the actual edits. Load the repo to comprehend the architecture, then use targeted file operations to make precise changes. The <code>customtools</code> endpoint with <code>gemini-3.1-pro-preview-customtools</code> is Google's attempt at making this seamless. You get both the broad comprehension and the surgical precision in one model.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Where This Is Going</div>
+          <div class="section-subtitle">Context windows will keep growing</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The context race continues</div>
+          <p class="card-desc">
+            Context windows roughly doubled every few months through 2025. If that pace continues, the 1M limit becomes 4M or 10M. At some point, most codebases fit entirely in context. But cost and latency scale with context size. Sending 10 million tokens per request is technically possible, but it's slow and expensive. The physics of transformer attention means that bigger contexts will always carry a performance penalty compared to targeted reads.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Both approaches survive</div>
+          <p class="card-desc">
+            The pragmatic answer is that neither approach kills the other. You want big context for comprehension and agentic tools for execution. Understanding the full architecture of a codebase is a different task than making a precise three-line fix. The tools that win will be the ones that blend both seamlessly, letting you load context when you need the big picture and switch to targeted operations when you need to act. That's the direction Google is heading with Gemini 3.1 Pro, and it makes sense.
+          </p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Summary</div>
+        <div class="cta-title">Comprehension vs. execution. You need both.</div>
+        <p class="cta-desc">
+          Big context understands your code. Agentic tools work with it. The best results come from using both, and Gemini 3.1 Pro is the first model that seriously lets you try.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&#183;02&#183;24 &#183; 9 min read</div>
+    <a class="footer-link" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/" target="_blank" rel="noopener noreferrer">Gemini 3.1 Pro Blog Post &#8594;</a>
+  </footer>
+</body>
+</html>
