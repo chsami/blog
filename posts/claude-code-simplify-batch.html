@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code /simplify and /batch: Parallel Agents for Code Quality and Migrations - CHSAMI</title>
+  <meta name="description" content="Claude Code introduces /simplify and /batch - two new skills that use parallel agents to automate PR polish and large-scale code migrations with git worktree isolation.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-code-simplify-batch.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-code-simplify-batch.html">
+  <meta property="og:title" content="Claude Code /simplify and /batch: Parallel Agents for Code Quality and Migrations">
+  <meta property="og:description" content="Claude Code introduces /simplify and /batch - two new skills that use parallel agents to automate PR polish and large-scale code migrations with git worktree isolation.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop&q=80">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-02-28">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code /simplify and /batch: Parallel Agents for Code Quality and Migrations">
+  <meta name="twitter:description" content="Claude Code introduces /simplify and /batch - two new skills that use parallel agents to automate PR polish and large-scale code migrations with git worktree isolation.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop&q=80">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Code /simplify and /batch: Parallel Agents for Code Quality and Migrations",
+    "description": "Claude Code introduces /simplify and /batch - two new skills that use parallel agents to automate PR polish and large-scale code migrations with git worktree isolation.",
+    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop&q=80",
+    "datePublished": "2026-02-28",
+    "dateModified": "2026-02-28",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-code-simplify-batch.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .workflow-container {
+      background: var(--bg-card);
+      padding: 48px;
+      margin-top: 48px;
+    }
+
+    .workflow-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+
+    .workflow-steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--border-color);
+    }
+
+    .workflow-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-card);
+      border: 3px solid var(--text-primary);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step-command {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 6px 12px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .code-section {
+      margin-top: 48px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .code-block .comment {
+      color: #6B7280;
+    }
+
+    .code-block .command {
+      color: #F59E0B;
+    }
+
+    .code-block .string {
+      color: #10B981;
+    }
+
+    .code-block .flag {
+      color: #60A5FA;
+    }
+
+    .code-block .key {
+      color: #A78BFA;
+    }
+
+    .comparison-table {
+      width: 100%;
+      background: var(--bg-card);
+      margin-top: 48px;
+      border-collapse: collapse;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 20px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comparison-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+    }
+
+    .comparison-table td {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .prose {
+      max-width: 720px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-top: 32px;
+    }
+
+    .prose p {
+      margin-bottom: 24px;
+    }
+
+    .prose strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .cta-section {
+      background: var(--text-primary);
+      padding: 64px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-content {
+      color: var(--bg-primary);
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .cta-command {
+      display: inline-block;
+      background: rgba(248, 246, 241, 0.1);
+      border: 1px solid rgba(248, 246, 241, 0.2);
+      padding: 16px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--bg-primary);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+    .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+    @media (max-width: 1100px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .workflow-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .workflow-steps::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 48px 24px;
+      }
+      .hero-title {
+        font-size: 42px;
+      }
+      .hero-title span {
+        font-size: 18px;
+      }
+      .hero-desc {
+        font-size: 17px;
+      }
+      .content {
+        padding: 0 24px 48px;
+      }
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
+      }
+      .section-number {
+        font-size: 48px;
+      }
+      .section-title {
+        font-size: 24px;
+      }
+      .workflow-steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .feature-card {
+        padding: 28px;
+      }
+      .workflow-container {
+        padding: 32px 24px;
+      }
+      .cta-section {
+        padding: 40px 24px;
+      }
+      .cta-title {
+        font-size: 24px;
+      }
+      .cta-command {
+        font-size: 12px;
+        padding: 12px 20px;
+        word-break: break-all;
+      }
+      .header, .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .comparison-table {
+        font-size: 12px;
+      }
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+      .hero-title {
+        font-size: 32px;
+      }
+      .hero-title span {
+        font-size: 14px;
+        margin-top: 8px;
+      }
+      .hero-desc {
+        font-size: 15px;
+        margin-top: 24px;
+      }
+      .content {
+        padding: 0 20px 40px;
+      }
+      .section-number {
+        font-size: 36px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+      .feature-title {
+        font-size: 18px;
+      }
+      .step-number {
+        width: 48px;
+        height: 48px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="../index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-label animate">Feature - Claude Code CLI</div>
+    <h1 class="hero-title animate delay-1">
+      /simplify & /batch
+      <span>Parallel Agents for Code Quality and Migrations</span>
+    </h1>
+    <p class="hero-desc animate delay-2">
+      Claude Code ships two new built-in skills that automate the two most tedious parts of software engineering: polishing a pull request to production quality, and executing large-scale code migrations across an entire codebase. Both use parallel agents. Both change your workflow overnight.
+    </p>
+  </section>
+
+  <div class="content">
+
+    <!-- Section 1: The Problem -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <div>
+          <h2 class="section-title">The Two Time Sinks</h2>
+          <p class="section-subtitle">What These Skills Replace</p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          Every developer knows the pattern. You write the feature in an hour, then spend the rest of the day <strong>shepherding the PR to production</strong>: cleaning up naming inconsistencies, removing dead imports, fixing edge cases the linter missed, making sure the code actually follows your team's conventions documented in CLAUDE.md.
+        </p>
+        <p>
+          The second time sink is worse: <strong>code migrations</strong>. Swapping a UI framework, upgrading an API version, moving from one state management library to another. You know the change is mechanical. You know it's parallelizable. But you also know it'll take weeks of monotonous, error-prone file-by-file editing.
+        </p>
+        <p>
+          <code>/simplify</code> and <code>/batch</code> attack these two problems directly.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: /simplify -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <div>
+          <h2 class="section-title">/simplify</h2>
+          <p class="section-subtitle">Parallel Agents for PR Polish</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">✨</div>
+          <h3 class="feature-title">Code Quality</h3>
+          <p class="feature-desc">
+            Spawns parallel agents that scan your changes for naming inconsistencies, dead code, redundant logic, and style violations. Each agent focuses on a specific quality dimension.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-4">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Efficiency Tuning</h3>
+          <p class="feature-desc">
+            Agents identify unnecessary allocations, redundant computations, and suboptimal data structures. They suggest concrete improvements with benchmarking context - not generic advice.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-5">
+          <div class="feature-icon">📋</div>
+          <h3 class="feature-title">CLAUDE.md Compliance</h3>
+          <p class="feature-desc">
+            Reads your project's CLAUDE.md and verifies that every change aligns with documented conventions. Catches the drift that happens when you're focused on shipping, not style.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Usage</div>
+        <div class="code-block">
+          <pre><span class="comment"># Make your change, then simplify</span>
+<span class="string">"Hey Claude, refactor the auth module to use JWT refresh tokens,</span>
+<span class="string"> then run /simplify"</span>
+
+<span class="comment"># Or run it standalone on your current diff</span>
+<span class="command">/simplify</span>
+
+<span class="comment"># What happens behind the scenes:</span>
+<span class="comment"># 1. Claude reads your staged/unstaged changes</span>
+<span class="comment"># 2. Spawns parallel agents for quality, efficiency, compliance</span>
+<span class="comment"># 3. Each agent reviews independently</span>
+<span class="comment"># 4. Results are merged into a single set of improvements</span>
+<span class="comment"># 5. Changes are applied to your working tree</span></pre>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          The key insight is that code review decomposes into independent concerns. One agent can check naming while another checks performance while another verifies your CLAUDE.md conventions. <strong>They don't need to coordinate</strong> - each operates on the same diff but evaluates a different dimension.
+        </p>
+        <p>
+          This is the difference between "Claude, review my code" and a structured, multi-pass quality gate. The former gives you a wall of suggestions. The latter gives you clean code.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 3: /batch -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <h2 class="section-title">/batch</h2>
+          <p class="section-subtitle">Parallel Agents for Code Migrations</p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          <code>/batch</code> is the more ambitious skill. It takes a migration description, interactively plans out the work, then <strong>executes in parallel using dozens of agents</strong>. Each agent runs with full isolation using git worktrees, tests its own work, and opens its own pull request.
+        </p>
+      </div>
+
+      <div class="workflow-container">
+        <div class="workflow-title">/batch Execution Flow</div>
+        <div class="workflow-steps">
+          <div class="workflow-step animate delay-1">
+            <div class="step-number">01</div>
+            <div class="step-title">Plan</div>
+            <code class="step-command">interactive</code>
+            <p class="step-desc">You describe the migration. Claude analyzes the codebase and proposes a task breakdown. You refine it together.</p>
+          </div>
+
+          <div class="workflow-step animate delay-2">
+            <div class="step-number">02</div>
+            <div class="step-title">Isolate</div>
+            <code class="step-command">git worktree</code>
+            <p class="step-desc">Each task gets its own git worktree - a fully isolated copy of the repo. No agent can interfere with another.</p>
+          </div>
+
+          <div class="workflow-step animate delay-3">
+            <div class="step-number">03</div>
+            <div class="step-title">Execute</div>
+            <code class="step-command">parallel agents</code>
+            <p class="step-desc">Dozens of agents work simultaneously. Each handles one file or component. They migrate, then run the test suite.</p>
+          </div>
+
+          <div class="workflow-step animate delay-4">
+            <div class="step-number">04</div>
+            <div class="step-title">Ship</div>
+            <code class="step-command">pull requests</code>
+            <p class="step-desc">Each agent opens its own PR with passing tests. You review a stream of small, focused changes instead of one monster diff.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Usage</div>
+        <div class="code-block">
+          <pre><span class="comment"># Framework migration</span>
+<span class="command">/batch</span> <span class="string">migrate src/ from Solid to React</span>
+
+<span class="comment"># API version upgrade</span>
+<span class="command">/batch</span> <span class="string">update all API calls from v2 to v3 endpoints</span>
+
+<span class="comment"># Testing library swap</span>
+<span class="command">/batch</span> <span class="string">convert all Jest tests to Vitest</span>
+
+<span class="comment"># Style migration</span>
+<span class="command">/batch</span> <span class="string">replace CSS modules with Tailwind across components/</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Git Worktree Isolation -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <div>
+          <h2 class="section-title">Git Worktree Isolation</h2>
+          <p class="section-subtitle">Why This Actually Works</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">No Conflicts</h3>
+          <p class="feature-desc">
+            Each agent operates in its own git worktree - a separate checkout of the repository. Agent A migrating <code>Button.tsx</code> cannot interfere with Agent B migrating <code>Modal.tsx</code>.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">🧪</div>
+          <h3 class="feature-title">Independent Testing</h3>
+          <p class="feature-desc">
+            Each worktree runs its own test suite. An agent doesn't just make changes - it verifies they pass before opening a PR. Failed migrations never reach your review queue.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">📦</div>
+          <h3 class="feature-title">Atomic PRs</h3>
+          <p class="feature-desc">
+            Instead of one 500-file PR that's impossible to review, you get 50 focused PRs of 10 files each. Each is independently mergeable. Each has passing tests. Review becomes manageable.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">Behind the Scenes</div>
+        <div class="code-block">
+          <pre><span class="comment"># What /batch sets up for each agent:</span>
+
+<span class="command">git worktree add</span> <span class="string">/tmp/batch-agent-01</span> <span class="flag">-b</span> <span class="string">batch/migrate-button</span>
+<span class="command">git worktree add</span> <span class="string">/tmp/batch-agent-02</span> <span class="flag">-b</span> <span class="string">batch/migrate-modal</span>
+<span class="command">git worktree add</span> <span class="string">/tmp/batch-agent-03</span> <span class="flag">-b</span> <span class="string">batch/migrate-sidebar</span>
+<span class="comment"># ... dozens more</span>
+
+<span class="comment"># Each agent works in its own directory:</span>
+<span class="comment"># - Makes the migration changes</span>
+<span class="comment"># - Runs: npm test (or your test command)</span>
+<span class="comment"># - If tests pass: commits, pushes, opens PR</span>
+<span class="comment"># - If tests fail: attempts to fix, retries</span>
+
+<span class="comment"># After all agents complete:</span>
+<span class="command">git worktree remove</span> <span class="string">/tmp/batch-agent-01</span>
+<span class="command">git worktree remove</span> <span class="string">/tmp/batch-agent-02</span>
+<span class="comment"># Cleanup is automatic</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: /simplify vs /batch -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <h2 class="section-title">/simplify vs /batch</h2>
+          <p class="section-subtitle">Different Tools, Different Jobs</p>
+        </div>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>/simplify</th>
+            <th>/batch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Purpose</td>
+            <td>Polish existing changes</td>
+            <td>Execute large-scale migrations</td>
+          </tr>
+          <tr>
+            <td>Scope</td>
+            <td>Your current diff</td>
+            <td>Entire directories or codebase</td>
+          </tr>
+          <tr>
+            <td>Planning</td>
+            <td>Automatic - reads your changes</td>
+            <td>Interactive - you refine the plan</td>
+          </tr>
+          <tr>
+            <td>Isolation</td>
+            <td>Same working tree</td>
+            <td>Separate git worktrees per agent</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td>Improved code in place</td>
+            <td>Multiple pull requests</td>
+          </tr>
+          <tr>
+            <td>Agent Count</td>
+            <td>A few focused reviewers</td>
+            <td>Dozens of parallel workers</td>
+          </tr>
+          <tr>
+            <td>When to Use</td>
+            <td>Before every PR</td>
+            <td>Framework swaps, API upgrades, library migrations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="features-grid" style="margin-top: 48px;">
+        <div class="feature-card animate delay-1">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Daily Workflow</h3>
+          <p class="feature-desc">
+            Use <code>/simplify</code> after every feature implementation. It becomes the last step before you push - a one-command quality gate that catches what you missed while heads-down coding.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-2">
+          <div class="feature-icon">🚀</div>
+          <h3 class="feature-title">Quarterly Migrations</h3>
+          <p class="feature-desc">
+            Use <code>/batch</code> for the changes you've been dreading. The framework swap your team has been putting off. The API upgrade that touches 200 files. The work that used to take a sprint now takes an afternoon.
+          </p>
+        </div>
+
+        <div class="feature-card animate delay-3">
+          <div class="feature-icon">🤝</div>
+          <h3 class="feature-title">Combined Power</h3>
+          <p class="feature-desc">
+            Run <code>/batch</code> to execute the migration, then run <code>/simplify</code> on each resulting PR. The migration agents handle correctness; the simplify agents handle polish.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: What This Means -->
+    <section>
+      <div class="section-header">
+        <span class="section-number">06</span>
+        <div>
+          <h2 class="section-title">What This Means</h2>
+          <p class="section-subtitle">The Bigger Picture</p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          These aren't just two new slash commands. They represent a shift in how Claude Code thinks about agent orchestration. Previous features like the <a href="claude-code-task-management.html" style="color: var(--text-primary);">task management system</a> introduced parallel sub-agents. <code>/simplify</code> and <code>/batch</code> turn that capability into <strong>opinionated workflows</strong> - you don't need to design the agent topology yourself.
+        </p>
+        <p>
+          The git worktree pattern in <code>/batch</code> is particularly significant. Multi-agent coding has always had a coordination problem: agents stepping on each other's changes, merge conflicts, race conditions on shared files. Worktrees solve this at the infrastructure level. Each agent gets a complete, isolated copy of the repository. There is nothing to coordinate.
+        </p>
+        <p>
+          For teams that have built their own <a href="claude-skills-guide.html" style="color: var(--text-primary);">custom skills</a>, these built-in skills set a new bar. They show what's possible when skills have deep integration with git, the test runner, and the PR workflow - not just the conversation context.
+        </p>
+      </div>
+    </section>
+
+    <div class="cta-section">
+      <div class="cta-content">
+        <div class="cta-label">Coming in the Next Claude Code Release</div>
+        <div class="cta-title">Ship Cleaner Code. Migrate Faster.</div>
+        <p class="cta-desc">
+          /simplify automates PR polish with parallel review agents. /batch parallelizes large-scale migrations with git worktree isolation. Both ship in the next version of Claude Code.
+        </p>
+        <code class="cta-command">/simplify &nbsp;&nbsp; /batch</code>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="../index.html" class="footer-link">
+      ← Back to Blog
+    </a>
+    <div style="display: flex; gap: 32px; align-items: center;">
+      <span class="footer-text">© 2026 CHSAMI - Claude Code /simplify & /batch</span>
+      <a href="claude-skills-guide.html" class="footer-link">
+        Read Skills Guide →
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>
