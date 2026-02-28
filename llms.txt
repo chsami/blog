@@ -25,6 +25,11 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### The Red Line: Anthropic Said No to Mass Surveillance. OpenAI Said Yes to the Pentagon.
+- URL: /posts/anthropic-vs-openai-surveillance.html
+- Published: 2026-02-28
+- Description: Anthropic refused to let the US military use Claude without ethical safeguards. The government banned them. Hours later, Sam Altman announced OpenAI's deal with the Department of War. A breakdown of the situation and an OpenAI vs Anthropic comparison.
+
 #### Seedance 2.0 Is a Game-Changer for AI Video
 - URL: /posts/seedance-2-video-generation.html
 - Published: 2026-02-12
