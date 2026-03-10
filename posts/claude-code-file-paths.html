@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Your AI Stops Showing Its Work - CHSAMI</title>
+  <meta name="description" content="Anthropic shipped a one-line UI change to Claude Code that hid file paths from developers. 398 Hacker News points and 241 comments later, the debate is still not resolved. It was never really about file paths.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-code-file-paths.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-code-file-paths.html">
+  <meta property="og:title" content="When Your AI Stops Showing Its Work">
+  <meta property="og:description" content="Anthropic shipped a one-line UI change to Claude Code that hid file paths from developers. 398 Hacker News points and 241 comments later, the debate is still not resolved. It was never really about file paths.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11c68a-421a-6180-bc97-93adab22d8b3/ideogram-v3.0_Dark_terminal_screen_showing_redacted_file_paths_abstract_minimal_tech_illustrat-0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-03-10">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When Your AI Stops Showing Its Work">
+  <meta name="twitter:description" content="Anthropic shipped a one-line UI change to Claude Code that hid file paths from developers. 398 Hacker News points and 241 comments later, the debate is still not resolved. It was never really about file paths.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11c68a-421a-6180-bc97-93adab22d8b3/ideogram-v3.0_Dark_terminal_screen_showing_redacted_file_paths_abstract_minimal_tech_illustrat-0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "When Your AI Stops Showing Its Work",
+    "description": "Anthropic shipped a one-line UI change to Claude Code that hid file paths from developers. 398 Hacker News points and 241 comments later, the debate is still not resolved. It was never really about file paths.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11c68a-421a-6180-bc97-93adab22d8b3/ideogram-v3.0_Dark_terminal_screen_showing_redacted_file_paths_abstract_minimal_tech_illustrat-0.jpg",
+    "datePublished": "2026-03-10",
+    "dateModified": "2026-03-10",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-code-file-paths.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .prose {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 800px;
+    }
+
+    .prose + .prose {
+      margin-top: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-top: 2px;
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .quote-block {
+      border-left: 4px solid var(--text-primary);
+      padding: 24px 32px;
+      margin-top: 32px;
+      background: var(--bg-card);
+    }
+
+    .quote-text {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .quote-attr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    .code-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      padding: 32px;
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--bg-primary);
+      margin: 0;
+    }
+
+    .code-block .dim { color: #555555; }
+    .code-block .path { color: #10B981; }
+    .code-block .summary { color: #A8A4A0; }
+    .code-block .prompt { color: #F59E0B; }
+    .code-block .cmd { color: #60A5FA; }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 32px;
+    }
+
+    .before-after-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 12px 32px;
+    }
+
+    .before-after-label.before {
+      background: var(--bg-card);
+      color: var(--text-muted);
+    }
+
+    .before-after-label.after {
+      background: var(--text-primary);
+      color: rgba(248, 246, 241, 0.5);
+    }
+
+    .before-after .code-block {
+      margin-top: 0;
+    }
+
+    .before-after .code-block.light {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .before-after .code-block.light pre {
+      color: var(--text-secondary);
+    }
+
+    .before-after .code-block.light .path {
+      color: #0A7B4E;
+    }
+
+    .comparison-table {
+      width: 100%;
+      margin-top: 32px;
+      border-collapse: collapse;
+    }
+
+    .comparison-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 16px 24px;
+      text-align: left;
+      border-bottom: 2px solid var(--text-primary);
+    }
+
+    .comparison-table td {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      width: 160px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+      font-size: 24px;
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.82);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.75;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .spacer {
+      margin-top: 40px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .before-after { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .list-item { grid-template-columns: 1fr; gap: 4px; }
+      .comparison-table th,
+      .comparison-table td { padding: 12px 16px; }
+      .comparison-table td:first-child { white-space: normal; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .header { padding: 32px 20px; }
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .code-block { padding: 20px; }
+      .code-block pre { font-size: 12px; }
+      .cta { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&larr; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Claude Code &middot; March 2026</div>
+      <h1 class="hero-title">When Your AI Stops Showing Its Work<span>The file-path fight in Claude Code is not about file paths.</span></h1>
+      <p class="hero-desc">
+        In February 2026, Anthropic shipped a one-line UI change to Claude Code that collapsed file-path output into an uninformative summary. 398 points on Hacker News, 241 comments, a GitHub thread, and a direct public response from the head of Claude Code later, the debate has not fully resolved. What looks like a UX disagreement is actually the first serious public argument about who defines trust between a developer and an AI agent.
+      </p>
+    </section>
+
+    <section class="content">
+
+      <!-- 01: The Change -->
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The change</div>
+          <div class="section-subtitle">Version 2.1.20</div>
+        </div>
+      </div>
+
+      <p class="prose">Claude Code version 2.1.20 shipped on February 16th. Before it, when Claude read a file, your terminal showed you the file path. After it, you got a summary line. No paths. Just a count.</p>
+
+      <div class="before-after">
+        <div>
+          <div class="before-after-label before">Before &mdash; v2.1.19</div>
+          <div class="code-block light">
+            <pre><span class="path">&#x25B6; Read src/auth/token.ts</span>
+<span class="path">&#x25B6; Read config/database.yml</span>
+<span class="path">&#x25B6; Read tests/integration/payment.test.js</span>
+<span class="path">&#x25B6; Edit src/auth/token.ts</span></pre>
+          </div>
+        </div>
+        <div>
+          <div class="before-after-label after">After &mdash; v2.1.20</div>
+          <div class="code-block">
+            <pre><span class="summary">&#x25B6; Read 3 files (ctrl+o to expand)</span>
+<span class="summary">&#x25B6; Edit 1 file (ctrl+o to expand)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <p class="prose spacer">That is it. Which files? The summary does not say. A GitHub issue labeled "Critical" appeared the same day, drawing dozens of comments, all variants of the same objection: the path is the signal. Without it, the line carries no information. As one person put it directly: "If you are going to display something like 'Searched for 13 patterns, read 2 files,' there is nothing I can do with that information. You might as well not display it at all."</p>
+
+      <p class="prose">Boris Cherny, the creator and head of Claude Code at Anthropic, entered both the GitHub thread and Hacker News to explain the decision. His reasoning was honest, carefully considered, and built on premises that do not match how most of his paying users work.</p>
+
+      <!-- 02: The Reasoning -->
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">The reasoning</div>
+          <div class="section-subtitle">Why Anthropic made this call</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="meta">Boris Cherny &mdash; Head of Claude Code, Anthropic &mdash; HN #46978710</div>
+        <div class="card-title">Designing for the trajectory, not the moment</div>
+        <p class="card-desc">
+          "When we released Claude Code, Sonnet 3.5 was able to run unattended for less than 30 seconds at a time before going off the rails. Now, Opus 4.6 1-shots much of my code, often running for minutes, hours, and days at a time. The amount of output this generates can quickly become overwhelming in a terminal. Users give the model a prompt, and don't want to drown in a sea of log output in order to pick out what matters: specific tool calls, file edits, and so on. We dogfooded it internally for over a month. We cannot build the right things without community feedback. In this case, we missed the mark for a subset of our users."
+        </p>
+      </div>
+
+      <p class="prose spacer">The logic is coherent. As Claude has gotten more capable, a single session generates far more tool calls than it did a year ago. Terminals have fixed font sizes and inconsistent color support. In a session running for hours, the volume of output can obscure the things that actually need attention: diffs, bash results, the state of work at completion. Anthropic dogfooded the change internally for over a month. Most of their engineers preferred the quieter output.</p>
+
+      <p class="prose">The change was not arbitrary. It was a considered product decision built on real usage data, from people who use Claude Code the way Anthropic imagines it being used: as a background worker you hand a task and check on when it is done. The problem is that this is not how most of the community uses it yet.</p>
+
+      <!-- 03: Two Use Cases -->
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Two use cases, one product</div>
+          <div class="section-subtitle">Where the trust gap lives</div>
+        </div>
+      </div>
+
+      <p class="prose">The people who preferred the quieter output and the people who erupted on GitHub are not in the same situation. They are using the same product with completely different assumptions about the relationship between developer and agent.</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Anthropic's model</th>
+            <th>Community's model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Session length</td>
+            <td>Minutes, hours, occasionally days. The agent runs autonomously and you review the output at the end</td>
+            <td>Short to medium sessions with active supervision. You watch and intervene when something looks wrong</td>
+          </tr>
+          <tr>
+            <td>Role of file paths</td>
+            <td>Noise during execution. What matters is the final diff, not the intermediate steps that produced it</td>
+            <td>Course-correction signal. Seeing which files Claude reads in the first ten seconds tells you whether the session is on track</td>
+          </tr>
+          <tr>
+            <td>Trust level</td>
+            <td>Established. The agent has earned enough reliability that you do not need to supervise every tool call</td>
+            <td>In progress. Trust is built by watching the agent work correctly across many sessions, not granted upfront</td>
+          </tr>
+          <tr>
+            <td>Codebase profile</td>
+            <td>Greenfield or well-bounded scopes. The model's context matches what is in the repo</td>
+            <td>Large, established codebases. Multiple domains share terminology; domain confusion is a real and common failure mode</td>
+          </tr>
+          <tr>
+            <td>Error cost</td>
+            <td>Low per-session cost of a wrong turn, caught at review. Batch output is reviewed before anything is merged</td>
+            <td>High per-session token cost of an undetected wrong turn. Catching it at review means discarding work that consumed real money</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="quote-block">
+        <p class="quote-text">"Files containing the word 'payment' or 'onboarding' might be for entirely different DDD domains than the one relevant to the problem. The very first thing Claude does when planning, choosing which files to read, is a key point for manual intervention. Once I know Claude is looking in the right place, I'm on to the next task."</p>
+        <div class="quote-attr">CTO &mdash; Hacker News thread #46978710</div>
+      </div>
+
+      <div class="quote-block">
+        <p class="quote-text">"I don't want verbose mode. I want Claude to tell me what it's reading in the first three seconds, so I can switch gears without fear it's going to the wrong part of the codebase. I want Claude to be the babysitter, but I want to make sure the babysitter knows where I left the note before I head out the door."</p>
+        <div class="quote-attr">Developer &mdash; Hacker News thread #46978710</div>
+      </div>
+
+      <p class="prose spacer">File visibility is not curiosity. It is course correction before the course is set. In a large monorepo, knowing which files Claude reads in the first ten seconds of a session is exactly how you decide whether to let it continue or stop it, correct the context, and restart. Without that information, the first opportunity to catch a domain mismatch comes at the end of the session, when the work is done and you can see the diff.</p>
+
+      <!-- 04: The Fix -->
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The fix that broke two things</div>
+          <div class="section-subtitle">The verbose mode saga</div>
+        </div>
+      </div>
+
+      <p class="prose">Anthropic's response to the backlash was to repurpose verbose mode. In the new configuration, enabling verbose shows file paths inline as they always had been. The original behavior, restored via a flag. Problem solved, officially.</p>
+
+      <p class="prose">The problem with this was that verbose mode already meant something. It meant: dump everything. Full thinking traces, hook output, full subagent transcripts, all of it, directly into your terminal. So Anthropic began stripping things out of verbose mode, version by version, making it progressively less verbose. File paths: kept. Thinking traces: removed. Hook output: removed. Subagent transcripts: partially removed, with more to come.</p>
+
+      <div class="grid-2 spacer">
+        <div class="card">
+          <div class="meta">Group 1</div>
+          <div class="card-title">People who wanted file paths</div>
+          <p class="card-desc">
+            Now have to enable a setting called "verbose" to get output that is not, by any normal definition, verbose. The flag name is misleading and the change is not discoverable. Users who did not read the GitHub thread or the release notes have no way to know the behavior changed or how to restore it. Several pinned to version 2.1.19 and stopped updating.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Group 2</div>
+          <div class="card-title">People who were using verbose mode</div>
+          <p class="card-desc">
+            Lost the actual verbose output. Thinking traces and hook output, which some workflows depend on, moved behind Ctrl+O. Verbose mode became less verbose on their behalf, without their asking, to make room for the people who wanted file paths. One setting now tries to serve two incompatible needs and satisfies neither fully.
+          </p>
+        </div>
+      </div>
+
+      <p class="prose spacer">The one-boolean config flag that would have solved the original complaint in an afternoon, something like <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; background: var(--bg-card); padding: 2px 6px;">show_file_paths: true</code>, remained unshipped. Instead, a series of releases stripped things out of verbose mode one by one. As the symmetrybreak.ing blog put it: "At some point you've just reinvented a config toggle with extra steps."</p>
+
+      <div class="highlight-box">
+        <div class="card-title">"Anthropic during the Super Bowl: we'd never disrespect our users. Anthropic on GitHub: have you tried verbose mode?"</div>
+        <p class="card-desc">
+          The line from the symmetrybreak.ing post landed on Hacker News and stayed there. It is barbed but it points at something real. Anthropic ran a Super Bowl ad in early 2026 positioning Claude as a tool built around user trust. Six days later, they were in a GitHub thread telling developers that the UI change they objected to was "a way to simplify things so you can focus on what matters." The disconnect between the brand statement and the product decision was the thing people could not let go.
+        </p>
+      </div>
+
+      <!-- 05: Money and Brand -->
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">The money and the brand</div>
+          <div class="section-subtitle">Two dimensions the press missed</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="meta">Financial</div>
+          <div class="card-title">File paths are a cost-control mechanism</div>
+          <p class="card-desc">
+            Claude Code Max is $200 a month. Claude Code's billing charges per token. When Claude misunderstands your intent and reads the wrong domain's files, every tool call from that point forward is anchored to the wrong context. The session produces work you will reject. The faster you can catch a wrong turn, the less money you spend. Watching which files Claude reads in the first ten seconds is not just a workflow preference. It is how you decide whether to let a session run or stop it and reset the context before it burns tokens on a dead end. Hiding that information by default makes the cost of a misaligned session higher, not lower.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Reputational</div>
+          <div class="card-title">The Constitutional AI company hides what its AI does</div>
+          <p class="card-desc">
+            Anthropic's public position is that it takes transparency and safety seriously. Constitutional AI, interpretability research, published red lines on autonomous weapons and mass surveillance. The company's entire competitive identity rests on the argument that it is trustworthy in ways others are not. Then their flagship developer product ships a default that hides what it is doing to your codebase. One Hacker News commenter connected this directly: "Defaulting to a posture that allows people to feel they have visibility into where agentic workflows get their context from is, arguably, critical to Claude's brand messaging." The word "feel" is worth sitting with. Actual control and the feeling of control are not the same thing.
+          </p>
+        </div>
+      </div>
+
+      <!-- 06: The actual question -->
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">The actual question</div>
+          <div class="section-subtitle">Who defines the developer-agent relationship</div>
+        </div>
+      </div>
+
+      <p class="prose">Boris Cherny wrote something in the HN thread that, in retrospect, is the most telling part of this whole episode: "When we started Claude Code, it was just a few of us using it. Now, a large number of engineers rely on Claude Code to get their work done every day. We can no longer design for ourselves."</p>
+
+      <p class="prose">That sentence is honest about the problem and partially blind to one of its dimensions. Anthropic's internal users are Anthropic engineers. People who work at the company building the model. They have a fundamentally different relationship to Claude's reliability than a developer at a startup paying $200 a month. When Anthropic's internal users preferred the quieter output, that preference was shaped by a level of trust earned through proximity: knowing the people who wrote the model, seeing how its failures mode in controlled conditions, having colleagues you can ask directly when something goes wrong.</p>
+
+      <p class="prose">The developers in the GitHub thread do not have that trust. They are building it. Watching file paths is one of the tools they use to build it.</p>
+
+      <div class="quote-block">
+        <p class="quote-text">"The hiding stuff is weird because the whole reason you'd want to see what Claude is doing isn't just curiosity. It's about catching when it goes off the rails before it makes a mess. Like when it starts reading through your entire codebase because it misunderstood what you asked for. Abstractions are great until they hide the thing that's about to break your build."</p>
+        <div class="quote-attr">Developer &mdash; Hacker News thread #47033622</div>
+      </div>
+
+      <p class="prose spacer">Anthropic is making product decisions for a future where trust between developers and AI agents is already established. Their users are living in a present where it is still being negotiated, session by session, file read by file read. Both are right about their respective realities. The tension will not resolve until either Claude gets reliable enough that watching the first ten seconds no longer matters, or Anthropic accepts that "reliable enough" is not a threshold that flips on any particular version number.</p>
+
+      <p class="prose">Until then, a config flag would help a lot of people. The ask was never complicated.</p>
+
+      <div class="cta">
+        <div class="cta-label">The bottom line</div>
+        <div class="cta-title">The relationship between a developer and an AI agent has to be earned. You cannot ship it as a default.</div>
+        <p class="cta-desc">
+          Anthropic built Claude Code for a mode of use that their best users have not yet reached: deep trust, long autonomous sessions, output reviewed at the end rather than supervised throughout. The UI reflects that future. The developers paying $200 a month are living in a different present, where trust is incremental, context errors are expensive, and file paths are not noise but signal. Closing that gap requires either waiting for the model to get better or giving developers the tools to supervise the model while it does. One of those is a product decision. The other is not.
+        </p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026&middot;03&middot;10 &middot; 8 min read</div>
+    <a class="footer-link" href="../index.html">Back to Home &rarr;</a>
+  </footer>
+</body>
+</html>
