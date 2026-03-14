@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opus 4.6 Just Got 1M Tokens for Free. Here's What to Do With It. - CHSAMI</title>
+  <meta name="description" content="Anthropic quietly flipped the switch on March 13. Claude Opus 4.6 now defaults to 1M context for Claude Max subscribers. Here's what actually changes in your workflow.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claude-opus-1m-context-available.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claude-opus-1m-context-available.html">
+  <meta property="og:title" content="Opus 4.6 Just Got 1M Tokens for Free. Here's What to Do With It.">
+  <meta property="og:description" content="Anthropic quietly flipped the switch on March 13. Claude Opus 4.6 now defaults to 1M context for Claude Max subscribers. Here's what actually changes in your workflow.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11f7ed-b5d6-6f30-9eed-c1acb3d977d5/ideogram-v3.0_Minimalist_Swiss_design_poster_showing_the_number_1_000_000_in_massive_bold_blac-0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-03-14">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Opus 4.6 Just Got 1M Tokens for Free. Here's What to Do With It.">
+  <meta name="twitter:description" content="Anthropic quietly flipped the switch on March 13. Claude Opus 4.6 now defaults to 1M context for Claude Max subscribers. Here's what actually changes in your workflow.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11f7ed-b5d6-6f30-9eed-c1acb3d977d5/ideogram-v3.0_Minimalist_Swiss_design_poster_showing_the_number_1_000_000_in_massive_bold_blac-0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Opus 4.6 Just Got 1M Tokens for Free. Here's What to Do With It.",
+    "description": "Anthropic quietly flipped the switch on March 13. Claude Opus 4.6 now defaults to 1M context for Claude Max subscribers. Here's what actually changes in your workflow.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11f7ed-b5d6-6f30-9eed-c1acb3d977d5/ideogram-v3.0_Minimalist_Swiss_design_poster_showing_the_number_1_000_000_in_massive_bold_blac-0.jpg",
+    "datePublished": "2026-03-14",
+    "dateModified": "2026-03-14",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claude-opus-1m-context-available.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 48px;
+      border: 1px solid var(--border-color);
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.8);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      margin-top: 32px;
+    }
+
+    .stat-cell {
+      background: var(--bg-card);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text-primary);
+      padding-bottom: 2px;
+      transition: opacity 0.2s ease;
+    }
+
+    .related-link:hover { opacity: 0.6; }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .stat-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 24px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+      .header { padding: 32px 24px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">&#8592; Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">AI &amp; Industry &middot; 8 min read &middot; 14.03.2026</div>
+      <h1 class="hero-title">Opus 4.6 Just Got 1M Tokens for Free<span>Here's what actually changes in your workflow</span></h1>
+      <p class="hero-desc">
+        On March 13, 2026, Anthropic quietly bumped Claude Opus 4.6 to a 1M token context window by default. No blog post, no announcement. Users noticed it in Claude Code v2.1.75 via a single status bar tooltip. The community reaction was basically "#HolyShit." Here's what it means in practice.
+      </p>
+      <img class="hero-image"
+        src="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f11f7ed-b5d6-6f30-9eed-c1acb3d977d5/ideogram-v3.0_Minimalist_Swiss_design_poster_showing_the_number_1_000_000_in_massive_bold_blac-0.jpg"
+        alt="One million token context window now available for Claude Opus 4.6"
+        width="1200" height="675" loading="eager">
+    </section>
+
+    <section class="content">
+
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">What Just Changed</div>
+          <div class="section-subtitle">The silent rollout</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">No blog post, just a tooltip</div>
+          <p class="card-desc">
+            The first sign anyone got was a single line in the Claude Code status bar after updating to v2.1.75: "Opus now defaults to 1M context &middot; 5x more room, same pricing." That was it. No press release, no official Anthropic news post. The community spotted it on Twitter and HN before any official coverage landed. It's been in limited preview since late 2025, but as of March 13 it's on for everyone on Claude Max.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">What "same pricing" actually means</div>
+          <p class="card-desc">
+            For Claude Max subscribers, the 1M context window on Opus 4.6 is included at no extra cost. That's the big deal. The previous 200K default window was already generous, but the 1M window opens up a completely different class of tasks. The catch: on the raw API, you're still billed per token. Sending 1M tokens per request adds up fast. One commenter on HN who had early API access put it bluntly: "I would have been lighting cash on fire." Know your use case before going wild.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>Claude Code v2.1.75
+Opus 4.6 · Claude Max
+   ~/Projects/your-project
+
+↑ Opus now defaults to 1M context · 5x more room, same pricing</pre>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <div class="stat-number">1M</div>
+          <div class="stat-label">Token context</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">5x</div>
+          <div class="stat-label">Previous window</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">128K</div>
+          <div class="stat-label">Max output tokens</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">What 1 Million Tokens Looks Like</div>
+          <div class="section-subtitle">Concrete reference points</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">It's a lot more than you think</div>
+        <p class="card-desc">
+          A million tokens sounds big in the abstract. Here's what it actually fits. The entire Lord of the Rings trilogy is about 500K tokens. A medium-sized SaaS codebase with 50,000 lines of TypeScript across 200 files lands around 400K tokens. Six months of Slack export from a 10-person team? About 300K. A year of git history with diffs? Easily under 1M for most repos. You're not just feeding a few files anymore. You're feeding entire projects, entire histories, entire knowledge bases.
+        </p>
+      </div>
+      <div class="grid-3" style="margin-top: 24px;">
+        <div class="card">
+          <div class="meta">Reference</div>
+          <div class="card-title">Full codebase</div>
+          <p class="card-desc">A 50K line TypeScript project with dependencies stripped fits around 400K tokens. Most production repos fit with room to spare. No need to chunk, no need to pick files.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Reference</div>
+          <div class="card-title">Legal docs</div>
+          <p class="card-desc">An entire contract negotiation history, including all drafts, markups, and email threads over several months typically runs 200K to 600K tokens. One shot, full context.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Reference</div>
+          <div class="card-title">Research corpus</div>
+          <p class="card-desc">50 to 80 full academic papers fit in 1M tokens. For literature reviews, competitive research, or cross-referencing studies, this replaces hours of back-and-forth chunked queries.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">Six Things You Can Do Now</div>
+          <div class="section-subtitle">That weren't practical before</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Load your entire repo for architecture questions</div>
+          <div class="checklist">
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Ask "where are all the places we touch user billing?" and get a real answer, not a guess based on partial context</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Trace data flows across files that don't directly import each other — the kind of dependency a code search can't find</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Onboard a new developer by loading the full repo and letting them ask questions as if talking to the engineer who built it</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Do real cross-file refactors in one pass</div>
+          <div class="checklist">
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Rename a concept that appears in 40 files, update docs, update tests, and verify no edge cases are missed, all in one request</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Migration planning where you need to see every call site before deciding the right abstraction</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Consistency audits across a large codebase — find every place that breaks a pattern without building a custom linter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">Analyze logs and telemetry without preprocessing</div>
+          <p class="card-desc">
+            A day's worth of application logs from a medium-traffic service fits in 1M tokens. Instead of writing a log analysis script, you can now just dump the logs and ask "what was weird about today?" You get natural language pattern matching across the full dataset. Not a replacement for proper observability tooling, but genuinely useful for incident investigation.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Full conversation history for long-running agents</div>
+          <p class="card-desc">
+            If you're building AI agents that run for hours or days, you've been dealing with context compression strategies to keep costs down. With 1M tokens, a long agentic session where the agent takes hundreds of steps still fits in context. That's a real change for people building Claude Code extensions or long-horizon automated workflows.
+          </p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">Skip the RAG pipeline for internal docs</div>
+          <p class="card-desc">
+            For a lot of internal documentation use cases, people have been building RAG pipelines: chunk the docs, embed them, retrieve relevant chunks, generate answers. For a knowledge base under 500K tokens, you can now just load the whole thing. No chunking strategy to tune, no retrieval quality to debug, no embedding model to maintain. Just the docs.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Cross-document research and synthesis</div>
+          <p class="card-desc">
+            Load an entire book alongside 20 papers that cite it. Ask Opus to find where the papers contradict the book's claims. Load all the transcripts from a conference alongside the speaker bios and ask for a synthesis of the week's themes. This is research assistant territory, but without the chunking artifacts that made smaller context windows frustrating.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The Cost Reality</div>
+          <div class="section-subtitle">Know what you're signing up for</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Claude Max vs the API: very different stories</div>
+        <p class="card-desc">
+          The "same pricing" headline is accurate for Claude Max subscribers. You're paying a flat monthly fee and the 1M context is bundled in. For conversational or interactive use, that's genuinely a great deal. But if you're building a product on the Anthropic API and thinking about using 1M context per request at scale, you need to do the math first. At current API token pricing, a single 1M input token request costs roughly $15. Do that a hundred times a day in a production pipeline and you're burning $45K a month just on context. The API pricing hasn't changed just because the window got bigger.
+        </p>
+      </div>
+      <div class="grid-2" style="margin-top: 24px;">
+        <div class="card">
+          <div class="meta">Use case</div>
+          <div class="card-title">Claude Max: go for it</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Personal development workflows in Claude Code</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>One-off research and analysis tasks</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Exploratory codebase work and refactoring</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Writing and synthesis projects with large source material</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="meta">Use case</div>
+          <div class="card-title">API: think carefully</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Low-frequency tasks where full context is genuinely needed</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>High-value work where the cost is justified by the output</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Batched offline workflows, not real-time user-facing features</span></div>
+            <div class="check-item"><span class="check-bullet">&#10003;</span><span>Any use case where you've actually modeled the monthly spend</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top: 32px;">
+        <div class="card-title">Sonnet 4.6 is still separate</div>
+        <p class="card-desc">The 1M context is now free for Opus on Claude Max. Sonnet 4.6 with 1M context is still billed as additional usage. If you're a Sonnet user by default for cost reasons, nothing changed for you yet. Opus is the one that got the upgrade.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">When to Still Use Agentic Tools</div>
+          <div class="section-subtitle">The big window doesn't win everything</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Context windows don't replace tools</div>
+        <p class="card-desc">
+          Before the 1M window was widely available, a lot of developers were already using the big-context approach with Gemini 3.1 Pro. I wrote about this exact tradeoff in detail in an earlier post. The short version: big context wins for understanding, agentic tools win for precision and cost. That tradeoff hasn't gone away. If you're running a task 500 times a day in a pipeline, 1M tokens per request will bankrupt you. If you need to find a bug that touches 3 files, a quick grep-and-read with agentic tools still uses 90% fewer tokens than loading the whole repo.
+        </p>
+      </div>
+      <div style="margin-top: 24px;">
+        <a href="gemini-context-vs-agentic.html" class="related-link">Read: 1M Tokens vs. Agentic Tools &#8594;</a>
+      </div>
+      <div class="grid-3" style="margin-top: 32px;">
+        <div class="card">
+          <div class="meta">Use big context when</div>
+          <div class="card-title">You need the whole picture</div>
+          <p class="card-desc">Understanding unknown codebases, cross-file dependency analysis, architecture decisions where missing one file could give you the wrong answer.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Use agentic tools when</div>
+          <div class="card-title">You have a specific target</div>
+          <p class="card-desc">Bug hunting with a starting point, targeted refactors, anything you'd run at scale in a CI pipeline, or work on repos that are genuinely huge.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Use both when</div>
+          <div class="card-title">You're building something complex</div>
+          <p class="card-desc">Load the full repo to understand architecture, then switch to targeted file operations to make precise edits. The comprehension pass and the execution pass are different jobs.</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">How to Actually Use It</div>
+          <div class="section-subtitle">Getting started in Claude Code</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">It just works now</div>
+        <p class="card-desc">
+          If you're on Claude Code v2.1.75 or later with a Claude Max subscription, you're already on 1M context for Opus by default. You don't need to toggle anything. The status bar will show you the current context usage as you work, so you can see how much room you have. For API users, you set <code>max_tokens</code> and the context window is already available at the model level.
+        </p>
+      </div>
+      <div class="code-block">
+        <pre># Claude Code: already enabled, just update
+claude update
+
+# API: context is model-level, just send more tokens
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "claude-opus-4-6",
+    "max_tokens": 128000,
+    "messages": [{"role": "user", "content": "...your 1M token context here..."}]
+  }'</pre>
+      </div>
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">Practical tips for big context</div>
+          <div class="checklist">
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Strip comments and whitespace if you're loading a codebase — can cut token count by 20 to 30%</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Exclude <code>node_modules</code>, <code>dist</code>, and generated files — these inflate context without adding signal</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Put the most important files at the beginning of the context — recency bias in attention means the start and end get more weight</span>
+            </div>
+            <div class="check-item">
+              <span class="check-bullet">&#10003;</span>
+              <span>Ask one focused question per big-context request rather than trying to do everything at once</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Tools to load your codebase</div>
+          <p class="card-desc" style="margin-bottom: 16px;">
+            Claude Code handles this automatically in the background when you work in a project. For manual API use, a few tools help:
+          </p>
+          <div class="list">
+            <div class="list-item">
+              <span class="list-label">Repomix</span>
+              <span class="list-body">Concatenates your whole repo into a single file optimized for LLM consumption. Handles gitignore, strips irrelevant files.</span>
+            </div>
+            <div class="list-item">
+              <span class="list-label">files-to-prompt</span>
+              <span class="list-body">Simon Willison's CLI tool. Simple, fast, filters by file type. Great for feeding specific subdirectories.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Bottom line</div>
+        <div class="cta-title">The barrier just moved</div>
+        <p class="cta-desc">
+          Six months ago, 1M tokens was a Gemini-exclusive luxury. Now it's the Opus default. For Claude Max subscribers, an entire class of tasks that previously required RAG pipelines, embedding models, or chunking strategies can now be done with a single well-crafted prompt. The tools you build and the workflows you design can start from a different assumption. That's worth paying attention to.
+        </p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">© 2026 CHSAMI</span>
+    <a href="../index.html" class="footer-link">More Posts</a>
+  </footer>
+</body>
+</html>
