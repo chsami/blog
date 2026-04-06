@@ -363,6 +363,32 @@
       color: var(--text-muted);
     }
 
+    .bridge-block {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      align-items: start;
+      max-width: 960px;
+      margin: 40px 0 48px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .bridge-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .bridge-text {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
     .cta {
       background: var(--text-primary);
       color: var(--bg-primary);
@@ -494,6 +520,13 @@
         padding: 28px;
       }
 
+      .bridge-block {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 32px 0 40px;
+        padding: 24px 0;
+      }
+
       .code-block {
         padding: 24px;
       }
@@ -533,6 +566,10 @@
       .list-body,
       .check-item {
         font-size: 14px;
+      }
+
+      .bridge-text {
+        font-size: 15px;
       }
     }
   </style>
@@ -763,13 +800,16 @@ terraform plan
         </div>
       </div>
 
-      <p class="body-text">
-        That is also why skepticism around MCP is not irrational. Some engineers on Hacker News keep asking a fair
-        question: if my model can already call a documented REST API, why wrap it again? The honest answer is that
-        sometimes you should not. If you only need one tightly-controlled integration, raw HTTP or a CLI wrapper may be
-        simpler. MCP starts paying off when compatibility across clients and environments matters more than local
-        simplicity.
-      </p>
+      <div class="bridge-block">
+        <div class="bridge-label">Fair skepticism</div>
+        <p class="bridge-text">
+          That is also why skepticism around MCP is not irrational. Some engineers on Hacker News keep asking a fair
+          question: if my model can already call a documented REST API, why wrap it again? The honest answer is that
+          sometimes you should not. If you only need one tightly-controlled integration, raw HTTP or a CLI wrapper may
+          be simpler. MCP starts paying off when compatibility across clients and environments matters more than local
+          simplicity.
+        </p>
+      </div>
 
       <div class="quote">
         <div class="quote-text">
