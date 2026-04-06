@@ -25,6 +25,11 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### CLI vs MCP: The Future of Agentic Communication Is Layered
+- URL: /posts/cli-vs-mcp-agentic-communication.html
+- Published: 2026-04-06
+- Description: CLI vs MCP is the wrong fight. CLI remains the execution surface, MCP becomes the tool layer, and agent-to-agent protocols likely sit above both.
+
 #### The Red Line: Anthropic Said No to Mass Surveillance. OpenAI Said Yes to the Pentagon.
 - URL: /posts/anthropic-vs-openai-surveillance.html
 - Published: 2026-02-28
@@ -133,4 +138,3 @@ Sami - Software Developer
 
 ## Contact
 Website: https://chsami.com
-

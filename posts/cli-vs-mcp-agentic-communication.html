@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI vs MCP: The Future of Agentic Communication Is Layered - CHSAMI</title>
+  <meta name="description" content="CLI vs MCP is the wrong fight. CLI remains the execution surface, MCP becomes the tool layer, and agent-to-agent protocols likely sit above both.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/cli-vs-mcp-agentic-communication.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/cli-vs-mcp-agentic-communication.html">
+  <meta property="og:title" content="CLI vs MCP: The Future of Agentic Communication Is Layered">
+  <meta property="og:description" content="CLI vs MCP is the wrong fight. CLI remains the execution surface, MCP becomes the tool layer, and agent-to-agent protocols likely sit above both.">
+  <meta property="og:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f131c88-1dde-6820-bd6d-128284f573a3/ideogram-v3.0_Swiss_minimalist_editorial_poster_for_a_developer_blog_article_about_agentic_com-0.jpg">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-04-06">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CLI vs MCP: The Future of Agentic Communication Is Layered">
+  <meta name="twitter:description" content="CLI vs MCP is the wrong fight. CLI remains the execution surface, MCP becomes the tool layer, and agent-to-agent protocols likely sit above both.">
+  <meta name="twitter:image" content="https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f131c88-1dde-6820-bd6d-128284f573a3/ideogram-v3.0_Swiss_minimalist_editorial_poster_for_a_developer_blog_article_about_agentic_com-0.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CLI vs MCP: The Future of Agentic Communication Is Layered",
+    "description": "CLI vs MCP is the wrong fight. CLI remains the execution surface, MCP becomes the tool layer, and agent-to-agent protocols likely sit above both.",
+    "image": "https://cdn.leonardo.ai/users/a9b3f82a-8653-45c4-a215-235f24fc796d/generations/1f131c88-1dde-6820-bd6d-128284f573a3/ideogram-v3.0_Swiss_minimalist_editorial_poster_for_a_developer_blog_article_about_agentic_com-0.jpg",
+    "datePublished": "2026-04-06",
+    "dateModified": "2026-04-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/cli-vs-mcp-agentic-communication.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+    }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .body-text {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 960px;
+      margin-bottom: 32px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .quote {
+      background: var(--bg-card);
+      padding: 36px;
+      margin-top: 24px;
+      position: relative;
+    }
+
+    .quote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .quote-text {
+      font-size: 20px;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      max-width: 920px;
+    }
+
+    .quote-source {
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    .link,
+    .body-text a,
+    .card-desc a,
+    .list-body a,
+    .quote a {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--bg-primary);
+      padding: 2px 6px;
+    }
+
+    .code-block code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    @media (max-width: 1100px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 56px 24px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .hero-title span {
+        font-size: 18px;
+      }
+
+      .hero-desc {
+        font-size: 17px;
+      }
+
+      .content {
+        padding: 0 24px 56px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 48px;
+      }
+
+      .section-number {
+        font-size: 56px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .card,
+      .quote {
+        padding: 28px;
+      }
+
+      .code-block {
+        padding: 24px;
+      }
+
+      .list-item {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+      }
+
+      .content {
+        padding: 0 20px 40px;
+      }
+
+      .card-title {
+        font-size: 18px;
+      }
+
+      .card-desc,
+      .list-body,
+      .check-item {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Agentic Engineering</div>
+      <h1 class="hero-title">
+        CLI vs MCP
+        <span>The future of agentic communication is layered, not winner-take-all</span>
+      </h1>
+      <p class="hero-desc">
+        Developers keep arguing about whether agents should use the shell or talk to tools through MCP. I think that is
+        the wrong question. CLI remains the most dependable execution surface, MCP becomes the portability layer for
+        tool access, and agent-to-agent protocols will likely sit above both when delegation, task state, and
+        provenance actually matter.
+      </p>
+      <div class="hero-meta">
+        <div>Published: Apr 6, 2026</div>
+        <div>Reading time: 8 min</div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The wrong fight</div>
+          <div class="section-subtitle">Execution surface vs interoperability layer</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        When people ask whether agents should use a CLI or MCP, they are comparing two different layers of the stack.
+        CLI is an execution surface. It is how work actually happens inside a real environment with a current directory,
+        environment variables, credentials, logs, and exit codes. MCP is an interoperability layer. It tells an agent
+        what capabilities exist and how to call them in a more portable way.
+      </p>
+
+      <p class="body-text">
+        That is why the debate keeps feeling confused. The best agent systems already use both. They fall back to shell
+        commands for local, stateful, high-context work, then reach for MCP when they need a reusable contract that can
+        travel across clients. One of the more revealing recent Hacker News threads was not about replacing the shell
+        with MCP, but about building a <a class="link" href="https://news.ycombinator.com/item?id=46513163" target="_blank" rel="noopener noreferrer">universal command-line client for MCP</a>.
+        That is not a contradiction. It is the market telling you the shell is still the most natural landing zone for
+        both humans and agents.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">CLI is not the legacy option</div>
+          <p class="card-desc">
+            The shell keeps winning because it carries context for free. An agent can run <code>git</code>,
+            <code>npm</code>, <code>kubectl</code>, or <code>terraform</code> without first requiring a registry,
+            schema negotiation, or vendor-specific adapter.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">MCP is not a replacement for execution</div>
+          <p class="card-desc">
+            MCP is valuable because it standardizes discovery and invocation. That makes tool access cleaner across
+            clients, but it does not remove the messy, privileged, environment-bound layer where work ultimately gets
+            done.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">Why CLI keeps winning</div>
+          <div class="section-subtitle">State, trust, and human fallback</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        In developer workflows, the shell is hard to beat because it inherits the exact world the agent is operating in.
+        The checked-out branch, the local cache, the container runtime, the cluster auth, the failing test output, the
+        current repo root — all of that already exists at the command line. A generic tool contract can expose pieces of
+        that context, but only after someone decides which pieces matter and re-models them explicitly.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Why it works</div>
+          <div class="card-title">Environment comes for free</div>
+          <p class="card-desc">
+            Current directory, secrets, SSH agents, cloud auth, local config, and stderr/stdout are already there.
+            Agents do not need a second representation of the same reality.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Why it works</div>
+          <div class="card-title">Anything can be wrapped</div>
+          <p class="card-desc">
+            If a tool has a binary, a script, or an HTTP endpoint, it can be driven from a shell. That universality is
+            hard to match, especially in mixed stacks and messy internal environments.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Why it works</div>
+          <div class="card-title">Humans can take over instantly</div>
+          <p class="card-desc">
+            When the agent fails, a developer can rerun the same command, inspect the same output, and recover from the
+            same point. That handoff matters more than protocol elegance.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre><code>git diff --stat
+npm test
+kubectl logs deploy/api --tail=100
+terraform plan
+</code></pre>
+      </div>
+
+      <p class="body-text">
+        No registry. No capability card. No JSON-RPC handshake. Just process I/O in an environment that already knows
+        what project, cluster, or account you are talking to. That is why coding agents and ops agents keep reaching
+        for shells even when more structured interfaces are available.
+      </p>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">What MCP actually solved</div>
+          <div class="section-subtitle">Portable tool access is a real upgrade</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        None of that makes MCP hype fake. The official <a class="link" href="https://modelcontextprotocol.io/introduction" target="_blank" rel="noopener noreferrer">MCP introduction</a>
+        calls it a “USB-C port for AI applications,” and that is a useful mental model as long as you do not confuse
+        ports with workflows. MCP matters because it gives tool builders and client builders a shared contract instead of
+        forcing every product to invent bespoke adapters.
+      </p>
+
+      <p class="body-text">
+        Anthropic's recent post about <a class="link" href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation" target="_blank" rel="noopener noreferrer">donating MCP to the Agentic AI Foundation</a>
+        makes the adoption story clear: more than 10,000 public servers, support across ChatGPT, Cursor, Gemini,
+        Microsoft Copilot, and VS Code, plus a growing connector and registry ecosystem. That is not a toy. It is the
+        beginning of a tool layer.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">MCP value</div>
+          <div class="card-title">Discoverability</div>
+          <p class="card-desc">
+            Agents can enumerate capabilities instead of guessing which hidden command, REST route, or browser click path
+            exists.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">MCP value</div>
+          <div class="card-title">Portability</div>
+          <p class="card-desc">
+            One well-defined tool surface can be reused across multiple clients instead of rewritten for every IDE,
+            chatbot, and automation product.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">MCP value</div>
+          <div class="card-title">Structured state</div>
+          <p class="card-desc">
+            Agents get typed inputs and outputs instead of pretending to be a shaky human clicking through UIs and
+            parsing screenshots.
+          </p>
+        </div>
+      </div>
+
+      <p class="body-text">
+        This is exactly why <a class="link" href="chrome-146-webmcp-preview.html">WebMCP</a> is so interesting. When a browser or app exposes real
+        capabilities, the agent can stop acting like a remote-controlled intern clicking buttons and start interacting
+        with actual state. That is a genuine shift.
+      </p>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">Where MCP stops being enough</div>
+          <div class="section-subtitle">Tool schemas are not workflow semantics</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        The hardest part of agentic work is rarely “can I call a tool?” It is “which tool should run now, under what
+        approval, with what retry policy, and how do I explain what happened afterward?” MCP does not fully answer those
+        questions. It gives you a cleaner tool contract, not a complete theory of orchestration.
+      </p>
+
+      <p class="body-text">
+        The best public evidence I have seen is Vercel's own eval story: in <a class="link" href="vercel-agents-md-vs-skills.html">AGENTS.md vs Skills</a>,
+        passive context injection beat tool retrieval because agents often failed at the decision to invoke the right
+        capability at the right time. Tool availability is not the same thing as tool judgment.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Gap 1</div>
+          <div class="card-title">Invocation semantics</div>
+          <p class="card-desc">
+            A schema can tell an agent how to call a tool, but not when to pause, ask a human, delegate, or prefer one
+            path over another under ambiguity.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Gap 2</div>
+          <div class="card-title">Provenance and trust</div>
+          <p class="card-desc">
+            Production systems need to answer who touched what, which tool mutated state, and what evidence supported
+            the result. That layer sits above raw tool invocation.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Gap 3</div>
+          <div class="card-title">Security boundaries</div>
+          <p class="card-desc">
+            Standardized tools also standardize blast radius. The more portable the capability becomes, the more
+            important approvals, sandboxing, and least-privilege design become.
+          </p>
+        </div>
+      </div>
+
+      <p class="body-text">
+        That is also why skepticism around MCP is not irrational. Some engineers on Hacker News keep asking a fair
+        question: if my model can already call a documented REST API, why wrap it again? The honest answer is that
+        sometimes you should not. If you only need one tightly-controlled integration, raw HTTP or a CLI wrapper may be
+        simpler. MCP starts paying off when compatibility across clients and environments matters more than local
+        simplicity.
+      </p>
+
+      <div class="quote">
+        <div class="quote-text">
+          “A2A is an open protocol that complements Anthropic's Model Context Protocol (MCP), which provides helpful
+          tools and context to agents.”
+        </div>
+        <div class="quote-source">
+          Google Cloud, <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">A New Era of Agent Interoperability</a>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">What comes next</div>
+          <div class="section-subtitle">Agent-to-agent protocols above MCP</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        Google's A2A announcement matters because it makes the missing layer explicit. MCP is mostly about agent-to-tool
+        communication. A2A is about agent-to-agent communication: capability discovery, task lifecycle, artifacts,
+        status updates, and negotiation between a client agent and a remote specialist. In other words, the future is
+        not MCP replacing CLI. It is a stack where different layers solve different problems.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Layer 1</div>
+          <div class="card-title">CLI / raw APIs</div>
+          <p class="card-desc">
+            The execution layer. Closest to the real environment, easiest to debug, best for local state and human
+            takeover.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Layer 2</div>
+          <div class="card-title">MCP</div>
+          <p class="card-desc">
+            The capability layer. Best when tool discovery, typed contracts, and client portability matter more than
+            bespoke local wiring.
+          </p>
+        </div>
+        <div class="card">
+          <div class="meta">Layer 3</div>
+          <div class="card-title">A2A-style protocols</div>
+          <p class="card-desc">
+            The coordination layer. Handles delegation, long-running tasks, status, artifacts, and specialist agents
+            that need to work together.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre><code>user request
+    ↓
+coordinator agent
+    ↓  A2A / task delegation
+specialist agent
+    ↓  MCP / tool contract
+tool server
+    ↓  CLI or HTTP / real execution
+filesystem, browser, database, kubectl, git
+</code></pre>
+      </div>
+
+      <p class="body-text">
+        That is the architecture I would bet on. Not one protocol to rule everything, but a layered model of trust. CLI
+        survives because it requires very few shared assumptions. MCP wins because standardized capabilities are useful
+        across clients. A2A-style protocols rise because multi-agent systems need state, negotiation, and provenance
+        that tool schemas alone cannot provide.
+      </p>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">What I would build right now</div>
+          <div class="section-subtitle">Design for the layered future</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Practical checklist</div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-bullet">1</span><span>Keep critical actions callable via CLI or plain HTTP even if you add MCP on top.</span></div>
+            <div class="check-item"><span class="check-bullet">2</span><span>Use MCP for tools that benefit from portability across clients, hosted agents, and app surfaces.</span></div>
+            <div class="check-item"><span class="check-bullet">3</span><span>Treat agent-to-agent protocols as orchestration layers, not as substitutes for security boundaries.</span></div>
+            <div class="check-item"><span class="check-bullet">4</span><span>Log provenance: which agent delegated, which tool executed, what artifact came back, and under what approval.</span></div>
+            <div class="check-item"><span class="check-bullet">5</span><span>Keep human-written constraints in <code>AGENTS.md</code> or <code>CLAUDE.md</code>; dynamic discovery still is not the whole story.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">My prediction</div>
+          <div class="list">
+            <div class="list-item">
+              <div class="list-label">Short term</div>
+              <div class="list-body">Coding agents and ops agents stay shell-first because local execution still offers the best reliability and debuggability.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Medium term</div>
+              <div class="list-body">MCP becomes table stakes for portable tool ecosystems, browser-exposed capabilities, and hosted enterprise connectors.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Next wave</div>
+              <div class="list-body">A2A-style task protocols proliferate above MCP, then slowly converge where enterprises need agents from different vendors to cooperate.</div>
+            </div>
+            <div class="list-item">
+              <div class="list-label">Constant</div>
+              <div class="list-body">Developers keep a shell escape hatch forever, because shared standards fail at the exact moment real environments become messy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Takeaway</div>
+        <div class="cta-title">The future is layered</div>
+        <p class="cta-desc">
+          CLI stays because it is the most reliable way to execute work. MCP grows because standardized capabilities are
+          too useful to ignore. Agent-to-agent protocols arrive because delegation needs more than tool schemas. The
+          winner is not one interface. It is the stack that knows when to use each one.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026-04-06 • 8 min read</div>
+    <a class="footer-link" href="../about.html">About Sami</a>
+  </footer>
+</body>
+</html>
