@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why You Need a .claudeignore (Even Though Claude Code Doesn't Ship One) - CHSAMI</title>
+  <meta name="description" content="A .claudeignore file isn't officially supported by Claude Code, but the idea behind it is critical. Here's why context hygiene matters and what actually works to keep secrets and noise out of your agent.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/claudeignore-context-hygiene.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/claudeignore-context-hygiene.html">
+  <meta property="og:title" content="Why You Need a .claudeignore (Even Though Claude Code Doesn't Ship One)">
+  <meta property="og:description" content="A .claudeignore file isn't officially supported by Claude Code, but the idea behind it is critical. Here's why context hygiene matters and what actually works to keep secrets and noise out of your agent.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why You Need a .claudeignore (Even Though Claude Code Doesn't Ship One)">
+  <meta name="twitter:description" content="A .claudeignore file isn't officially supported by Claude Code, but the idea behind it is critical. Here's why context hygiene matters and what actually works to keep secrets and noise out of your agent.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Why You Need a .claudeignore (Even Though Claude Code Doesn't Ship One)",
+    "description": "A .claudeignore file isn't officially supported by Claude Code, but the idea behind it is critical. Here's why context hygiene matters and what actually works to keep secrets and noise out of your agent.",
+    "image": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&h=630&fit=crop",
+    "datePublished": "2026-05-20",
+    "dateModified": "2026-05-20",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/claudeignore-context-hygiene.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .card-desc + .card-desc { margin-top: 12px; }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      margin: 0;
+      white-space: pre;
+    }
+
+    .code-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.85);
+    }
+
+    .warning-box {
+      background: #fff8e6;
+      border-left: 4px solid #d97706;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+
+    .warning-box .card-title {
+      color: #92400e;
+    }
+
+    .warning-box .card-desc {
+      color: #78350f;
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: rgba(26, 26, 26, 0.06);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .highlight-box code,
+    .cta code {
+      background: rgba(248, 246, 241, 0.15);
+      color: var(--bg-primary);
+    }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .header { padding: 32px 24px 24px; }
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 20px; }
+      .code-block pre { font-size: 12px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+      .cta { padding: 40px 28px; }
+      .cta-title { font-size: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Claude Code · Security</div>
+      <h1 class="hero-title">.claudeignore<span>Why the idea matters even though Claude Code doesn't officially support it</span></h1>
+      <p class="hero-desc">
+        I spent an hour this week trying to figure out why Claude kept opening <code>node_modules</code> during a refactor. Turns out the answer is simple and slightly annoying: there is no native <code>.claudeignore</code> file in Claude Code. <code>.gitignore</code> is partially honored. Everything else is on you. Here is what I learned setting it up properly, and why you cannot afford to skip this.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">What people mean by .claudeignore</div>
+          <div class="section-subtitle">The mental model borrowed from git</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The intuition</div>
+          <p class="card-desc">
+            If you have used Git for more than a week, you know <code>.gitignore</code>. You drop a file at the root of your repo, list patterns like <code>node_modules/</code>, <code>dist/</code>, <code>.env</code>, and Git pretends those paths do not exist. Clean diffs, no accidental commits.
+          </p>
+          <p class="card-desc">
+            <code>.claudeignore</code> is the same idea, transplanted onto your AI agent. You write the file, list the patterns you do not want Claude poking at, and the agent leaves them alone. Simple. Obvious. Necessary.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The catch</div>
+          <p class="card-desc">
+            It does not exist. Not as a first-class feature in Claude Code. The official docs make no mention of <code>.claudeignore</code>. There is a long-running GitHub issue (#79 on the anthropics/claude-code repo) asking for it, and it is still open. Anthropic's answer so far is "use the permissions system instead."
+          </p>
+          <p class="card-desc">
+            Which is fine, except that nobody told the rest of the internet. Half the blog posts you will read still tell you to create a <code>.claudeignore</code>. The file you create will sit there doing absolutely nothing.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">Why this matters</div>
+          <div class="section-subtitle">Three reasons context hygiene is not optional</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="meta">Reason 01</div>
+          <div class="card-title">Tokens cost money</div>
+          <p class="card-desc">When Claude reads a 3MB <code>package-lock.json</code> "just to check", that is real tokens on your bill. On a Max plan you hit the rate limit faster. On API, you pay cash. I have watched a single careless <code>Grep</code> across <code>node_modules</code> burn through 40k tokens.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Reason 02</div>
+          <div class="card-title">Noise hurts accuracy</div>
+          <p class="card-desc">Even with a 1M context window, junk in the context degrades output. When Claude grep's your <code>dist/</code> folder and finds 200 minified matches for a function name, it has to filter them out before answering. Sometimes it does not.</p>
+        </div>
+        <div class="card">
+          <div class="meta">Reason 03</div>
+          <div class="card-title">Secrets leak</div>
+          <p class="card-desc">The real one. Your <code>.env</code> file with the Stripe live key. Your <code>~/.ssh/id_rsa</code>. An <code>aws-credentials</code> dump from last quarter. Claude can read them. If you are piping responses anywhere, you have to assume those secrets just left the building.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The Register, January 2026</div>
+        <p class="card-desc">A reporter wrote a <code>.claudeignore</code> file blocking <code>.env</code>, asked Claude what was inside, and Claude read it anyway. Anthropic's response was essentially "yes, that file is not a real thing, please use the permissions system." If you have been counting on <code>.claudeignore</code> alone, your secrets are not protected.</p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">What actually works</div>
+          <div class="section-subtitle">settings.json deny rules</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">The real ignore file</div>
+        <p class="card-desc">
+          Claude Code's permissions system lives in <code>.claude/settings.json</code> (project) or <code>~/.claude/settings.json</code> (global). It supports an <code>permissions.deny</code> array where you list tool calls Claude is not allowed to make. Patterns follow the same gitignore-style syntax you already know.
+        </p>
+        <div class="code-block">
+          <div class="code-label">.claude/settings.json</div>
+<pre>{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(~/.ssh/**)",
+      "Read(**/node_modules/**)",
+      "Read(**/dist/**)",
+      "Read(**/build/**)",
+      "Read(**/.next/**)",
+      "Read(**/coverage/**)",
+      "Read(**/*.log)"
+    ]
+  }
+}</pre>
+        </div>
+        <p class="card-desc" style="margin-top: 24px;">
+          Drop this into <code>.claude/settings.json</code> at the root of your project and commit it. Now when Claude tries to <code>Read</code> any of those paths, the tool call is blocked before it even runs. No token spend. No secrets in context.
+        </p>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">Two precedence rules to remember</div>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-label">Deny wins</div>
+            <div class="list-body">Rules are evaluated deny first, then ask, then allow. The first matching rule fires. So even if a parent setting allows <code>Read(**)</code>, a project-level <code>Read(./.env)</code> deny will still block it.</div>
+          </div>
+          <div class="list-item">
+            <div class="list-label">Settings cascade</div>
+            <div class="list-body">Claude Code merges four layers: managed → command line → project (<code>.claude/settings.json</code>) → user (<code>~/.claude/settings.json</code>). If a tool is denied at any higher layer, no lower layer can re-allow it. Lock things down at the user level once and forget it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The Bash escape hatch</div>
+          <div class="section-subtitle">Where deny rules quietly fail</div>
+        </div>
+      </div>
+      <div class="warning-box">
+        <div class="card-title">Read(./.env) does not block cat .env</div>
+        <p class="card-desc">
+          This is the gotcha that bit me hardest. A <code>Read</code> deny rule only blocks the <code>Read</code> tool. Claude can still spawn a Bash shell and run <code>cat .env</code>, <code>grep -r SECRET .</code>, or <code>find . -name "*.env" -exec cat {} \;</code>. The <code>Bash</code> tool is a completely separate permission scope, and the contents of the file flow straight back into context like any other shell output.
+        </p>
+      </div>
+      <div class="grid-2" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-title">The fix: deny Bash too</div>
+          <p class="card-desc">
+            For every sensitive path, add matching Bash denies. It is verbose, but it closes the hole.
+          </p>
+          <div class="code-block">
+            <div class="code-label">extra Bash denies</div>
+<pre>"deny": [
+  "Read(./.env)",
+  "Bash(cat .env)",
+  "Bash(cat .env.*)",
+  "Bash(grep:* .env*)",
+  "Bash(less .env*)",
+  "Bash(head .env*)",
+  "Bash(tail .env*)"
+]</pre>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">The nuclear option: sandbox</div>
+          <p class="card-desc">
+            If you do not want to play whack-a-mole, enable sandboxing. Claude Code can run inside a restricted environment (Claude Cowork on Mac, the dev container approach on Linux, or the new <code>--sandbox</code> flag) where the filesystem itself blocks reads of paths outside the project. This is the only approach that actually stops a determined agent.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">A pre-tool-use hook for true parity</div>
+          <div class="section-subtitle">If you really want a .claudeignore file</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">The community workaround</div>
+        <p class="card-desc">
+          Claude Code does support hooks: shell scripts that fire on lifecycle events. A <code>PreToolUse</code> hook runs before any tool call, can inspect the arguments, and can return an exit code that blocks the call. The community package <code>li-zhixin/claude-ignore</code> uses exactly this mechanism to give you a real <code>.claudeignore</code> file.
+        </p>
+        <p class="card-desc">
+          You install it, drop a <code>.claudeignore</code> at the root of your project with gitignore-style patterns, and the hook blocks any <code>Read</code>, <code>Grep</code>, or <code>Glob</code> call that matches. The patterns cascade hierarchically the way <code>.gitignore</code> does: drop one in a subdirectory and it applies only to that subtree.
+        </p>
+        <div class="code-block">
+          <div class="code-label">.claudeignore (via hook)</div>
+<pre># Build outputs
+dist/
+build/
+.next/
+out/
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+
+# Test data
+tests/fixtures/large/
+*.snapshot
+
+# Logs and caches
+*.log
+.cache/
+coverage/
+
+# Secrets (belt and braces — also denied in settings.json)
+.env
+.env.*
+*.pem
+*.key</pre>
+        </div>
+        <p class="card-desc" style="margin-top: 24px;">
+          Two caveats. First, the hook only intercepts the tools it knows about — if Claude finds a way around them, you fall through. Second, you are trusting a third-party hook script in your agent's privileged path. Read the source before you install it.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">My actual setup</div>
+          <div class="section-subtitle">What I run on this blog repo</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Three layers, in order of trust</div>
+        <div class="checklist">
+          <div class="check-item"><span class="check-bullet">1</span><span><strong>User-level deny in <code>~/.claude/settings.json</code></strong> for the universal stuff: <code>~/.ssh/**</code>, <code>**/.env*</code>, <code>**/*.pem</code>, <code>**/*.key</code>, <code>~/.aws/**</code>. These apply to every project I touch and I never have to think about them again.</span></div>
+          <div class="check-item"><span class="check-bullet">2</span><span><strong>Project-level deny in <code>.claude/settings.json</code></strong> committed alongside the code: <code>node_modules/**</code>, <code>dist/**</code>, <code>.next/**</code>, plus any project-specific paths like generated SDKs or large fixture dumps.</span></div>
+          <div class="check-item"><span class="check-bullet">3</span><span><strong>Bash escape-hatch denies</strong> mirroring the Read rules for anything secret. I do not bother for build folders — wasting tokens on <code>node_modules</code> is annoying but not dangerous.</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">A real before/after</div>
+        <p class="card-desc">
+          On my last refactor, before I added the project-level denies, a single "find all uses of <code>renderPost</code>" task burned 27k tokens, most of it grep'ing through <code>node_modules</code> and the build output. After adding the denies, the same task came back in 4k tokens and the answer was cleaner because Claude was not pattern-matching minified code by mistake.
+        </p>
+        <p class="card-desc">
+          Six lines of JSON, 80% token reduction. There is not a refactor or rename in your future where this does not pay for itself in the first hour.
+        </p>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Bottom line</div>
+        <div class="cta-title">Stop waiting for .claudeignore. Use what already works.</div>
+        <p class="cta-desc">
+          A native <code>.claudeignore</code> may ship one day. Until then, every Claude Code project should have a <code>.claude/settings.json</code> with deny rules for secrets and build folders, and a matching set of Bash denies for anything truly sensitive. Five minutes of setup, every token and every secret saved from here on out.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026·05·20 · 8 min read</div>
+    <a class="footer-link" href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener noreferrer">Claude Code settings docs →</a>
+  </footer>
+</body>
+</html>
