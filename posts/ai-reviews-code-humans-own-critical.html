@@ -492,7 +492,7 @@
       <div class="hero-label">Development · AI Workflow</div>
       <h1 class="hero-title">Let the AI review the code<span>Keep the critical parts human</span></h1>
       <p class="hero-desc">
-        My agent wrote 1,100 lines before lunch last Tuesday. Eleven of those lines mattered. The problem was that I had to read all 1,100 to find them, and so did the teammate I asked to approve the PR. Coding got cheap this year. Reviewing it did not. Here is the swap I made — and why I think the whole industry is reaching for the wrong fix.
+        My agent wrote 1,100 lines before lunch last Tuesday. Eleven of those lines mattered. The problem was that I had to read all 1,100 to find them, and so did the teammate I asked to approve the PR. Coding got cheap this year. Reviewing it did not. Here is the swap I made, and why I think the whole industry is reaching for the wrong fix.
       </p>
     </section>
 
@@ -508,7 +508,7 @@
         <div class="card">
           <div class="card-title">The thing nobody warned me about</div>
           <p class="card-desc">
-            For about a month, agents felt like a pure win. I described a feature, the code appeared, tests passed. Then the pull requests started stacking up. Not because the code was bad — because there was suddenly <em>so much of it</em>, and every line still needed a human to say "yes, ship this."
+            For about a month, agents felt like a pure win. I described a feature, the code appeared, tests passed. Then the pull requests started stacking up. Not because the code was bad, but because there was suddenly <em>so much of it</em>, and every line still needed a human to say "yes, ship this."
           </p>
           <p class="card-desc">
             The work didn't disappear. It slid one step down the pipeline, from writing to reviewing. And reviewing is the one part of the job I can't hand to an agent by just typing faster.
@@ -536,7 +536,7 @@
         </div>
         <div class="stat">
           <div class="stat-number">+21%</div>
-          <div class="stat-label">more tasks completed — the gain that's now stuck in review</div>
+          <div class="stat-label">more tasks completed, the gain that's now stuck in review</div>
         </div>
       </div>
 
@@ -551,12 +551,12 @@
         <div class="card">
           <div class="meta">Theory 01</div>
           <div class="card-title">It went to review</div>
-          <p class="card-desc">The most direct reading, and the one the data backs. When an agent generates volume, the binding constraint becomes a human reading and approving it. This is the camp betting on better review tools — and there are a lot of new ones.</p>
+          <p class="card-desc">The most direct reading, and the one the data backs. When an agent generates volume, the binding constraint becomes a human reading and approving it. This is the camp betting on better review tools, and there are a lot of new ones.</p>
         </div>
         <div class="card">
           <div class="meta">Theory 02</div>
           <div class="card-title">It went to future-you</div>
-          <p class="card-desc">James Shore's argument: the cost didn't vanish, it got pushed into maintenance. His math is brutal — double your output at the same maintenance cost per line and the gain is gone in about 19 months, then permanently negative. You financed today with debt.</p>
+          <p class="card-desc">James Shore's argument: the cost didn't vanish, it got pushed into maintenance. His math is brutal: double your output at the same maintenance cost per line and the gain is gone in about 19 months, then permanently negative. You financed today with debt.</p>
         </div>
         <div class="card">
           <div class="meta">Theory 03</div>
@@ -576,7 +576,7 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-title">More human review doesn't scale — that's the whole problem</div>
+        <div class="card-title">More human review doesn't scale, and that's the whole problem</div>
         <p class="card-desc">
           Look at where the new tools are pointed. A wave of products launched this year with some version of the pitch "put humans back in control of code review." The instinct is understandable: AI made a mess, so a human should check it.
         </p>
@@ -599,7 +599,7 @@
         <div class="card">
           <div class="card-title">Most review is rule-application</div>
           <p class="card-desc">
-            Be honest about what most of a review actually is. Does this match our conventions? Are there tests? Does it handle the error case? Any obvious injection or unbounded loop? Does it do what the ticket asked? That's not deep insight — it's applying a checklist, tirelessly, to a large surface. A machine with a clear rubric is genuinely good at that, and never gets bored on PR number nine.
+            Be honest about what most of a review actually is. Does this match our conventions? Are there tests? Does it handle the error case? Any obvious injection or unbounded loop? Does it do what the ticket asked? That's not deep insight; it's applying a checklist, tirelessly, to a large surface. A machine with a clear rubric is genuinely good at that, and never gets bored on PR number nine.
           </p>
           <p class="card-desc">
             So I let the agent do the first pass on the boring 80%: style, conventions, test coverage, common bug and security patterns, "does this diff match the spec." It posts comments. It blocks the obvious stuff before a human ever looks.
@@ -608,10 +608,10 @@
         <div class="card">
           <div class="card-title">Humans author the load-bearing parts</div>
           <p class="card-desc">
-            The other 10–20% is different in kind, not degree. The core data model. The auth and permission boundaries. Anything that touches money. Concurrency. The architectural decisions that are expensive to undo. Being wrong here isn't a bug, it's a rewrite — or a breach.
+            The other 10–20% is different in kind, not degree. The core data model. The auth and permission boundaries. Anything that touches money. Concurrency. The architectural decisions that are expensive to undo. Being wrong here isn't a bug, it's a rewrite, or a breach.
           </p>
           <p class="card-desc">
-            That code stays human-authored and human-owned. Not human-<em>reviewed-after-the-agent-wrote-it</em> — human-written, because this is exactly where you need a real mental model of the system, and where "looks plausible" is the most dangerous sentence in engineering.
+            That code stays human-authored and human-owned. Not human-<em>reviewed-after-the-agent-wrote-it</em>, but human-written, because this is exactly where you need a real mental model of the system, and where "looks plausible" is the most dangerous sentence in engineering.
           </p>
         </div>
       </div>
@@ -633,7 +633,7 @@
       <div class="card">
         <div class="card-title">Write the review rules down, then make them the reviewer</div>
         <p class="card-desc">
-          The trick that makes AI review trustworthy is that the rules are explicit and checked in — not vibes in the model's head. I keep a plain file in the repo and point the review agent at it. When a rule is wrong, I edit the file, not the agent. The rules become the artifact the team argues about, which is the right thing to argue about.
+          The trick that makes AI review trustworthy is that the rules are explicit and checked in, not vibes in the model's head. I keep a plain file in the repo and point the review agent at it. When a rule is wrong, I edit the file, not the agent. The rules become the artifact the team argues about, which is the right thing to argue about.
         </p>
         <div class="code-block">
           <div class="code-label">.review-rules.md (the agent reviews against this)</div>
@@ -657,7 +657,7 @@
 
 # Do NOT block on (leave for the human)
 - Naming taste, file layout, "I'd have done it differently"
-- Anything in /core, /auth, or /billing — flag for human, never auto-approve</pre>
+- Anything in /core, /auth, or /billing: flag for human, never auto-approve</pre>
         </div>
         <p class="card-desc" style="margin-top: 24px;">
           The last two lines are the important ones. The agent's job ends at the door of the critical paths. It can <em>flag</em> something in <code>/billing</code>, but it can never wave it through. That's reserved.
@@ -689,14 +689,14 @@
       <div class="warning-box">
         <div class="card-title">The strongest counterargument cuts both ways</div>
         <p class="card-desc">
-          The sharpest critique of agents I've read is simple: an LLM can't build a consistent mental model of your codebase. It pattern-matches plausible text with no guarantee of accuracy. And if that's true for writing code, it's true for reviewing it — so how can I trust the agent as a reviewer?
+          The sharpest critique of agents I've read is simple: an LLM can't build a consistent mental model of your codebase. It pattern-matches plausible text with no guarantee of accuracy. And if that's true for writing code, it's true for reviewing it, so how can I trust the agent as a reviewer?
         </p>
       </div>
       <div class="grid-2" style="margin-top: 32px;">
         <div class="card">
           <div class="card-title">That's precisely why the split exists</div>
           <p class="card-desc">
-            I'm not asking the agent to understand the system. I'm asking it to apply a checklist to a diff — work that needs a clear rubric, not a deep model. The parts that genuinely require understanding the whole system are the parts I kept on the human side. The objection doesn't break the plan; it's the reason the plan is shaped this way.
+            I'm not asking the agent to understand the system. I'm asking it to apply a checklist to a diff, work that needs a clear rubric, not a deep model. The parts that genuinely require understanding the whole system are the parts I kept on the human side. The objection doesn't break the plan; it's the reason the plan is shaped this way.
           </p>
           <p class="card-desc">
             And the real guarantee doesn't come from the agent at all. It comes from the harness: strong types, a real test suite, and CI gates. The agent's review is a fast first filter on top of guarantees the model isn't responsible for.
@@ -705,10 +705,10 @@
         <div class="card">
           <div class="card-title">Two things this doesn't fix</div>
           <p class="card-desc">
-            <strong>Who writes the rules?</strong> You do — and writing good review rules is itself the "deciding what should exist" work. The bottleneck moves up to judgment, which is where you wanted it.
+            <strong>Who writes the rules?</strong> You do, and writing good review rules is itself the "deciding what should exist" work. The bottleneck moves up to judgment, which is where you wanted it.
           </p>
           <p class="card-desc">
-            <strong>Maintenance debt.</strong> Faster review of worse code still buries you (Shore's point). So the rules have to enforce maintainability, not just correctness — readable, tested, boring code. Bake "costs less to maintain" into the rubric, or you've just automated your way into the debt faster.
+            <strong>Maintenance debt.</strong> Faster review of worse code still buries you (Shore's point). So the rules have to enforce maintainability, not just correctness: readable, tested, boring code. Bake "costs less to maintain" into the rubric, or you've just automated your way into the debt faster.
           </p>
         </div>
       </div>
@@ -717,7 +717,7 @@
         <div class="cta-label">Bottom line</div>
         <div class="cta-title">The code was never the bottleneck. Don't make the human one worse.</div>
         <p class="cta-desc">
-          When review becomes the jam, the answer isn't to feed it more of your scarcest resource. Let an agent enforce written rules across the boring majority of every PR, and spend your own attention authoring and owning the parts that would take a week to unbreak. The question that matters six months from now was never "can it write this?" It's "who understands this?" Make sure the answer is still a person — for the parts that count.
+          When review becomes the jam, the answer isn't to feed it more of your scarcest resource. Let an agent enforce written rules across the boring majority of every PR, and spend your own attention authoring and owning the parts that would take a week to unbreak. The question that matters six months from now was never "can it write this?" It's "who understands this?" Make sure the answer is still a person, for the parts that count.
         </p>
       </div>
     </section>
