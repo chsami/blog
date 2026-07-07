@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40KNBS6D0Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40KNBS6D0Q');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing Code Got Cheap. Owning It Didn't. - CHSAMI</title>
+  <meta name="description" content="An agent built a genuinely hard part of our product, a tender-document ingestion pipeline with a job queue, retries, multi-format parsing and embeddings for search, in a week. I didn't write a line of it. Owning it, reviewing it, and standing behind it was the cost AI didn't make cheaper.">
+  <meta name="author" content="Sami">
+  <link rel="canonical" href="https://chsami.com/posts/writing-code-cheap-owning-expensive.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chsami.com/posts/writing-code-cheap-owning-expensive.html">
+  <meta property="og:title" content="Writing Code Got Cheap. Owning It Didn't.">
+  <meta property="og:description" content="An agent built a genuinely hard part of our product, a tender-document ingestion pipeline with a job queue, retries, multi-format parsing and embeddings for search, in a week. I didn't write a line of it. Owning it, reviewing it, and standing behind it was the cost AI didn't make cheaper.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=630&fit=crop">
+  <meta property="og:site_name" content="CHSAMI">
+  <meta property="article:published_time" content="2026-07-06">
+  <meta property="article:author" content="Sami">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Writing Code Got Cheap. Owning It Didn't.">
+  <meta name="twitter:description" content="An agent built a genuinely hard part of our product, a tender-document ingestion pipeline with a job queue, retries, multi-format parsing and embeddings for search, in a week. I didn't write a line of it. Owning it, reviewing it, and standing behind it was the cost AI didn't make cheaper.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=630&fit=crop">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Writing Code Got Cheap. Owning It Didn't.",
+    "description": "An agent built a genuinely hard part of our product, a tender-document ingestion pipeline with a job queue, retries, multi-format parsing and embeddings for search, in a week. I didn't write a line of it. Owning it, reviewing it, and standing behind it was the cost AI didn't make cheaper.",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=630&fit=crop",
+    "datePublished": "2026-07-06",
+    "dateModified": "2026-07-06",
+    "author": {
+      "@type": "Person",
+      "name": "Sami",
+      "url": "https://chsami.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CHSAMI",
+      "url": "https://chsami.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chsami.com/og-image.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chsami.com/posts/writing-code-cheap-owning-expensive.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #F8F6F1;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-muted: #888888;
+      --text-light: #A8A4A0;
+      --border-color: #E8E4DC;
+      --accent: #1A1A1A;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-primary);
+      font-family: 'Satoshi', 'Helvetica Neue', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 60px 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .hero {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin-top: 32px;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--border-color);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 36px;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--text-primary);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .card-desc + .card-desc { margin-top: 12px; }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .list-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .list-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 32px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      margin: 0;
+      white-space: pre;
+    }
+
+    .code-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .check-bullet {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .highlight-box {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .highlight-box .card-title {
+      color: var(--bg-primary);
+    }
+
+    .highlight-box .card-desc {
+      color: rgba(248, 246, 241, 0.85);
+    }
+
+    .warning-box {
+      background: #fff8e6;
+      border-left: 4px solid #d97706;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+
+    .warning-box .card-title {
+      color: #92400e;
+    }
+
+    .warning-box .card-desc {
+      color: #78350f;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .stat {
+      background: var(--bg-card);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .cta {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 56px;
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      opacity: 0.85;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: rgba(26, 26, 26, 0.06);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .highlight-box code,
+    .cta code {
+      background: rgba(248, 246, 241, 0.15);
+      color: var(--bg-primary);
+    }
+
+    @media (max-width: 1100px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .stat-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .header { padding: 32px 24px 24px; }
+      .hero { padding: 56px 24px; }
+      .hero-title { font-size: 42px; }
+      .hero-title span { font-size: 18px; }
+      .hero-desc { font-size: 17px; }
+      .content { padding: 0 24px 56px; }
+      .section-header { flex-direction: column; gap: 12px; padding-top: 48px; }
+      .section-number { font-size: 56px; }
+      .section-title { font-size: 26px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .card { padding: 28px; }
+      .code-block { padding: 20px; }
+      .code-block pre { font-size: 12px; }
+      .list-item { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+      .cta { padding: 40px 28px; }
+      .cta-title { font-size: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-desc { font-size: 15px; }
+      .content { padding: 0 20px 40px; }
+      .card-title { font-size: 18px; }
+      .card-desc { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="back-link" href="../index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Development · AI Workflow</div>
+      <h1 class="hero-title">Writing code got cheap<span>Owning it didn't</span></h1>
+      <p class="hero-desc">
+        Over one week an agent built a genuinely hard piece of our product: the pipeline that ingests public-procurement tender documents, parses Word, PDF and Excel, queues the slow work with real retries, and embeds everything for search. I didn't write a line of it. And that turned out to be fine, because the expensive part was never the writing. It was owning it: understanding it, reviewing it hard enough to trust it, and standing behind it when a bid depends on it. That's the cost the demos tend to skip, and it's one AI didn't make cheaper.
+      </p>
+    </section>
+
+    <section class="content">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div>
+          <div class="section-title">The week I did a month's worth of work</div>
+          <div class="section-subtitle">And why it felt too good</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">What actually happened</div>
+          <p class="card-desc">
+            The hardest thing on our roadmap was document ingestion. Buyers upload tender packs in whatever format the authority issued them: a Word <code>.docx</code>, a scanned PDF, a spreadsheet of line items in Excel. Each has to be parsed, split into chunks, embedded, and made searchable, all behind a job queue with real retries because parsing is slow and fails in a dozen ways. This was not a demo. It was the piece everything else in the product leaned on.
+          </p>
+          <p class="card-desc">
+            I described the design to an agent over a couple of days: a queue, a parser per format, an embedding step, idempotent retries. By the end of the week it worked end to end. Genuinely hard code, not boilerplate, in less time than I'd scoped. My first reaction was relief. My second, once I sat with it, was the useful one: <em>this was one of the more load-bearing things we'd shipped, and I hadn't written a line of it myself.</em>
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The gap the speed hides</div>
+          <p class="card-desc">
+            Here's the trap. The cost of <strong>producing</strong> that code dropped sharply. The cost of <strong>owning</strong> it (reading it, trusting it, debugging it a month from now, onboarding a teammate onto it) barely moved.
+          </p>
+          <p class="card-desc">
+            A demo ends at "it works." Production begins there and runs for years. Building a demo with AI and building software you'll maintain with AI are two different jobs, and the speed makes them look identical until the second bill comes due.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-number">1 week</div>
+          <div class="stat-label">to build a pipeline I'd have scoped at a month of work</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">~0</div>
+          <div class="stat-label">reduction in the cost of owning it afterward</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">of it human-reviewed before it shipped</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div>
+          <div class="section-title">The bottleneck moved from "can we?" to "should we?"</div>
+          <div class="section-subtitle">Capacity went up. Judgment got scarce.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">When everything is buildable, the hard question changes</div>
+        <p class="card-desc">
+          For most of my career the constraining question was <em>can we build this in time?</em> Estimation, scope-cutting, and sprint planning all exist to answer it. Agents take that question off the table for a lot of everyday work. When a feature costs an afternoon instead of a fortnight, "can we?" stops being the interesting part.
+        </p>
+        <p class="card-desc">
+          What replaces it is harder and less fun: <em>should this exist at all?</em> Every line we generate is a line someone has to understand, secure, migrate, and eventually delete. Cheap production doesn't lower that ongoing tax; it just lets you sign up for it faster. The scarce resource is no longer typing speed. It's the judgment to decide what deserves to be in the codebase in the first place.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div>
+          <div class="section-title">The overconfidence trap</div>
+          <div class="section-subtitle">Generating more than you can absorb</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The admin panel nobody asked for</div>
+          <p class="card-desc">
+            A month after the ingestion pipeline shipped, I got cocky. A ticket asked for a small thing: a way to re-trigger a parse job that had failed. Instead of the one button that would have done it, I let an agent build a whole "operations dashboard" on top of the queue: bulk re-runs, filters, an audit log, the works. It looked useful. It was also a couple thousand lines of surface area nobody had asked to own.
+          </p>
+          <p class="card-desc">
+            Because it was so cheap to make, I skipped the question I'd have asked if it cost two weeks: <em>do we actually want to maintain this forever?</em> The answer was no. We ripped most of it out. Cheap to write, expensive to carry.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">The quiet failure modes</div>
+          <p class="card-desc">
+            Left unsupervised, agents don't produce dramatic disasters. They produce <em>noise</em>: pull requests that touch forty files to fix one bug, a helper that already existed under a different name, a config option nobody will ever set. Individually each is defensible. In aggregate they bury the signal.
+          </p>
+          <p class="card-desc">
+            The most dangerous artifact is the plausible one: code and docs that read as correct, pass a skim, and are subtly wrong in exactly the place you didn't look.
+          </p>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <div class="card-title">Watch the docs that "sound right"</div>
+        <p class="card-desc">
+          While building the pipeline, an agent updated our README to describe its retry and backoff policy. The prose was confident and well-formatted. It also described a backoff curve the code didn't implement. Six weeks later someone tuned a queue timeout based on that README and got burned. Generated documentation fails in a uniquely nasty way: it's fluent enough to be trusted and detailed enough to be wrong.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div>
+          <div class="section-title">The part that's still yours: the "why"</div>
+          <div class="section-subtitle">Agents know what changed. You know why.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The missing half of every generated PR</div>
+          <p class="card-desc">
+            Read enough agent-authored pull requests and a pattern shows up. The description tells you <em>what</em> changed in detail: "added a <code>.docx</code> parser, wired it into the queue, updated the embedding step." What it rarely tells you is <em>why</em>: which lost bid prompted this, which older parsing decision it quietly reverses, what we tried before that didn't work.
+          </p>
+          <p class="card-desc">
+            That "why" isn't in the repo. It's in your head, in a support thread, in a hallway conversation from two years ago. An agent can't reconstruct context it was never given, and the context is the expensive part.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Owning it meant reviewing it, not writing it</div>
+          <p class="card-desc">
+            Here's the honest part. I didn't hand-write that pipeline, and I don't think I should have. The agent's version was at least as good as what I'd have typed against a deadline. What changed wasn't who wrote it, it was how hard I looked. Because so much downstream depends on a tender being parsed correctly and never silently dropped, I reviewed that code far more thoroughly than I review a feature that can't hurt anyone. I traced the retry paths and each parser's failure modes: what a corrupt PDF does, whether an Excel with merged cells loses rows, whether a re-queued job embeds the same document twice.
+          </p>
+          <p class="card-desc">
+            One rule shows why the depth mattered. A scanned PDF with no extractable text has to be flagged for a human, never indexed as empty, because a single missed requirement in a tender can sink an entire bid. To the agent that check looked redundant. To us it was the whole point. You only catch that when you review in proportion to what the code can break, not to how long it took to write.
+          </p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="card-title">The division of labor that actually holds</div>
+        <p class="card-desc">
+          Agents accelerate execution. Humans supply direction, context, the judgment of how hard to look, and the call on whether the output is good enough to ship. The work didn't shrink; it moved up a level, from writing lines to setting intent, weighing tradeoffs, and reviewing in proportion to what a change can break.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div>
+          <div class="section-title">Agent-ready is just production-ready</div>
+          <div class="section-subtitle">A messy repo scales its mess faster with agents</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">There's no special "AI setup," just the fundamentals, enforced</div>
+        <p class="card-desc">
+          I went looking for the magic configuration that makes a codebase good for agents. There isn't one. The things that make a repo pleasant for an agent are the exact things that make it pleasant for a new hire: clear structure, one obvious way to run each task, tests you can trust, docs that match reality, consistent patterns. The difference is that a human tolerates a messy repo and an agent amplifies it: point agents at spaghetti and you get more spaghetti, faster.
+        </p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-bullet">✓</span><span><strong>Repeatable commands.</strong> One documented way to build, test, lint, and run. If it lives only in your shell history, an agent can't use it and neither can the new hire.</span></div>
+          <div class="check-item"><span class="check-bullet">✓</span><span><strong>A test suite that means something.</strong> Coverage the agent (and you) can lean on as the real safety net. This is the guarantee the model isn't responsible for.</span></div>
+          <div class="check-item"><span class="check-bullet">✓</span><span><strong>A verification harness the agent can run.</strong> Not "trust me it works," but a script that exercises the change end-to-end and fails loudly.</span></div>
+          <div class="check-item"><span class="check-bullet">✓</span><span><strong>Fast CI.</strong> If the loop from change to green is twenty minutes, you've capped how much an agent can actually help.</span></div>
+          <div class="check-item"><span class="check-bullet">✓</span><span><strong>An <code>AGENTS.md</code>.</strong> The house rules, written down once, so you're not re-explaining them every session.</span></div>
+        </div>
+        <div class="code-block">
+          <div class="code-label">AGENTS.md: the house rules an agent reads first</div>
+<pre># How to work in this repo
+
+## Commands
+- Install:  pnpm install
+- Test:     pnpm test        (must pass before any PR)
+- Verify:   pnpm verify:e2e  (drives the real flow, not just units)
+- Lint:     pnpm lint --fix
+
+## Conventions
+- Money is stored in integer minor units. Never a float.
+- Every new endpoint goes through the auth middleware. No exceptions.
+- New behavior ships with a test that would fail before the change.
+
+## Explain your reasoning
+- In the PR body, write WHY, not just what. Link the ticket.
+- If you touched the ingestion pipeline, embeddings, or auth: stop and flag for a human.
+
+## Do not
+- Invent config options nobody asked for.
+- Update the docs to describe behavior the code does not have.</pre>
+        </div>
+        <p class="card-desc" style="margin-top: 24px;">
+          None of this is exotic. It's the checklist a good team already half-follows. Agents just remove the option of half-following it. The gaps that a patient human papered over become the potholes the agent drives straight into.
+        </p>
+      </div>
+
+      <div class="section-header">
+        <div class="section-number">06</div>
+        <div>
+          <div class="section-title">Stop speeding up the old loop. Redesign it.</div>
+          <div class="section-subtitle">The big gains don't come from typing faster</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The mistake I made for months</div>
+          <p class="card-desc">
+            My first instinct was to bolt agents onto the workflow I already had: same planning, same tickets, same review dance, just with a faster author in the middle. That gets you a modest bump and a review queue that backs up. The whole cycle was designed around code being the expensive step. Remove that assumption and every other step is in the wrong shape.
+          </p>
+          <p class="card-desc">
+            The real gains show up only when you rethink the loop end to end: how you plan, how you generate, how you test, how you review, how you decide something is done.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">From counting tickets to naming outcomes</div>
+          <p class="card-desc">
+            We changed how we plan. Instead of a backlog of a hundred small issues, we now keep a short list of the user experiences that have to be true ("every uploaded tender is parsed and searchable within a minute," "no document is ever silently dropped from the index") and score how close we are to each.
+          </p>
+          <p class="card-desc">
+            When building is cheap, a pile of tickets is just a to-do list for a machine. The valuable artifact is the shared judgment about which outcomes matter and how we'll know we got there.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 32px;">
+        <div class="card-title">And go easy on the people who feel slower</div>
+        <p class="card-desc">
+          The teammates most resistant to this shift were my best engineers, and it took me a while to understand why. They've spent a decade building workflows that genuinely work. Telling them the hard thing is "easy now" lands as an insult, not a gift. And for a while they really are slower, because decomposing a task for an agent, feeding it context, and validating its output is a new skill on top of the ones they already mastered.
+        </p>
+        <p class="card-desc">
+          That discomfort is real and temporary. The move isn't to shame anyone into adopting the tools; it's to let people trade up gradually and to respect that "progress feels like regression" is an honest description of the first few weeks, not stubbornness.
+        </p>
+      </div>
+
+      <div class="cta">
+        <div class="cta-label">Bottom line</div>
+        <div class="cta-title">AI accelerates the work. You still own the result.</div>
+        <p class="cta-desc">
+          The tools got much better at producing code. They did little for the obligation to understand, explain, and stand behind what ships, and that obligation is where the cost, and the value, actually lives. Treat generation as cheap and ownership as the scarce thing it is: decide what deserves to exist, keep the "why" human, make the repo trustworthy enough for an agent to work in, and redesign the loop instead of just flooring the old one. The question six months from now was never "could it write this?" It's "who understands this?" Keep the answer a person.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-text">Published 2026·07·06 · 8 min read</div>
+    <a class="footer-link" href="https://agents.md" target="_blank" rel="noopener noreferrer">The AGENTS.md convention →</a>
+  </footer>
+</body>
+</html>
