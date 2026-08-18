@@ -25,6 +25,11 @@ Sami - Software Developer
 
 ### Blog Posts
 
+#### The Value in AI Is Moving Up the Stack
+- URL: /posts/ai-value-moves-up-stack.html
+- Published: 2026-08-18
+- Description: Stripe's reported OpenRouter deal, Claude's fragile text watermark, and Higgsfield's soaring valuation point to the same shift: the real value in AI is moving above the model.
+
 #### CLI vs MCP: The Future of Agentic Communication Is Layered
 - URL: /posts/cli-vs-mcp-agentic-communication.html
 - Published: 2026-04-06
